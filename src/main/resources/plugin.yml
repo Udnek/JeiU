@@ -1,0 +1,16 @@
+name: jeiu
+version: '${project.version}'
+main: me.udnek.jeiu.JeiU
+api-version: '1.20'
+depend: [ItemsCoreU]
+commands:
+  recipe:
+    description: "recipe"
+    usage: "/recipe <item>"
+    aliases: []
+    permission-message: "You do not have permission to use this command"
+  recipe_usages:
+    description: "recipe_usages"
+    usage: "/recipe_usages <item>"
+    aliases: []
+    permission-message: "You do not have permission to use this command"
