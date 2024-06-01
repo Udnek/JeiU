@@ -1,5 +1,6 @@
 package me.udnek.jeiu.recipefeatures.visualizer;
 
+import me.udnek.itemscoreu.nms.NMS;
 import me.udnek.itemscoreu.nms.NMSHelper;
 import me.udnek.jeiu.recipefeatures.RecipesMenu;
 import org.apache.commons.lang3.StringUtils;
@@ -32,7 +33,7 @@ public class LootTableVisualizer{
         this.recipesMenu = recipesMenu;
 
 
-        List<ItemStack> possibleLoot = NMSHelper.getNMS().getPossibleLoot(lootTable);
+        List<ItemStack> possibleLoot = NMS.get().getPossibleLoot(lootTable);
         possibleLoot = clearDuplicates(possibleLoot);
 
         if (possibleLoot.size() > MAX_CAPACITY) {
