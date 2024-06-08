@@ -1,4 +1,4 @@
-package me.udnek.jeiu.recipefeatures.recipemenuitem;
+package me.udnek.jeiu.recipe_feature.item;
 
 import me.udnek.itemscoreu.customitem.CustomItem;
 import org.bukkit.Material;
@@ -6,17 +6,20 @@ import org.bukkit.Material;
 public class RecipeBannerItem extends CustomItem {
 
     @Override
+    public String getRawId() {
+        return "recipe_banner";
+    }
+
+    @Override
     public Material getMaterial() {
         return Material.GUNPOWDER;
     }
 
     @Override
-    protected String getRawDisplayName() {
+    public String getRawItemName() {
         return "";
     }
 
     @Override
-    protected String getItemName() {
-        return "recipe_banner";
-    }
+    public boolean getHideTooltip() {return true;}
 }

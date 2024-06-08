@@ -1,6 +1,6 @@
-package me.udnek.jeiu.recipefeatures.visualizer;
+package me.udnek.jeiu.recipe_feature.visualizer;
 
-import me.udnek.jeiu.recipefeatures.RecipesMenu;
+import me.udnek.jeiu.recipe_feature.RecipesMenu;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 

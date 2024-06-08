@@ -1,10 +1,8 @@
 package me.udnek.jeiu;
 
-import me.udnek.itemscoreu.customitem.CustomItemManager;
 import me.udnek.jeiu.commands.RecipeCommand;
 import me.udnek.jeiu.commands.RecipeUsagesCommand;
-import me.udnek.jeiu.recipefeatures.RecipesMenu;
-import me.udnek.jeiu.recipefeatures.recipemenuitem.*;
+import me.udnek.jeiu.recipe_feature.RecipesMenu;
 import org.bukkit.plugin.java.JavaPlugin;
 
 

@@ -1,14 +1,10 @@
-package me.udnek.jeiu.recipefeatures.visualizer;
+package me.udnek.jeiu.recipe_feature.visualizer;
 
-import me.udnek.itemscoreu.utils.CustomItemUtils;
-import me.udnek.jeiu.recipefeatures.RecipesMenu;
-import me.udnek.jeiu.recipefeatures.recipemenuitem.Items;
+import me.udnek.jeiu.recipe_feature.RecipesMenu;
+import me.udnek.jeiu.recipe_feature.item.Items;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.trim.ArmorTrim;
-import org.bukkit.inventory.meta.trim.TrimMaterial;
 
 import java.util.List;
 import java.util.Map;

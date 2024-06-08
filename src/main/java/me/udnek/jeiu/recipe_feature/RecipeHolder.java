@@ -1,10 +1,9 @@
-package me.udnek.jeiu.recipefeatures;
+package me.udnek.jeiu.recipe_feature;
 
 import org.bukkit.inventory.Recipe;
 import org.bukkit.loot.LootTable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RecipeHolder {

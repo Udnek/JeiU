@@ -1,20 +1,13 @@
-package me.udnek.jeiu.recipefeatures.visualizer;
+package me.udnek.jeiu.recipe_feature.visualizer;
 
 import me.udnek.itemscoreu.nms.NMS;
-import me.udnek.itemscoreu.nms.NMSHelper;
-import me.udnek.jeiu.recipefeatures.RecipesMenu;
-import org.apache.commons.lang3.StringUtils;
+import me.udnek.jeiu.recipe_feature.RecipesMenu;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootContext;
 import org.bukkit.loot.LootTable;
-import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class LootTableVisualizer{
@@ -101,6 +94,10 @@ public class LootTableVisualizer{
                 return Material.SPAWNER;
             case "archaeology":
                 return Material.BRUSH;
+            case "pots":
+                return Material.DECORATED_POT;
+            case "spawners":
+                return Material.TRIAL_SPAWNER;
             case "gameplay":
                 switch (subtype){
                     case "hero_of_the_village":

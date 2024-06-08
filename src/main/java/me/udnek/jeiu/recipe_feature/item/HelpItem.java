@@ -1,7 +1,7 @@
-package me.udnek.jeiu.recipefeatures.recipemenuitem;
+package me.udnek.jeiu.recipe_feature.item;
 
-import me.udnek.itemscoreu.customitem.CustomModelDataItem;
-import me.udnek.itemscoreu.utils.DecorUtils;
+import me.udnek.itemscoreu.customitem.CustomItem;
+import me.udnek.itemscoreu.utils.ComponentU;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -10,16 +10,16 @@ import org.bukkit.Material;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelpItem extends CustomModelDataItem {
+public class HelpItem extends CustomItem {
 
     @Override
     public List<Component> getLore() {
 
         ArrayList<Component> lore = new ArrayList<Component>();
 
-        lore.add(DecorUtils.constructTranslatable("gui.jeiu.help.description.1", Component.keybind("key.mouse.left")
-                .decoration(TextDecoration.ITALIC, false).decorate(TextDecoration.BOLD).color(TextColor.color(85,255,85))));
-        lore.add(DecorUtils.constructTranslatable("gui.jeiu.help.description.2", Component.keybind("key.mouse.right")
+        lore.add(ComponentU.translatableWithInsertion("gui.jeiu.help.description.1", Component.keybind("key.mouse.left")
+                .decoration(TextDecoration.ITALIC, false).decorate(TextDecoration.BOLD).color(TextColor.color(85, 255, 85))));
+        lore.add(ComponentU.translatableWithInsertion("gui.jeiu.help.description.2", Component.keybind("key.mouse.right")
                 .decoration(TextDecoration.ITALIC, false).decorate(TextDecoration.BOLD).color(TextColor.color(255,85,85))));
         lore.add(Component.translatable("gui.jeiu.help.description.3"));
         lore.add(Component.translatable("gui.jeiu.help.description.4"));
@@ -43,18 +43,13 @@ public class HelpItem extends CustomModelDataItem {
     }
 
     @Override
-    protected String getRawDisplayName() {
+    public String getRawId() {return "help_button";}
+
+    @Override
+    public String getRawItemName() {
         return "gui.jeiu.help";
     }
 
-
     @Override
-    protected String getItemName() {
-        return "help_button";
-    }
-
-    @Override
-    public int getCustomModelData() {
-        return 1104;
-    }
+    public Integer getCustomModelData() {return 1104;}
 }

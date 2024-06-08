@@ -1,13 +1,13 @@
-package me.udnek.jeiu.recipefeatures;
+package me.udnek.jeiu.recipe_feature;
 
 import me.udnek.itemscoreu.custominventory.CustomInventory;
-import me.udnek.itemscoreu.utils.CustomItemUtils;
+import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.utils.ItemUtils;
 import me.udnek.jeiu.Utils;
-import me.udnek.jeiu.recipefeatures.recipemenuitem.Items;
-import me.udnek.jeiu.recipefeatures.visualizer.LootTableVisualizer;
-import me.udnek.jeiu.recipefeatures.visualizer.VanillaRecipeVisualizer;
-import me.udnek.jeiu.recipefeatures.visualizer.VisualizableRecipe;
+import me.udnek.jeiu.recipe_feature.item.Items;
+import me.udnek.jeiu.recipe_feature.visualizer.LootTableVisualizer;
+import me.udnek.jeiu.recipe_feature.visualizer.VanillaRecipeVisualizer;
+import me.udnek.jeiu.recipe_feature.visualizer.VisualizableRecipe;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -71,11 +71,11 @@ public class RecipesMenu extends CustomInventory {
         event.setCancelled(true);
 
 
-        if (CustomItemUtils.isItemStackEqualsId(itemStack, Items.nextButton.getId())){
+        if (Items.nextButton.isSameId(itemStack)){
             this.openNextRecipe(this.recipeIndex + 1);
             return;
         }
-        if (CustomItemUtils.isItemStackEqualsId(itemStack, Items.previousButton.getId())){
+        if (Items.previousButton.isSameId(itemStack)){
             this.openNextRecipe(this.recipeIndex - 1);
             return;
         }
@@ -213,7 +213,7 @@ public class RecipesMenu extends CustomInventory {
                 this.setItemAt(index, ((RecipeChoice.MaterialChoice) recipeChoice).getChoices().get(0));
                 return;
             }
-            else if (this.targetItemStack != null && !CustomItemUtils.isCustomItem(this.targetItemStack)) {
+            else if (this.targetItemStack != null && !CustomItem.isCustom(this.targetItemStack)) {
                 if (((RecipeChoice.MaterialChoice) recipeChoice).getChoices().contains(this.targetItemStack.getType())){
                     this.setItemAt(index, this.targetItemStack);
                     return;

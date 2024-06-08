@@ -1,6 +1,4 @@
-package me.udnek.jeiu.recipefeatures.visualizer;
-
-import org.bukkit.inventory.Recipe;
+package me.udnek.jeiu.recipe_feature.visualizer;
 
 public interface VisualizableRecipe {
 

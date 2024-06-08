@@ -1,4 +1,4 @@
-package me.udnek.jeiu.recipefeatures.recipemenuitem;
+package me.udnek.jeiu.recipe_feature.item;
 
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.customitem.CustomItemManager;
