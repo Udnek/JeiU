@@ -2,7 +2,7 @@ package me.udnek.jeiu.recipe_feature;
 
 import me.udnek.itemscoreu.custominventory.CustomInventory;
 import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.utils.ItemUtils;
+import me.udnek.itemscoreu.customitem.ItemUtils;
 import me.udnek.jeiu.Utils;
 import me.udnek.jeiu.recipe_feature.item.Items;
 import me.udnek.jeiu.recipe_feature.visualizer.LootTableVisualizer;

@@ -1,6 +1,6 @@
 package me.udnek.jeiu.commands;
 
-import me.udnek.itemscoreu.utils.ItemUtils;
+import me.udnek.itemscoreu.customitem.ItemUtils;
 import me.udnek.jeiu.recipe_feature.RecipesMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

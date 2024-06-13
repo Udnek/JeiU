@@ -12,7 +12,7 @@ public class Items {
     public static final CustomItem banner = register(new RecipeBannerItem());
 
     private static CustomItem register(CustomItem customItem){
-        return CustomItemManager.registerItem(JeiU.getInstance(), customItem);
+        return CustomItemManager.register(JeiU.getInstance(), customItem);
     }
 
 }
