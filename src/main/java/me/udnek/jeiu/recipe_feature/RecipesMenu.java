@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.SmithingTrimRecipe;
 import org.bukkit.loot.LootTable;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -122,11 +123,21 @@ public class RecipesMenu extends CustomInventory {
 
     public static void openNewItemUsagesMenu(Player player, ItemStack itemStack){
         List<Recipe> itemInRecipesUsages = ItemUtils.getItemInRecipesUsages(itemStack);
+        clearSmithingRecipes(itemInRecipesUsages);
 
         List<RecipeHolder> recipeHolders = RecipeHolder.of(itemInRecipesUsages, new ArrayList<>());
 
         if (recipeHolders.isEmpty()) return;
         new RecipesMenu(0, itemStack, recipeHolders).open(player);
+    }
+
+    // TODO: 6/18/2024 VISUALIZE INSTEAD OF REMOVING
+    public static void clearSmithingRecipes(List<Recipe> recipes){
+        List<Recipe> toRemove = new ArrayList<>();
+        for (Recipe recipe : recipes) {
+            if (recipe instanceof SmithingTrimRecipe) toRemove.add(recipe);
+        }
+        recipes.removeAll(toRemove);
     }
 
     
