@@ -48,7 +48,7 @@ public class RecipesMenu extends CustomInventory {
     private int recipeIndex;
     private ItemStack targetItemStack = null;
 
-    private HashMap<Integer, RecipeChoice> toAnimateItems = new HashMap<Integer, RecipeChoice>();
+    private HashMap<Integer, RecipeChoice> toAnimateItems = new HashMap<>();
 
     private BukkitTask animatedItemsRunningTask = null;
 
@@ -72,11 +72,11 @@ public class RecipesMenu extends CustomInventory {
         event.setCancelled(true);
 
 
-        if (Items.nextButton.isSameId(itemStack)){
+        if (Items.nextButton.isThisItem(itemStack)){
             this.openNextRecipe(this.recipeIndex + 1);
             return;
         }
-        if (Items.previousButton.isSameId(itemStack)){
+        if (Items.previousButton.isThisItem(itemStack)){
             this.openNextRecipe(this.recipeIndex - 1);
             return;
         }

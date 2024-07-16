@@ -1,9 +1,10 @@
 package me.udnek.jeiu.recipe_feature.item;
 
+import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import org.bukkit.Material;
 
-public class PreviousRecipeItem extends CustomItem {
+public class PreviousRecipeItem extends ConstructableCustomItem {
 
     @Override
     public String getRawId() {

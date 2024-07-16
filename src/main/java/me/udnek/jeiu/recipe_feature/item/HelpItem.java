@@ -1,5 +1,6 @@
 package me.udnek.jeiu.recipe_feature.item;
 
+import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.utils.ComponentU;
 import net.kyori.adventure.text.Component;
@@ -10,7 +11,7 @@ import org.bukkit.Material;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelpItem extends CustomItem {
+public class HelpItem extends ConstructableCustomItem {
 
     @Override
     public List<Component> getLore() {
