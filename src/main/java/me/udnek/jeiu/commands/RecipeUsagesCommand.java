@@ -15,12 +15,11 @@ import java.util.List;
 public class RecipeUsagesCommand implements TabExecutor, CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(commandSender instanceof Player)){
+        if (!(commandSender instanceof Player player)) {
             return false;
         }
-        Player player = (Player) commandSender;
 
-        if (args.length == 0){
+        if (args.length == 0) {
             RecipesMenu.openNewItemUsagesMenu(player, player.getEquipment().getItemInMainHand());
             return true;
         }

@@ -12,7 +12,7 @@ public class RecipeHolder {
     private LootTable lootTable;
     public final Type type;
 
-    public static List<RecipeHolder> of(List<Recipe> recipes, List<LootTable> lootTables){
+    public static List<RecipeHolder> of(List<Recipe> recipes, List<LootTable> lootTables) {
         List<RecipeHolder> recipeHolders = new ArrayList<>();
         for (Recipe recipe : recipes) {
             recipeHolders.add(new RecipeHolder(recipe));
@@ -24,11 +24,12 @@ public class RecipeHolder {
     }
 
 
-    public RecipeHolder(Recipe recipe){
+    public RecipeHolder(Recipe recipe) {
         this.recipe = recipe;
         type = Type.RECIPE;
     }
-    public RecipeHolder(LootTable lootTable){
+
+    public RecipeHolder(LootTable lootTable) {
         this.lootTable = lootTable;
         type = Type.LOOT_TABLE;
     }
@@ -42,7 +43,7 @@ public class RecipeHolder {
     }
 
 
-    public enum Type{
+    public enum Type {
         RECIPE,
         LOOT_TABLE
     }

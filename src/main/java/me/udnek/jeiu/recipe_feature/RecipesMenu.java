@@ -34,21 +34,21 @@ public class RecipesMenu extends CustomInventory {
 
     private static Plugin plugin;
 
-    private static final int previousRecipeButtonPosition = 9*4+7;
-    private static final int nextRecipeButtonPosition = 9*2+7;
+    private static final int previousRecipeButtonPosition = 9 * 4 + 7;
+    private static final int nextRecipeButtonPosition = 9 * 2 + 7;
     private static final int helpButtonPosition = 7;
     ////
-    public static final ItemStack NEXT_PAGE_BUTTON = Items.nextButton.getItem();
-    public static final ItemStack PREVIOUS_PAGE_BUTTON = Items.previousButton.getItem();;
+    public static final ItemStack NEXT_PAGE_BUTTON = Items.NEXT_BUTTON.getItem();
+    public static final ItemStack PREVIOUS_PAGE_BUTTON = Items.PREVIOUS_BUTTON.getItem();
     public static final ItemStack RECIPE_INFO = new ItemStack(Material.LIGHT);
-    public static final ItemStack HELP_BUTTON = Items.help.getItem();;
+    public static final ItemStack HELP_BUTTON = Items.HELP.getItem();
     public static final int recipeInfoOffset = 9;
 
-    private List<RecipeHolder> recipeHolders;
+    private final List<RecipeHolder> recipeHolders;
     private int recipeIndex;
     private ItemStack targetItemStack = null;
 
-    private HashMap<Integer, RecipeChoice> toAnimateItems = new HashMap<>();
+    private final HashMap<Integer, RecipeChoice> toAnimateItems = new HashMap<>();
 
     private BukkitTask animatedItemsRunningTask = null;
 
@@ -72,35 +72,38 @@ public class RecipesMenu extends CustomInventory {
         event.setCancelled(true);
 
 
-        if (Items.nextButton.isThisItem(itemStack)){
+        if (Items.NEXT_BUTTON.isThisItem(itemStack)) {
             this.openNextRecipe(this.recipeIndex + 1);
             return;
         }
-        if (Items.previousButton.isThisItem(itemStack)){
+        if (Items.PREVIOUS_BUTTON.isThisItem(itemStack)) {
             this.openNextRecipe(this.recipeIndex - 1);
             return;
         }
-        if (event.isLeftClick()){
+        if (event.isLeftClick()) {
             this.openOtherItemRecipes(itemStack);
             return;
         }
-        if (event.isRightClick()){
+        if (event.isRightClick()) {
             this.openOtherItemUsages(itemStack);
         }
 
 
     }
 
-    public Player getViewer(){
+    public Player getViewer() {
         return (Player) this.inventory.getViewers().get(0);
     }
-    public boolean hasViewer(){return !this.inventory.getViewers().isEmpty();}
 
-    public static void initialize(Plugin plugin){
+    public boolean hasViewer() {
+        return !this.inventory.getViewers().isEmpty();
+    }
+
+    public static void initialize(Plugin plugin) {
         RecipesMenu.plugin = plugin;
     }
 
-    private RecipesMenu(int recipeIndex, ItemStack targetItemStack, List<RecipeHolder> recipeHolders){
+    private RecipesMenu(int recipeIndex, ItemStack targetItemStack, List<RecipeHolder> recipeHolders) {
         this.recipeIndex = recipeIndex;
         if (targetItemStack != null) targetItemStack.setAmount(1);
         this.targetItemStack = targetItemStack;
@@ -109,19 +112,20 @@ public class RecipesMenu extends CustomInventory {
     }
 
 
-    private void openNextRecipe(int recipeIndex){
+    private void openNextRecipe(int recipeIndex) {
         this.recipeIndex = recipeIndex;
         this.run();
     }
 
-    private void openOtherItemRecipes(ItemStack itemStack){
+    private void openOtherItemRecipes(ItemStack itemStack) {
         openNewItemRecipesMenu(this.getViewer(), itemStack);
     }
-    private void openOtherItemUsages(ItemStack itemStack){
+
+    private void openOtherItemUsages(ItemStack itemStack) {
         openNewItemUsagesMenu(this.getViewer(), itemStack);
     }
 
-    public static void openNewItemUsagesMenu(Player player, ItemStack itemStack){
+    public static void openNewItemUsagesMenu(Player player, ItemStack itemStack) {
         List<Recipe> itemInRecipesUsages = ItemUtils.getItemInRecipesUsages(itemStack);
         clearSmithingRecipes(itemInRecipesUsages);
 
@@ -132,7 +136,7 @@ public class RecipesMenu extends CustomInventory {
     }
 
     // TODO: 6/18/2024 VISUALIZE INSTEAD OF REMOVING
-    public static void clearSmithingRecipes(List<Recipe> recipes){
+    public static void clearSmithingRecipes(List<Recipe> recipes) {
         List<Recipe> toRemove = new ArrayList<>();
         for (Recipe recipe : recipes) {
             if (recipe instanceof SmithingTrimRecipe) toRemove.add(recipe);
@@ -140,8 +144,8 @@ public class RecipesMenu extends CustomInventory {
         recipes.removeAll(toRemove);
     }
 
-    
-    public static void openNewItemRecipesMenu(Player player, ItemStack itemStack){
+
+    public static void openNewItemRecipesMenu(Player player, ItemStack itemStack) {
         List<Recipe> recipesFromItemStack = ItemUtils.getRecipesOfItemStack(itemStack);
         List<LootTable> whereItemStackInLootTable = ItemUtils.getWhereItemStackInLootTable(itemStack);
 
@@ -156,7 +160,7 @@ public class RecipesMenu extends CustomInventory {
         new RecipesMenu(0, null, recipeHolders).open(player);
     }
 
-    private void run(){
+    private void run() {
         this.toAnimateItems.clear();
         if (this.animatedItemsRunningTask != null) this.animatedItemsRunningTask.cancel();
         this.inventory.clear();
@@ -168,10 +172,9 @@ public class RecipesMenu extends CustomInventory {
             new LootTableVisualizer().visualize(this, recipeHolder.getLootTable(), targetItemStack);
         } else {
             Recipe recipe = recipeHolder.getRecipe();
-            if (recipe instanceof VisualizableRecipe){
+            if (recipe instanceof VisualizableRecipe) {
                 ((VisualizableRecipe) recipe).getVisualizer().visualize(this, recipe, targetItemStack);
-            }
-            else if (Utils.isVanillaRecipe(recipe)){
+            } else if (Utils.isVanillaRecipe(recipe)) {
                 new VanillaRecipeVisualizer().visualize(this, recipe, targetItemStack);
             }
         }
@@ -181,22 +184,22 @@ public class RecipesMenu extends CustomInventory {
     }
 
 
-    public RecipeHolder getRecipeHolder(){
+    public RecipeHolder getRecipeHolder() {
         return this.recipeHolders.get(recipeIndex);
     }
 
 
-    private void setPageButtons(){
-        if (this.recipeIndex != this.recipeHolders.size()-1){
+    private void setPageButtons() {
+        if (this.recipeIndex != this.recipeHolders.size() - 1) {
             this.setItemAt(nextRecipeButtonPosition, NEXT_PAGE_BUTTON);
         }
-        if (this.recipeIndex != 0){
+        if (this.recipeIndex != 0) {
             this.setItemAt(previousRecipeButtonPosition, PREVIOUS_PAGE_BUTTON);
         }
         this.setItemAt(helpButtonPosition, HELP_BUTTON);
     }
 
-    private void setInfoItem(){
+    private void setInfoItem() {
         // TODO: 3/10/2024 CREATE INFO
 /*        Recipe recipe = this.getRecipe();
         ItemStack itemStack = RECIPE_INFO;
@@ -213,31 +216,28 @@ public class RecipesMenu extends CustomInventory {
     }
 
 
-    public void setItemAt(int index, ItemStack itemStack){
+    public void setItemAt(int index, ItemStack itemStack) {
         this.inventory.setItem(index, itemStack);
     }
 
-    public void setItemAt(int index, RecipeChoice recipeChoice){
+    public void setItemAt(int index, RecipeChoice recipeChoice) {
         if (recipeChoice == null) return;
-        if ((recipeChoice instanceof RecipeChoice.MaterialChoice)){
-            if (((RecipeChoice.MaterialChoice) recipeChoice).getChoices().size() == 1){
+        if ((recipeChoice instanceof RecipeChoice.MaterialChoice)) {
+            if (((RecipeChoice.MaterialChoice) recipeChoice).getChoices().size() == 1) {
                 this.setItemAt(index, ((RecipeChoice.MaterialChoice) recipeChoice).getChoices().get(0));
                 return;
-            }
-            else if (this.targetItemStack != null && !CustomItem.isCustom(this.targetItemStack)) {
-                if (((RecipeChoice.MaterialChoice) recipeChoice).getChoices().contains(this.targetItemStack.getType())){
+            } else if (this.targetItemStack != null && !CustomItem.isCustom(this.targetItemStack)) {
+                if (((RecipeChoice.MaterialChoice) recipeChoice).getChoices().contains(this.targetItemStack.getType())) {
                     this.setItemAt(index, this.targetItemStack);
                     return;
                 }
             }
-        }
-        else{
-            if (((RecipeChoice.ExactChoice) recipeChoice).getChoices().size() == 1){
+        } else {
+            if (((RecipeChoice.ExactChoice) recipeChoice).getChoices().size() == 1) {
                 this.setItemAt(index, ((RecipeChoice.ExactChoice) recipeChoice).getChoices().get(0));
                 return;
-            }
-            else if (this.targetItemStack == null) {
-                if (((RecipeChoice.ExactChoice) recipeChoice).getChoices().contains(this.targetItemStack)){
+            } else if (this.targetItemStack == null) {
+                if (((RecipeChoice.ExactChoice) recipeChoice).getChoices().contains(this.targetItemStack)) {
                     this.setItemAt(index, this.targetItemStack);
                     return;
                 }
@@ -246,27 +246,27 @@ public class RecipesMenu extends CustomInventory {
         this.toAnimateItems.put(index, recipeChoice);
     }
 
-    public void setItemAt(int index, Material material){
+    public void setItemAt(int index, Material material) {
         this.setItemAt(index, new ItemStack(material));
     }
 
-    private ItemStack getRandomItemFromChoice(RecipeChoice recipeChoice){
+    private ItemStack getRandomItemFromChoice(RecipeChoice recipeChoice) {
         if (recipeChoice instanceof RecipeChoice.ExactChoice) {
             List<ItemStack> itemStacks = ((RecipeChoice.ExactChoice) recipeChoice).getChoices();
             return itemStacks.get(new Random().nextInt(itemStacks.size()));
 
-        } else{
+        } else {
             List<Material> materials = ((RecipeChoice.MaterialChoice) recipeChoice).getChoices();
             Material material = materials.get(new Random().nextInt(materials.size()));
             return new ItemStack(material);
         }
     }
 
-    private void animateRecipes(){
-        this.animatedItemsRunningTask = new BukkitRunnable(){
+    private void animateRecipes() {
+        this.animatedItemsRunningTask = new BukkitRunnable() {
 
             @Override
-            public void run(){
+            public void run() {
                 if (!RecipesMenu.this.hasViewer()) {
                     this.cancel();
                 }
@@ -279,7 +279,7 @@ public class RecipesMenu extends CustomInventory {
         }.runTaskTimer(plugin, 0, 20);
     }
 
-    private void animationFrame(){
+    private void animationFrame() {
         for (Map.Entry<Integer, RecipeChoice> choiceEntry : RecipesMenu.this.toAnimateItems.entrySet()) {
             RecipesMenu.this.setItemAt(choiceEntry.getKey(), RecipesMenu.this.getRandomItemFromChoice(choiceEntry.getValue()));
         }
@@ -287,7 +287,7 @@ public class RecipesMenu extends CustomInventory {
 
     @Override
     public int getInventorySize() {
-        return 9*6;
+        return 9 * 6;
     }
 
 }

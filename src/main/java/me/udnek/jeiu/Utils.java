@@ -4,7 +4,7 @@ import org.bukkit.inventory.*;
 
 public class Utils {
 
-    public static boolean isVanillaRecipe(Recipe recipe){
+    public static boolean isVanillaRecipe(Recipe recipe) {
 
         if (recipe instanceof ShapedRecipe) return true;
         if (recipe instanceof ShapelessRecipe) return true;
@@ -17,9 +17,7 @@ public class Utils {
         if (recipe instanceof StonecuttingRecipe) return true;
 
         if (recipe instanceof SmithingTrimRecipe) return true;
-        if (recipe instanceof SmithingTransformRecipe) return true;
-
-        return false;
+        return recipe instanceof SmithingTransformRecipe;
 
     }
 

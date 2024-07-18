@@ -10,7 +10,9 @@ public final class JeiU extends JavaPlugin {
 
     private static JeiU instance;
 
-    public static JeiU getInstance() { return instance; }
+    public static JeiU getInstance() {
+        return instance;
+    }
 
 
     @Override

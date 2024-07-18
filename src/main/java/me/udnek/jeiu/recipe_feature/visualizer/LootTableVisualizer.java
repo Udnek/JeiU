@@ -10,10 +10,10 @@ import org.bukkit.loot.LootTable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LootTableVisualizer{
+public class LootTableVisualizer {
 
-    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9*2+1);
-    private static final Layout MIDDLE_LAYOUT = new Layout(7, 3, 9*2);
+    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 1);
+    private static final Layout MIDDLE_LAYOUT = new Layout(7, 3, 9 * 2);
     private static final Layout BIG_LAYOUT = new Layout(7, 5, 9);
 
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
@@ -44,7 +44,7 @@ public class LootTableVisualizer{
         for (ItemStack itemStack : possibleLoot) {
 
 
-            recipesMenu.setItemAt(row*9+i+ layout.getOffset(), itemStack);
+            recipesMenu.setItemAt(row * 9 + i + layout.getOffset(), itemStack);
 
             i++;
             if (i % layout.getX() == 0) {
@@ -56,7 +56,7 @@ public class LootTableVisualizer{
         setDecoration();
     }
 
-    public List<ItemStack> clearDuplicates(List<ItemStack> itemStacks){
+    public List<ItemStack> clearDuplicates(List<ItemStack> itemStacks) {
         List<ItemStack> newItems = new ArrayList<>();
 
         for (ItemStack itemStack : itemStacks) {
@@ -68,7 +68,7 @@ public class LootTableVisualizer{
     }
 
 
-    private void setDecoration(){
+    private void setDecoration() {
         String key = lootTable.getKey().getKey();
         String[] split = key.split("/");
 
@@ -76,8 +76,7 @@ public class LootTableVisualizer{
         String subtype = "";
         if (split.length >= 2) subtype = split[1];
 
-        Bukkit.getLogger().info(key + " ( "+category+", "+subtype+" )");
-
+        Bukkit.getLogger().info(key + " ( " + category + ", " + subtype + " )");
 
 
         recipesMenu.setItemAt(RecipesMenu.RECIPE_BLOCK_OFFSET, chooseIcon(category, subtype));
@@ -85,9 +84,9 @@ public class LootTableVisualizer{
     }
 
 
-    public Material chooseIcon(String category, String subtype){
+    public Material chooseIcon(String category, String subtype) {
 
-        switch (category){
+        switch (category) {
             case "chests":
                 return Material.CHEST;
             case "entities":
@@ -99,7 +98,7 @@ public class LootTableVisualizer{
             case "spawners":
                 return Material.TRIAL_SPAWNER;
             case "gameplay":
-                switch (subtype){
+                switch (subtype) {
                     case "hero_of_the_village":
                         return Material.EMERALD;
                     case "fishing":
@@ -115,23 +114,23 @@ public class LootTableVisualizer{
         return Material.BARRIER;
     }
 
-    public static class Layout{
+    public static class Layout {
 
         private final int x;
         private final int y;
         private final int offset;
 
-        Layout(int x, int y, int offset){
+        Layout(int x, int y, int offset) {
             this.x = x;
             this.y = y;
             this.offset = offset;
         }
 
-        int getCapacity(){
-            return x*y;
+        int getCapacity() {
+            return x * y;
         }
 
-        boolean willFitIn(int capacity){
+        boolean willFitIn(int capacity) {
             return capacity <= getCapacity();
         }
 

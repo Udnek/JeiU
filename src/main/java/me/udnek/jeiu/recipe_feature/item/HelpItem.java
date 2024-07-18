@@ -1,7 +1,6 @@
 package me.udnek.jeiu.recipe_feature.item;
 
 import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
-import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.utils.ComponentU;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -21,7 +20,7 @@ public class HelpItem extends ConstructableCustomItem {
         lore.add(ComponentU.translatableWithInsertion("gui.jeiu.help.description.1", Component.keybind("key.mouse.left")
                 .decoration(TextDecoration.ITALIC, false).decorate(TextDecoration.BOLD).color(TextColor.color(85, 255, 85))));
         lore.add(ComponentU.translatableWithInsertion("gui.jeiu.help.description.2", Component.keybind("key.mouse.right")
-                .decoration(TextDecoration.ITALIC, false).decorate(TextDecoration.BOLD).color(TextColor.color(255,85,85))));
+                .decoration(TextDecoration.ITALIC, false).decorate(TextDecoration.BOLD).color(TextColor.color(255, 85, 85))));
         lore.add(Component.translatable("gui.jeiu.help.description.3"));
         lore.add(Component.translatable("gui.jeiu.help.description.4"));
         lore.add(Component.translatable("gui.jeiu.help.description.5"));
@@ -44,7 +43,9 @@ public class HelpItem extends ConstructableCustomItem {
     }
 
     @Override
-    public String getRawId() {return "help_button";}
+    public String getRawId() {
+        return "help_button";
+    }
 
     @Override
     public String getRawItemName() {
@@ -52,5 +53,7 @@ public class HelpItem extends ConstructableCustomItem {
     }
 
     @Override
-    public Integer getCustomModelData() {return 1104;}
+    public Integer getCustomModelData() {
+        return 1104;
+    }
 }
