@@ -1,13 +1,13 @@
-package me.udnek.jeiu.recipe_feature.item;
+package me.udnek.jeiu.item;
 
 import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
 import org.bukkit.Material;
 
-public class PreviousRecipeItem extends ConstructableCustomItem {
+public class RecipeBannerItem extends ConstructableCustomItem {
 
     @Override
     public String getRawId() {
-        return "previous_recipe_button";
+        return "recipe_banner";
     }
 
     @Override
@@ -17,11 +17,11 @@ public class PreviousRecipeItem extends ConstructableCustomItem {
 
     @Override
     public String getRawItemName() {
-        return "gui.jeiu.arrow_left_active";
+        return "";
     }
 
     @Override
-    public Integer getCustomModelData() {
-        return 1102;
+    public boolean getHideTooltip() {
+        return true;
     }
 }

@@ -1,17 +1,22 @@
-package me.udnek.jeiu.recipe_feature;
+package me.udnek.jeiu.recipe;
 
-import me.udnek.itemscoreu.custominventory.CustomInventory;
+import io.papermc.paper.registry.RegistryKey;
+import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
 import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.customitem.ItemUtils;
+import me.udnek.itemscoreu.customloot.LootTableManager;
+import me.udnek.itemscoreu.customrecipe.RecipeManager;
+import me.udnek.itemscoreu.utils.ItemUtils;
+import me.udnek.itemscoreu.utils.LogUtils;
 import me.udnek.jeiu.Utils;
-import me.udnek.jeiu.recipe_feature.item.Items;
-import me.udnek.jeiu.recipe_feature.visualizer.LootTableVisualizer;
-import me.udnek.jeiu.recipe_feature.visualizer.VanillaRecipeVisualizer;
-import me.udnek.jeiu.recipe_feature.visualizer.VisualizableRecipe;
+import me.udnek.jeiu.item.Items;
+import me.udnek.jeiu.recipe.visualizer.LootTableVisualizer;
+import me.udnek.jeiu.recipe.visualizer.VanillaRecipeVisualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,13 +24,14 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingTrimRecipe;
 import org.bukkit.loot.LootTable;
+import org.bukkit.loot.LootTables;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
-public class RecipesMenu extends CustomInventory {
+public class RecipesMenu extends ConstructableCustomInventory {
 
     // TODO: 2/11/2024 DYNAMIC CRAFTING MATRIX AND RESULT 
 
@@ -34,15 +40,15 @@ public class RecipesMenu extends CustomInventory {
 
     private static Plugin plugin;
 
-    private static final int previousRecipeButtonPosition = 9 * 4 + 7;
-    private static final int nextRecipeButtonPosition = 9 * 2 + 7;
+    private static final int previousRecipeButtonPosition = 9 * 4 + 8;
+    private static final int nextRecipeButtonPosition = 9 * 2 + 8;
     private static final int helpButtonPosition = 7;
     ////
     public static final ItemStack NEXT_PAGE_BUTTON = Items.NEXT_BUTTON.getItem();
     public static final ItemStack PREVIOUS_PAGE_BUTTON = Items.PREVIOUS_BUTTON.getItem();
     public static final ItemStack RECIPE_INFO = new ItemStack(Material.LIGHT);
     public static final ItemStack HELP_BUTTON = Items.HELP.getItem();
-    public static final int recipeInfoOffset = 9;
+    public static final int RECIPE_INFO_OFFSET = 9;
 
     private final List<RecipeHolder> recipeHolders;
     private int recipeIndex;
@@ -126,7 +132,7 @@ public class RecipesMenu extends CustomInventory {
     }
 
     public static void openNewItemUsagesMenu(Player player, ItemStack itemStack) {
-        List<Recipe> itemInRecipesUsages = ItemUtils.getItemInRecipesUsages(itemStack);
+        List<Recipe> itemInRecipesUsages = RecipeManager.getInstance().getRecipesAsIngredient(itemStack);
         clearSmithingRecipes(itemInRecipesUsages);
 
         List<RecipeHolder> recipeHolders = RecipeHolder.of(itemInRecipesUsages, new ArrayList<>());
@@ -137,23 +143,22 @@ public class RecipesMenu extends CustomInventory {
 
     // TODO: 6/18/2024 VISUALIZE INSTEAD OF REMOVING
     public static void clearSmithingRecipes(List<Recipe> recipes) {
-        List<Recipe> toRemove = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-            if (recipe instanceof SmithingTrimRecipe) toRemove.add(recipe);
-        }
-        recipes.removeAll(toRemove);
+        recipes.removeIf((recipe) -> (recipe instanceof SmithingTrimRecipe));
     }
 
 
     public static void openNewItemRecipesMenu(Player player, ItemStack itemStack) {
-        List<Recipe> recipesFromItemStack = ItemUtils.getRecipesOfItemStack(itemStack);
-        List<LootTable> whereItemStackInLootTable = ItemUtils.getWhereItemStackInLootTable(itemStack);
-
-        List<RecipeHolder> recipeHolders = RecipeHolder.of(recipesFromItemStack, whereItemStackInLootTable);
-
-/*        for (LootTable lootTable : whereItemStackInLootTable) {
+        List<Recipe> recipesFromItemStack = RecipeManager.getInstance().getRecipesAsResult(itemStack);
+        long currentTimeMillis = System.currentTimeMillis();
+        List<LootTable> whereItemStackInLootTable = LootTableManager.getInstance().getWhereItemOccurs(itemStack);
+        LogUtils.log("Took:" + (System.currentTimeMillis() - currentTimeMillis));
+/*        LogUtils.log(whereItemStackInLootTable.size());
+        for (LootTable lootTable : whereItemStackInLootTable) {
             Bukkit.getLogger().info(lootTable.getKey().asString());
         }*/
+
+
+        List<RecipeHolder> recipeHolders = RecipeHolder.of(recipesFromItemStack, whereItemStackInLootTable);
 
 
         if (recipeHolders.isEmpty()) return;
@@ -168,17 +173,14 @@ public class RecipesMenu extends CustomInventory {
         this.setInfoItem();
 
         RecipeHolder recipeHolder = getRecipeHolder();
-        if (recipeHolder.type == RecipeHolder.Type.LOOT_TABLE) {
-            new LootTableVisualizer().visualize(this, recipeHolder.getLootTable(), targetItemStack);
-        } else {
-            Recipe recipe = recipeHolder.getRecipe();
-            if (recipe instanceof VisualizableRecipe) {
-                ((VisualizableRecipe) recipe).getVisualizer().visualize(this, recipe, targetItemStack);
-            } else if (Utils.isVanillaRecipe(recipe)) {
-                new VanillaRecipeVisualizer().visualize(this, recipe, targetItemStack);
-            }
+        switch (recipeHolder.getType()){
+            case LOOT_TABLE ->
+                new LootTableVisualizer(recipeHolder.getLootTable()).visualize(this);
+            case RECIPE ->
+                new VanillaRecipeVisualizer(recipeHolder.getRecipe()).visualize(this);
+            case VISUALIZABLE ->
+                recipeHolder.getVisualizable().visualize(this);
         }
-
 
         this.animateRecipes();
     }

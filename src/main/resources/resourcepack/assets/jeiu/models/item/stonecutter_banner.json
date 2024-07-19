@@ -1,0 +1,6 @@
+{
+	"parent": "jeiu:item/banner_template",
+	"textures": {
+		"0": "jeiu:item/stonecutter_banner"
+	}
+}

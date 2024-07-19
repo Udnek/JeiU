@@ -1,18 +1,13 @@
-package me.udnek.jeiu.recipe_feature.item;
+package me.udnek.jeiu.item;
 
 import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
 import org.bukkit.Material;
 
-public class FireIconItem extends ConstructableCustomItem {
-
-    @Override
-    public Integer getCustomModelData() {
-        return 1100;
-    }
+public class NextRecipeItem extends ConstructableCustomItem {
 
     @Override
     public String getRawId() {
-        return "fire_icon";
+        return "next_recipe_button";
     }
 
     @Override
@@ -22,11 +17,11 @@ public class FireIconItem extends ConstructableCustomItem {
 
     @Override
     public String getRawItemName() {
-        return "";
+        return "gui.jeiu.arrow_right_active";
     }
 
     @Override
-    public boolean getHideTooltip() {
-        return true;
+    public Integer getCustomModelData() {
+        return 1101;
     }
 }

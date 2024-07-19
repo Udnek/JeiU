@@ -1,7 +1,11 @@
-package me.udnek.jeiu.recipe_feature.visualizer;
+package me.udnek.jeiu.recipe.visualizer;
 
-import me.udnek.itemscoreu.nms.NMS;
-import me.udnek.jeiu.recipe_feature.RecipesMenu;
+import me.udnek.itemscoreu.customloot.LootTableManager;
+import me.udnek.itemscoreu.customloot.table.CustomLootTable;
+import me.udnek.itemscoreu.nms.Nms;
+import me.udnek.itemscoreu.utils.LogUtils;
+import me.udnek.jeiu.recipe.RecipesMenu;
+import me.udnek.jeiu.recipe.Visualizable;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -10,7 +14,7 @@ import org.bukkit.loot.LootTable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LootTableVisualizer {
+public class LootTableVisualizer implements Visualizable{
 
     private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 1);
     private static final Layout MIDDLE_LAYOUT = new Layout(7, 3, 9 * 2);
@@ -18,19 +22,22 @@ public class LootTableVisualizer {
 
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
 
-    private LootTable lootTable;
+    private final LootTable lootTable;
     private RecipesMenu recipesMenu;
 
-    public void visualize(RecipesMenu recipesMenu, LootTable lootTable, ItemStack targetItem) {
+    public LootTableVisualizer(LootTable lootTable){
         this.lootTable = lootTable;
+    }
+
+    public void visualize(RecipesMenu recipesMenu) {
         this.recipesMenu = recipesMenu;
 
 
-        List<ItemStack> possibleLoot = NMS.get().getPossibleLoot(lootTable);
-        possibleLoot = clearDuplicates(possibleLoot);
+        List<ItemStack> possibleLoot = LootTableManager.getInstance().getPossibleLoot(lootTable);
+        //possibleLoot = clearDuplicates(possibleLoot);
 
         if (possibleLoot.size() > MAX_CAPACITY) {
-            Bukkit.getLogger().info("OVERLOAD CAPACITY " + possibleLoot.size());
+            LogUtils.log("OVERLOAD CAPACITY " + possibleLoot.size());
             possibleLoot = possibleLoot.subList(0, MAX_CAPACITY);
         }
 
@@ -58,13 +65,10 @@ public class LootTableVisualizer {
 
     public List<ItemStack> clearDuplicates(List<ItemStack> itemStacks) {
         List<ItemStack> newItems = new ArrayList<>();
-
         for (ItemStack itemStack : itemStacks) {
             if (!newItems.contains(itemStack)) newItems.add(itemStack);
         }
-
         return newItems;
-
     }
 
 
@@ -76,7 +80,8 @@ public class LootTableVisualizer {
         String subtype = "";
         if (split.length >= 2) subtype = split[1];
 
-        Bukkit.getLogger().info(key + " ( " + category + ", " + subtype + " )");
+        String customText = (lootTable instanceof CustomLootTable ? " (Custom)" : " (Vanilla)");
+        LogUtils.log(lootTable.getKey().asString() + " ( " + category + ", " + subtype + " )" + customText);
 
 
         recipesMenu.setItemAt(RecipesMenu.RECIPE_BLOCK_OFFSET, chooseIcon(category, subtype));
@@ -97,6 +102,14 @@ public class LootTableVisualizer {
                 return Material.DECORATED_POT;
             case "spawners":
                 return Material.TRIAL_SPAWNER;
+            case "dispensers":
+                return Material.DISPENSER;
+            case "shearing":
+                return Material.SHEARS;
+            case "blocks":
+                Material material = Material.getMaterial(subtype.toUpperCase());
+                if (material != null) return material;
+                return Material.STRUCTURE_VOID;
             case "gameplay":
                 switch (subtype) {
                     case "hero_of_the_village":
@@ -106,12 +119,13 @@ public class LootTableVisualizer {
                     case "sniffer_digging":
                         return Material.SNIFFER_SPAWN_EGG;
                     case "piglin_bartering":
-                        return Material.PIGLIN_SPAWN_EGG;
+                        return Material.GOLD_INGOT;
                     case "cat_morning_gift":
                         return Material.CAT_SPAWN_EGG;
                 }
+            default:
+                return Material.BARRIER;
         }
-        return Material.BARRIER;
     }
 
     public static class Layout {

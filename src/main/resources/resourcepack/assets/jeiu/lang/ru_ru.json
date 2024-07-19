@@ -1,0 +1,24 @@
+﻿{
+	"gui.jeiu.title": "Рецепты",
+
+	"gui.jeiu.arrow_right_active": "Следующий рецепт",
+	"gui.jeiu.arrow_left_active": "Предыдущий рецепт",
+	"gui.jeiu.back": "Назад",
+	
+	"gui.jeiu.help": "Помощь",
+	
+	"gui.jeiu.help.description.1": "§f[%s§f] - рецепты",
+	"gui.jeiu.help.description.2": "§f[%s§f] - рецепты, где используется предмет",
+	"gui.jeiu.help.description.3":  "",
+	"gui.jeiu.help.description.4":  "§f/recipe §7- посмотреть рецепты предмета в руке",
+	"gui.jeiu.help.description.5":  "§f/recipe [item_id] §7- посмотреть рецепты",
+	"gui.jeiu.help.description.6":  "§7 указанного предмета",
+	"gui.jeiu.help.description.7":  "",
+	"gui.jeiu.help.description.8":  "§f/recipe_usages §7- посмотреть где предмет",
+	"gui.jeiu.help.description.9":  "§7 в руке используется",
+	"gui.jeiu.help.description.10": "§f/recipe_usages [item_id] §7- посмотреть где",
+	"gui.jeiu.help.description.11": "§7 указанный предмет используется",
+	"gui.jeiu.help.description.12": "",
+	"gui.jeiu.help.description.13": "§7⚠ Мод 'Just Enough Items' может",
+	"gui.jeiu.help.description.14": "§7 показывать рецепты не точно!"
+}

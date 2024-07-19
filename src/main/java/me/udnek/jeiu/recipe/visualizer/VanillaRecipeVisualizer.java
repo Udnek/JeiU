@@ -1,7 +1,8 @@
-package me.udnek.jeiu.recipe_feature.visualizer;
+package me.udnek.jeiu.recipe.visualizer;
 
-import me.udnek.jeiu.recipe_feature.RecipesMenu;
-import me.udnek.jeiu.recipe_feature.item.Items;
+import me.udnek.jeiu.item.Items;
+import me.udnek.jeiu.recipe.RecipesMenu;
+import me.udnek.jeiu.recipe.Visualizable;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -9,7 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 import java.util.Map;
 
-public class VanillaRecipeVisualizer implements AbstractRecipeVisualizer {
+public class VanillaRecipeVisualizer implements Visualizable {
 
     private static final int craftingMatrixOffset = 9 * 2 + 1;
     private static final int craftingResultOffset = 9 * 3 + 5;
@@ -33,12 +34,15 @@ public class VanillaRecipeVisualizer implements AbstractRecipeVisualizer {
 
 
     private RecipesMenu recipesMenu;
-    private Recipe recipe;
+    private final Recipe recipe;
 
-    public void visualize(RecipesMenu recipesMenu, Recipe recipe, ItemStack targetItem) {
+    public VanillaRecipeVisualizer(Recipe recipe){
+        this.recipe = recipe;
+    }
+
+    public void visualize(RecipesMenu recipesMenu) {
 
         this.recipesMenu = recipesMenu;
-        this.recipe = recipe;
 
         this.setDecorItems();
 

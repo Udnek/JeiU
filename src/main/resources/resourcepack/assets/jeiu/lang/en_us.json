@@ -1,0 +1,24 @@
+﻿{
+	"gui.jeiu.title": "Recipes",
+
+	"gui.jeiu.arrow_right_active": "Next Recipe",
+	"gui.jeiu.arrow_left_active": "Previous Recipe",
+	"gui.jeiu.back": "Back",
+	
+	"gui.jeiu.help": "Help",
+	
+	"gui.jeiu.help.description.1":  "§f[%s§f] to recipes",
+	"gui.jeiu.help.description.2":  "§f[%s§f] to recipes where is used in",
+	"gui.jeiu.help.description.3":  "",
+	"gui.jeiu.help.description.4":  "§f/recipe §7to see recipes of item in hand",
+	"gui.jeiu.help.description.5":  "§f/recipe [item_id] §7to see recipes of ",
+	"gui.jeiu.help.description.6":  "§7 specified item",
+	"gui.jeiu.help.description.7":  "",
+	"gui.jeiu.help.description.8":  "§f/recipe_usages §7to see recipes where",
+	"gui.jeiu.help.description.9":  "§7 item in hand is used in",
+	"gui.jeiu.help.description.10": "§f/recipe_usages [item_id] §7to see recipes",
+	"gui.jeiu.help.description.11": "§7 where item is used in",
+	"gui.jeiu.help.description.12": "",
+	"gui.jeiu.help.description.13": "§7⚠ Mod 'Just Enough Items' can",
+	"gui.jeiu.help.description.14": "§7 show inaccurate recipes!"
+}

@@ -1,7 +1,7 @@
-package me.udnek.jeiu.recipe_feature.item;
+package me.udnek.jeiu.item;
 
 import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.customitem.CustomItemManager;
+import me.udnek.itemscoreu.customitem.CustomItemRegistry;
 import me.udnek.jeiu.JeiU;
 
 public class Items {
@@ -12,7 +12,7 @@ public class Items {
     public static final CustomItem BANNER = register(new RecipeBannerItem());
 
     private static CustomItem register(CustomItem customItem) {
-        return CustomItemManager.getInstance().register(JeiU.getInstance(), customItem);
+        return CustomItemRegistry.getInstance().register(JeiU.getInstance(), customItem);
     }
 
 }

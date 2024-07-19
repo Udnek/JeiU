@@ -1,4 +1,4 @@
-name: jeiu
+name: JeiU
 version: '${project.version}'
 main: me.udnek.jeiu.JeiU
 api-version: '1.20'

@@ -1,7 +1,7 @@
 package me.udnek.jeiu.commands;
 
-import me.udnek.itemscoreu.customitem.ItemUtils;
-import me.udnek.jeiu.recipe_feature.RecipesMenu;
+import me.udnek.itemscoreu.utils.ItemUtils;
+import me.udnek.jeiu.recipe.RecipesMenu;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,6 +35,6 @@ public class RecipeCommand implements CommandExecutor, TabExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        return RecipeCommandUtils.getOptions(args);
+        return RecipeCommandUtils.getOptions(commandSender, args);
     }
 }

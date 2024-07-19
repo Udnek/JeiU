@@ -17,7 +17,9 @@ public class Utils {
         if (recipe instanceof StonecuttingRecipe) return true;
 
         if (recipe instanceof SmithingTrimRecipe) return true;
-        return recipe instanceof SmithingTransformRecipe;
+        if (recipe instanceof SmithingTransformRecipe) return true;
+
+        return false;
 
     }
 
