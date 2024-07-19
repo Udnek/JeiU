@@ -1,5 +1,6 @@
 package me.udnek.jeiu.recipe_feature;
 
+import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
 import me.udnek.itemscoreu.custominventory.CustomInventory;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.customitem.ItemUtils;
@@ -25,7 +26,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 
-public class RecipesMenu extends CustomInventory {
+public class RecipesMenu extends ConstructableCustomInventory {
 
     // TODO: 2/11/2024 DYNAMIC CRAFTING MATRIX AND RESULT 
 
