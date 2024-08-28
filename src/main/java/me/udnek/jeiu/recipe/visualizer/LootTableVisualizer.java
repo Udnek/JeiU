@@ -1,13 +1,13 @@
 package me.udnek.jeiu.recipe.visualizer;
 
-import me.udnek.itemscoreu.customloot.LootTableManager;
+import me.udnek.itemscoreu.customloot.LootTableUtils;
 import me.udnek.itemscoreu.customloot.table.CustomLootTable;
 import me.udnek.itemscoreu.nms.Nms;
 import me.udnek.itemscoreu.utils.LogUtils;
 import me.udnek.jeiu.recipe.RecipesMenu;
 import me.udnek.jeiu.recipe.Visualizable;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
 
@@ -18,7 +18,7 @@ public class LootTableVisualizer implements Visualizable{
 
     private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 1);
     private static final Layout MIDDLE_LAYOUT = new Layout(7, 3, 9 * 2);
-    private static final Layout BIG_LAYOUT = new Layout(7, 5, 9);
+    private static final Layout BIG_LAYOUT = new Layout(8, 5, 9);
 
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
 
@@ -33,7 +33,7 @@ public class LootTableVisualizer implements Visualizable{
         this.recipesMenu = recipesMenu;
 
 
-        List<ItemStack> possibleLoot = LootTableManager.getInstance().getPossibleLoot(lootTable);
+        List<ItemStack> possibleLoot = LootTableUtils.getPossibleLoot(lootTable);
         //possibleLoot = clearDuplicates(possibleLoot);
 
         if (possibleLoot.size() > MAX_CAPACITY) {
@@ -95,7 +95,11 @@ public class LootTableVisualizer implements Visualizable{
             case "chests":
                 return Material.CHEST;
             case "entities":
-                return Material.SPAWNER;
+                EntityType entityType = EntityType.fromName(subtype);
+                if (entityType == null) return Material.EGG;
+                ItemStack egg = Nms.get().getSpawnEggByType(entityType);
+                if (egg == null) return Material.EGG;
+                return egg.getType();
             case "archaeology":
                 return Material.BRUSH;
             case "pots":

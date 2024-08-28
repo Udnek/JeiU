@@ -1,22 +1,17 @@
 package me.udnek.jeiu.recipe;
 
-import io.papermc.paper.registry.RegistryKey;
 import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
 import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.customloot.LootTableManager;
+import me.udnek.itemscoreu.customloot.LootTableUtils;
 import me.udnek.itemscoreu.customrecipe.RecipeManager;
-import me.udnek.itemscoreu.utils.ItemUtils;
 import me.udnek.itemscoreu.utils.LogUtils;
-import me.udnek.jeiu.Utils;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.recipe.visualizer.LootTableVisualizer;
 import me.udnek.jeiu.recipe.visualizer.VanillaRecipeVisualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Registry;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +19,6 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.SmithingTrimRecipe;
 import org.bukkit.loot.LootTable;
-import org.bukkit.loot.LootTables;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -65,10 +59,6 @@ public class RecipesMenu extends ConstructableCustomInventory {
                 .append(Component.translatable("gui.jeiu.title", TextColor.color(0, 0, 0)));
     }
 
-    @Override
-    public String getRawDisplayName() {
-        return "";
-    }
 
     @Override
     public void onPlayerClicksItem(InventoryClickEvent event) {
@@ -150,7 +140,7 @@ public class RecipesMenu extends ConstructableCustomInventory {
     public static void openNewItemRecipesMenu(Player player, ItemStack itemStack) {
         List<Recipe> recipesFromItemStack = RecipeManager.getInstance().getRecipesAsResult(itemStack);
         long currentTimeMillis = System.currentTimeMillis();
-        List<LootTable> whereItemStackInLootTable = LootTableManager.getInstance().getWhereItemOccurs(itemStack);
+        List<LootTable> whereItemStackInLootTable = LootTableUtils.getWhereItemOccurs(itemStack);
         LogUtils.log("Took:" + (System.currentTimeMillis() - currentTimeMillis));
 /*        LogUtils.log(whereItemStackInLootTable.size());
         for (LootTable lootTable : whereItemStackInLootTable) {
@@ -249,6 +239,7 @@ public class RecipesMenu extends ConstructableCustomInventory {
     }
 
     public void setItemAt(int index, Material material) {
+        if (!material.isItem()) return;
         this.setItemAt(index, new ItemStack(material));
     }
 
