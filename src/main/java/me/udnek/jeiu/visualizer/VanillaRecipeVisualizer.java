@@ -1,16 +1,25 @@
-package me.udnek.jeiu.recipe.visualizer;
+package me.udnek.jeiu.visualizer;
 
+import io.papermc.paper.registry.keys.TrimMaterialKeys;
+import io.papermc.paper.registry.keys.TrimPatternKeys;
 import me.udnek.jeiu.item.Items;
-import me.udnek.jeiu.recipe.RecipesMenu;
-import me.udnek.jeiu.recipe.Visualizable;
+import me.udnek.jeiu.menu.RecipesMenu;
+import me.udnek.jeiu.visualizer.abstraction.AbstractVisualizer;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
+import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
 
-public class VanillaRecipeVisualizer implements Visualizable {
+public class VanillaRecipeVisualizer extends AbstractVisualizer {
 
     private static final int craftingMatrixOffset = 9 * 2 + 1;
     private static final int craftingResultOffset = 9 * 3 + 5;
@@ -32,24 +41,50 @@ public class VanillaRecipeVisualizer implements Visualizable {
     public static final ItemStack RECIPE_BANNER = Items.BANNER.getItem();
     public static final ItemStack FIRE_ICON = Items.FIRE_ICON.getItem();
 
-
-    private RecipesMenu recipesMenu;
     private final Recipe recipe;
 
     public VanillaRecipeVisualizer(Recipe recipe){
         this.recipe = recipe;
     }
+    @Override
+    public @Nullable List<Component> getInformation() {
+        if (recipe instanceof Keyed keyed) return List.of(Component.text("ID: " + keyed.getKey().asString()));
+        return null;
+    }
 
-    public void visualize(RecipesMenu recipesMenu) {
+/*    @Override
+    public void tickAnimation() {
+        if (!(recipe instanceof SmithingTrimRecipe)){
+            super.tickAnimation();
+            return;
+        }
 
-        this.recipesMenu = recipesMenu;
+        // TODO: 9/9/2024 ANIMATION
+        ItemStack template = animators.get(0).getFrame();
+        ItemStack base = animators.get(1).getFrame();
+        ItemStack addition = animators.get(2).getFrame();
 
-        this.setDecorItems();
+        if (template == null || base == null || addition == null) {
+            super.tickAnimation();
+            return;
+        }
 
-        // SHAPE
+        ItemStack result = base.clone();
+        ArmorMeta itemMeta = (ArmorMeta) result.getItemMeta();
 
+        if (trimMaterial == null) return;
+
+        itemMeta.setTrim();
+
+    }*/
+
+    public void visualize(@NotNull RecipesMenu recipesMenu) {
+        super.visualize(recipesMenu);
+
+        setDecorItems();
+
+        // SHAPED
         if (recipe instanceof ShapedRecipe) {
-
             String[] shape = ((ShapedRecipe) recipe).getShape();
             Map<Character, RecipeChoice> recipeChoiceMap = ((ShapedRecipe) recipe).getChoiceMap();
             RecipeChoice recipeChoice;
@@ -60,17 +95,16 @@ public class VanillaRecipeVisualizer implements Visualizable {
             if (shape.length != 3) extraYOffset = 1;
             if (shape[0].length() == 1) extraXOffset = 1;
 
-
             for (int y = 0; y < shape.length; y++) {
                 for (int x = 0; x < shape[0].length(); x++) {
 
                     recipeChoice = recipeChoiceMap.get(shape[y].charAt(x));
 
-                    this.setItemInCraftingMatrix(x + extraXOffset, y + extraYOffset, recipeChoice);
+                    setItemInCraftingMatrix(x + extraXOffset, y + extraYOffset, recipeChoice);
 
                 }
             }
-            this.recipesMenu.setItemAt(craftingResultOffset, recipe.getResult());
+            setItem(craftingResultOffset, recipe.getResult());
         }
 
         // SHAPELESS
@@ -85,72 +119,65 @@ public class VanillaRecipeVisualizer implements Visualizable {
             for (int i = 0; i < recipeChoiceList.size(); i++) {
                 y = (int) Math.ceil((float) (i + 1) / 3) - 1;
                 x = i % 3;
-                this.setItemInCraftingMatrix(x + extraOffset, y + extraOffset, recipeChoiceList.get(i));
+                setItemInCraftingMatrix(x + extraOffset, y + extraOffset, recipeChoiceList.get(i));
             }
-            this.recipesMenu.setItemAt(craftingResultOffset, recipe.getResult());
+            setItem(craftingResultOffset, recipe.getResult());
         }
         // COOKING
         else if (recipe instanceof CookingRecipe) {
-
             RecipeChoice inputChoice = ((CookingRecipe<?>) recipe).getInputChoice();
-            this.recipesMenu.setItemAt(cookingInputOffset, inputChoice);
-            this.recipesMenu.setItemAt(cookingResultOffset, recipe.getResult());
+            setItem(cookingInputOffset, inputChoice);
+            setItem(cookingResultOffset, recipe.getResult());
         }
         //SMITHING
         else if (recipe instanceof SmithingTransformRecipe) {
-
             RecipeChoice base = ((SmithingTransformRecipe) recipe).getBase();
             RecipeChoice addition = ((SmithingTransformRecipe) recipe).getAddition();
             RecipeChoice template = ((SmithingTransformRecipe) recipe).getTemplate();
-            this.recipesMenu.setItemAt(smithingTemplateOffset, template);
-            this.recipesMenu.setItemAt(smithingBaseOffset, base);
-            this.recipesMenu.setItemAt(smithingAdditionOffset, addition);
-            this.recipesMenu.setItemAt(smithingResultOffset, recipe.getResult());
+            setItem(smithingTemplateOffset, template);
+            setItem(smithingBaseOffset, base);
+            setItem(smithingAdditionOffset, addition);
+            setItem(smithingResultOffset, recipe.getResult());
 
         } else if (recipe instanceof SmithingTrimRecipe) {
-
             RecipeChoice base = ((SmithingTrimRecipe) recipe).getBase();
             RecipeChoice addition = ((SmithingTrimRecipe) recipe).getAddition();
             RecipeChoice template = ((SmithingTrimRecipe) recipe).getTemplate();
-            this.recipesMenu.setItemAt(smithingTemplateOffset, template);
-            this.recipesMenu.setItemAt(smithingBaseOffset, base);
-            this.recipesMenu.setItemAt(smithingAdditionOffset, addition);
-            this.recipesMenu.setItemAt(smithingResultOffset, recipe.getResult());
+            setItem(smithingTemplateOffset, template);
+            setItem(smithingBaseOffset, base);
+            setItem(smithingAdditionOffset, addition);
+            setItem(smithingResultOffset, recipe.getResult());
         }
         //STONECUTTING
         else if (recipe instanceof StonecuttingRecipe) {
-
             RecipeChoice inputChoice = ((StonecuttingRecipe) recipe).getInputChoice();
-            this.recipesMenu.setItemAt(stonecuttingInputOffset, inputChoice);
-            this.recipesMenu.setItemAt(stonecuttingResultOffset, recipe.getResult());
+            setItem(stonecuttingInputOffset, inputChoice);
+            setItem(stonecuttingResultOffset, recipe.getResult());
         }
     }
-
     private void setItemInCraftingMatrix(int x, int y, RecipeChoice recipeChoice) {
-        this.recipesMenu.setItemAt(y * 9 + x + craftingMatrixOffset, recipeChoice);
+        setItem(y * 9 + x + craftingMatrixOffset, recipeChoice);
     }
-
     private void setDecorItems() {
-
         int bannerCustomModelData;
         Material blockMaterial;
         if (recipe instanceof ShapelessRecipe || recipe instanceof ShapedRecipe) {
             bannerCustomModelData = 1000;
             blockMaterial = Material.CRAFTING_TABLE;
         } else if (recipe instanceof FurnaceRecipe) {
-            this.recipesMenu.setItemAt(cookingRecipeFireIconOffset, FIRE_ICON);
+            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 1001;
             blockMaterial = Material.FURNACE;
         } else if (recipe instanceof BlastingRecipe) {
-            this.recipesMenu.setItemAt(cookingRecipeFireIconOffset, FIRE_ICON);
+            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 1001;
             blockMaterial = Material.BLAST_FURNACE;
         } else if (recipe instanceof SmokingRecipe) {
-            this.recipesMenu.setItemAt(cookingRecipeFireIconOffset, FIRE_ICON);
+            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 1001;
             blockMaterial = Material.SMOKER;
         } else if (recipe instanceof CampfireRecipe) {
-            this.recipesMenu.setItemAt(cookingRecipeFireIconOffset, FIRE_ICON);
+            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 1001;
             blockMaterial = Material.CAMPFIRE;
         } else if (recipe instanceof SmithingRecipe) {
@@ -169,8 +196,8 @@ public class VanillaRecipeVisualizer implements Visualizable {
         itemMeta.setCustomModelData(bannerCustomModelData);
         itemStack.setItemMeta(itemMeta);
 
-        this.recipesMenu.setItemAt(recipeBannerOffset, itemStack);
-        this.recipesMenu.setItemAt(RecipesMenu.RECIPE_BLOCK_OFFSET, blockMaterial);
+        setItem(recipeBannerOffset, itemStack);
+        setItem(RecipesMenu.RECIPE_STATION_POSITION, blockMaterial);
     }
 }
 

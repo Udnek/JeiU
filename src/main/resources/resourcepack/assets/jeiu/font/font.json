@@ -2,11 +2,20 @@
 	"providers": [
 		{
 			"type": "bitmap",
-			"file": "jeiu:font/gui_backround.png",
+			"file": "jeiu:font/recipes_backround.png",
 			"ascent": 13,
 			"height": 256,
 			"chars": [
 				"0"
+			]
+		},
+		{
+			"type": "bitmap",
+			"file": "jeiu:font/items_backround.png",
+			"ascent": 13,
+			"height": 256,
+			"chars": [
+				"1"
 			]
 		},
 		{

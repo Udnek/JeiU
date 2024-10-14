@@ -1,24 +1,27 @@
-package me.udnek.jeiu.recipe.visualizer;
+package me.udnek.jeiu.visualizer;
 
 import me.udnek.itemscoreu.customloot.LootTableUtils;
 import me.udnek.itemscoreu.customloot.table.CustomLootTable;
 import me.udnek.itemscoreu.nms.Nms;
 import me.udnek.itemscoreu.utils.LogUtils;
-import me.udnek.jeiu.recipe.RecipesMenu;
-import me.udnek.jeiu.recipe.Visualizable;
+import me.udnek.jeiu.menu.RecipesMenu;
+import me.udnek.jeiu.visualizer.abstraction.Visualizer;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LootTableVisualizer implements Visualizable{
+public class LootTableVisualizer implements Visualizer {
 
-    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 1);
-    private static final Layout MIDDLE_LAYOUT = new Layout(7, 3, 9 * 2);
-    private static final Layout BIG_LAYOUT = new Layout(8, 5, 9);
+    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 2);
+    private static final Layout MIDDLE_LAYOUT = new Layout(9, 3, 9 * 2);
+    private static final Layout BIG_LAYOUT = new Layout(9, 5, 9);
 
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
 
@@ -29,7 +32,14 @@ public class LootTableVisualizer implements Visualizable{
         this.lootTable = lootTable;
     }
 
-    public void visualize(RecipesMenu recipesMenu) {
+    @Override
+    public @Nullable List<Component> getInformation() {
+        return List.of(Component.text("ID: " + lootTable.getKey().asString()));
+    }
+
+    @Override
+    public void tickAnimation() {}
+    public void visualize(@NotNull RecipesMenu recipesMenu) {
         this.recipesMenu = recipesMenu;
 
 
@@ -51,7 +61,7 @@ public class LootTableVisualizer implements Visualizable{
         for (ItemStack itemStack : possibleLoot) {
 
 
-            recipesMenu.setItemAt(row * 9 + i + layout.getOffset(), itemStack);
+            recipesMenu.setItem(row * 9 + i + layout.getOffset(), itemStack);
 
             i++;
             if (i % layout.getX() == 0) {
@@ -62,7 +72,6 @@ public class LootTableVisualizer implements Visualizable{
 
         setDecoration();
     }
-
     public List<ItemStack> clearDuplicates(List<ItemStack> itemStacks) {
         List<ItemStack> newItems = new ArrayList<>();
         for (ItemStack itemStack : itemStacks) {
@@ -70,8 +79,6 @@ public class LootTableVisualizer implements Visualizable{
         }
         return newItems;
     }
-
-
     private void setDecoration() {
         String key = lootTable.getKey().getKey();
         String[] split = key.split("/");
@@ -84,13 +91,10 @@ public class LootTableVisualizer implements Visualizable{
         LogUtils.log(lootTable.getKey().asString() + " ( " + category + ", " + subtype + " )" + customText);
 
 
-        recipesMenu.setItemAt(RecipesMenu.RECIPE_BLOCK_OFFSET, chooseIcon(category, subtype));
+        recipesMenu.setItem(RecipesMenu.RECIPE_STATION_POSITION, chooseIcon(category, subtype));
 
     }
-
-
     public Material chooseIcon(String category, String subtype) {
-
         switch (category) {
             case "chests":
                 return Material.CHEST;
@@ -110,6 +114,8 @@ public class LootTableVisualizer implements Visualizable{
                 return Material.DISPENSER;
             case "shearing":
                 return Material.SHEARS;
+            case "equipment":
+                return Material.IRON_CHESTPLATE;
             case "blocks":
                 Material material = Material.getMaterial(subtype.toUpperCase());
                 if (material != null) return material;
@@ -137,34 +143,26 @@ public class LootTableVisualizer implements Visualizable{
         private final int x;
         private final int y;
         private final int offset;
-
         Layout(int x, int y, int offset) {
             this.x = x;
             this.y = y;
             this.offset = offset;
         }
-
         int getCapacity() {
             return x * y;
         }
-
         boolean willFitIn(int capacity) {
             return capacity <= getCapacity();
         }
-
         public int getX() {
             return x;
         }
-
         public int getY() {
             return y;
         }
-
         public int getOffset() {
             return offset;
         }
-
-
     }
 }
 

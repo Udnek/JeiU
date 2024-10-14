@@ -1,11 +1,13 @@
 ﻿{
-	"gui.jeiu.title": "Recipes",
+	"gui.jeiu.recipes_title": "Recipes",
+	"gui.jeiu.items_title": "All Items",
 
-	"gui.jeiu.arrow_right_active": "Next Recipe",
-	"gui.jeiu.arrow_left_active": "Previous Recipe",
+	"gui.jeiu.next": "Next",
+	"gui.jeiu.previous": "Previous",
 	"gui.jeiu.back": "Back",
 	
 	"gui.jeiu.help": "Help",
+	"gui.jeiu.information": "Information",
 	
 	"gui.jeiu.help.description.1":  "§f[%s§f] to recipes",
 	"gui.jeiu.help.description.2":  "§f[%s§f] to recipes where is used in",

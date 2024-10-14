@@ -1,13 +1,34 @@
 package me.udnek.jeiu.commands;
 
-import me.udnek.itemscoreu.customitem.CustomItem;
+import me.udnek.itemscoreu.customregistry.CustomRegistries;
+import me.udnek.itemscoreu.utils.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeCommandUtils {
+
+    public static @Nullable ItemStack getTargetItem(@NotNull CommandSender commandSender, @NotNull String[] args){
+        if (!(commandSender instanceof Player player)) {
+            return null;
+        }
+        if (args.length == 0) {
+            ItemStack itemInMainHand = player.getEquipment().getItemInMainHand();
+            if (itemInMainHand.getType() == Material.AIR) return null;
+            return itemInMainHand;
+        }
+        String id = args[0];
+        if (!ItemUtils.isCustomItemOrMaterial(id)) return null;
+        ItemStack customItemOrMaterial = ItemUtils.getFromCustomItemOrMaterial(id);
+        if (customItemOrMaterial.getType() == Material.AIR) return null;
+        return customItemOrMaterial;
+    }
 
     public static List<String> getOptions(CommandSender commandSender, String[] args) {
         if (args.length > 1) return new ArrayList<>();
@@ -15,7 +36,7 @@ public class RecipeCommandUtils {
         final String search = args[0];
         List<String> options = new ArrayList<>();
 
-        for (String id : CustomItem.getAllIds()) {
+        for (String id : CustomRegistries.ITEM.getIds()) {
             if (id.contains(search)) options.add(id);
         }
 
