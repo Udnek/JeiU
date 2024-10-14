@@ -14,3 +14,8 @@ commands:
     usage: "/recipe_usages <item>"
     aliases: []
     permission-message: "You do not have permission to use this command"
+  all_items:
+    description: "all_items"
+    usage: "/all_items"
+    aliases: [items]
+    permission-message: "You do not have permission to use this command"

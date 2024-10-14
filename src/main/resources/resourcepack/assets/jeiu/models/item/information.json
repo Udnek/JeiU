@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "jeiu:item/arrow_right_active"
+		"layer0": "jeiu:item/information"
 	}
 }

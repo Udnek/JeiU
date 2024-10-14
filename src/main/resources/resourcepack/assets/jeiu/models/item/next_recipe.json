@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "jeiu:item/arrow_left_active"
+		"layer0": "jeiu:item/next_recipe"
 	}
 }

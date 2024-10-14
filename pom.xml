@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.udnek</groupId>
-    <artifactId>jeiu</artifactId>
+    <artifactId>JeiU</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>jeiu</name>
+    <name>JeiU</name>
 
     <properties>
         <java.version>21</java.version>
