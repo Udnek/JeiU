@@ -82,8 +82,10 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
         }
 
         if (query.getType() == MenuQuery.Type.USAGES){
+
+            List<Recipe> rawRecipes = new ArrayList<>();
+            RecipeManager.getInstance().getRecipesAsIngredient(query.getItemStack(), rawRecipes::add);
             List<Visualizable> newRecipes = new ArrayList<>();
-            List<Recipe> rawRecipes = RecipeManager.getInstance().getRecipesAsIngredient(query.getItemStack());
             Utils.toVisualizables(rawRecipes, List.of(), newRecipes::add);
 
             new MenuQueryEvent(query, newRecipes).callEvent();
@@ -101,19 +103,23 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
                     List<LootTable> thisLootTables = LootTableUtils.getWhereItemOccurs(query.getItemStack());
                     asyncLootTablesFound(thisLootTables);
                 }
-            }.run();
+            }.run(); // TODO REPLACE WITH ASYNC?
 
             final int period = 1;
-            new BukkitRunnable() {
+            new Runnable() {
                 int totalWaited = 0;
                 @Override
                 public void run() {
                     totalWaited += 1;
-                    if (totalWaited*period > 20*10 || !RecipesMenu.this.hasViewers()) {cancel(); return;}
+                    if (totalWaited*period > 20*10 || !RecipesMenu.this.hasViewers()) {
+                        //cancel();
+                        return;
+                    }
                     if (asyncFoundLootTables == null) return;
 
+                    List<Recipe> rawRecipes = new ArrayList<>();
+                    RecipeManager.getInstance().getRecipesAsResult(query.getItemStack(), rawRecipes::add);
                     List<Visualizable> newRecipes = new ArrayList<>();
-                    List<Recipe> rawRecipes = RecipeManager.getInstance().getRecipesAsResult(query.getItemStack());
                     Utils.toVisualizables(rawRecipes, asyncFoundLootTables, newRecipes::add);
 
                     new MenuQueryEvent(query, newRecipes).callEvent();
@@ -121,9 +127,9 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
                     visualizers = newRecipes;
                     recipeIndex = 0;
                     runPage();
-                    cancel();
+                    //cancel();
                 }
-            }.runTaskTimer(JeiU.getInstance(), 1, period);
+            }.run(); //.runTaskTimer(JeiU.getInstance(), 1, period);
         }
     }
 
