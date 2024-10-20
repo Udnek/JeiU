@@ -1,7 +1,5 @@
 package me.udnek.jeiu.visualizer;
 
-import io.papermc.paper.registry.keys.TrimMaterialKeys;
-import io.papermc.paper.registry.keys.TrimPatternKeys;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.abstraction.AbstractVisualizer;
@@ -9,10 +7,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
-import org.bukkit.inventory.meta.ArmorMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.trim.ArmorTrim;
-import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

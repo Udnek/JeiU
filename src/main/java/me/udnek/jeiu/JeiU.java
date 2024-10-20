@@ -2,13 +2,11 @@ package me.udnek.jeiu;
 
 import me.udnek.itemscoreu.customhelp.CustomHelpCommand;
 import me.udnek.itemscoreu.resourcepack.ResourcePackablePlugin;
-import me.udnek.itemscoreu.utils.LogUtils;
 import me.udnek.jeiu.commands.AllItemsCommand;
 import me.udnek.jeiu.commands.RecipeCommand;
 import me.udnek.jeiu.commands.RecipeUsagesCommand;
 import me.udnek.jeiu.item.Items;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 

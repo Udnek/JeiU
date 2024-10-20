@@ -2,15 +2,8 @@ package me.udnek.jeiu.component;
 
 import me.udnek.itemscoreu.customcomponent.CustomComponent;
 import me.udnek.itemscoreu.customcomponent.CustomComponentType;
-import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.abstraction.Visualizer;
-import net.kyori.adventure.text.Component;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public interface VisualizableInRecipesMenuComponent extends CustomComponent<Object> {
 

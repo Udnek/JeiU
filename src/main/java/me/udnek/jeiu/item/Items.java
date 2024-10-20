@@ -2,7 +2,7 @@ package me.udnek.jeiu.item;
 
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.customregistry.CustomRegistries;
-import me.udnek.itemscoreu.utils.ComponentU;
+import me.udnek.itemscoreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;

@@ -1,7 +1,7 @@
 package me.udnek.jeiu.commands;
 
 import me.udnek.itemscoreu.customregistry.CustomRegistries;
-import me.udnek.itemscoreu.utils.ItemUtils;
+import me.udnek.itemscoreu.util.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

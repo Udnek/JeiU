@@ -1,7 +1,7 @@
 package me.udnek.jeiu.commands;
 
-import me.udnek.jeiu.util.MenuQuery;
 import me.udnek.jeiu.menu.RecipesMenu;
+import me.udnek.jeiu.util.MenuQuery;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
