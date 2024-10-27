@@ -37,8 +37,8 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
     // TODO: 2/11/2024 DYNAMIC CRAFTING MATRIX AND RESULT
 
     public static final int RECIPE_STATION_POSITION = 4;
-    public static final int PREVIOUS_RECIPE_BUTTON_POSITION = 7;
-    public static final int NEXT_RECIPE_BUTTON_POSITION = 8;
+    public static final int PREVIOUS_BUTTON_POSITION = 7;
+    public static final int NEXT_BUTTON_POSITION = 8;
     public static final int HELP_BUTTON_POSITION = 1;
     public static final int BACK_BUTTON_POSITION = 0;
     public static final int RECIPE_INFO_POSITION = 3;
@@ -47,93 +47,62 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
     private List<Visualizable> visualizers;
     private int recipeIndex;
     private Visualizer currentRecipe;
-    private BackCallable backPage = null;
-    private List<LootTable> asyncFoundLootTables = null;
 
-    public RecipesMenu(@NotNull MenuQuery query, @NotNull Player player, @Nullable BackCallable backCallable) {
-        this.backPage = backCallable;
-        open(player);
-        runNewQuery(query, null);
+    private MenuQuery query;
+    private final Player player;
+
+    public RecipesMenu(@NotNull Player player) {
+        this.player = player;
     }
-    public RecipesMenu(@NotNull MenuQuery query, @NotNull Player player) {
-        this(query, player, null);
+
+    @Override
+    public void openBack(@NotNull InventoryClickEvent event) {
+        BackCallable backCallable = query.getBackCall();
+        if (backCallable != null) backCallable.backCall();
     }
+    @Override
+    public void openNext(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex+1);}
+    @Override
+    public void openPrevious(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex-1);}
 
     protected void openRecipeNumber(int recipeIndex) {
         this.recipeIndex = Math.clamp(recipeIndex, 0, Math.max(0, visualizers.size()-1));
         runPage();
     }
 
-
-    @Override
-    public void openBack(@NotNull InventoryClickEvent event) {backPage.backCall();}
-    @Override
-    public void openNext(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex+1);}
-    @Override
-    public void openPrevious(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex-1);}
+    private boolean isTechnical(@Nullable ItemStack itemStack){
+        if (itemStack == null) return false;
+        return CustomItem.isCustom(itemStack) && CustomItem.get(itemStack).hasComponent(ComponentTypes.TECHNICAL_ITEM);
+    }
 
     @Override
     public void runNewQuery(@NotNull MenuQuery query, @Nullable InventoryClickEvent event){
-        if (CustomItem.isCustom(query.getItemStack()) &&
-                CustomItem.get(query.getItemStack()).hasComponent(ComponentTypes.TECHNICAL_ITEM)){
-            return;
-        }
-
-        if (query.getType() == MenuQuery.Type.USAGES){
+        List<Visualizable> newRecipes = new ArrayList<>();
+        if (!isTechnical(query.getItemStack())) {
 
             List<Recipe> rawRecipes = new ArrayList<>();
-            RecipeManager.getInstance().getRecipesAsIngredient(query.getItemStack(), rawRecipes::add);
-            List<Visualizable> newRecipes = new ArrayList<>();
-            Utils.toVisualizables(rawRecipes, List.of(), newRecipes::add);
-
-            new MenuQueryEvent(query, newRecipes).callEvent();
-            if (newRecipes.isEmpty()) return;
-            visualizers = newRecipes;
-            recipeIndex = 0;
-            runPage();
-
-        } else {
-            asyncFoundLootTables = null;
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    List<LootTable> thisLootTables = LootTableUtils.getWhereItemOccurs(query.getItemStack());
-                    asyncLootTablesFound(thisLootTables);
-                }
-            }.run(); // TODO REPLACE WITH ASYNC?
-
-            final int period = 1;
-            new Runnable() {
-                int totalWaited = 0;
-                @Override
-                public void run() {
-                    totalWaited += 1;
-                    if (totalWaited*period > 20*10 || !RecipesMenu.this.hasViewers()) {
-                        //cancel();
-                        return;
-                    }
-                    if (asyncFoundLootTables == null) return;
-
-                    List<Recipe> rawRecipes = new ArrayList<>();
-                    RecipeManager.getInstance().getRecipesAsResult(query.getItemStack(), rawRecipes::add);
-                    List<Visualizable> newRecipes = new ArrayList<>();
-                    Utils.toVisualizables(rawRecipes, asyncFoundLootTables, newRecipes::add);
-
-                    new MenuQueryEvent(query, newRecipes).callEvent();
-                    if (newRecipes.isEmpty()) return;
-                    visualizers = newRecipes;
-                    recipeIndex = 0;
-                    runPage();
-                    //cancel();
-                }
-            }.run(); //.runTaskTimer(JeiU.getInstance(), 1, period);
+            if (query.getType() == MenuQuery.Type.USAGES){
+                RecipeManager.getInstance().getRecipesAsIngredient(query.getItemStack(), rawRecipes::add);
+                Utils.toVisualizables(rawRecipes, List.of(), newRecipes::add);
+            } else {
+                List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(query.getItemStack());
+                RecipeManager.getInstance().getRecipesAsResult(query.getItemStack(), rawRecipes::add);
+                Utils.toVisualizables(rawRecipes, lootTables, newRecipes::add);
+            }
         }
-    }
 
-    protected void asyncLootTablesFound(@NotNull List<LootTable> lootTables){
-        asyncFoundLootTables = lootTables;
+        new MenuQueryEvent(query, newRecipes).callEvent();
+        if (newRecipes.isEmpty() && query.isOpenIfNothingFound()) return;
+        this.query = query;
+        visualizers = newRecipes;
+        recipeIndex = 0;
+        runPage();
+        open(player);
+
     }
+    @Override
+    public @Nullable BackCallable getBackCall() {return query.getBackCall();}
+
     public boolean hasViewers() {return !inventory.getViewers().isEmpty();}
     protected void runPage() {
         if (animatorTicker != null) animatorTicker.cancel();
@@ -146,13 +115,13 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
         animateRecipes();
     }
     protected void setPageButtons() {
-        if (recipeIndex < visualizers.size() - 1) setItem(NEXT_RECIPE_BUTTON_POSITION, Items.NEXT_BUTTON);
-        else setItem(NEXT_RECIPE_BUTTON_POSITION, (ItemStack) null);
+        if (recipeIndex < visualizers.size() - 1) setItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
+        else setItem(NEXT_BUTTON_POSITION, (ItemStack) null);
 
-        if (recipeIndex > 0) setItem(PREVIOUS_RECIPE_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
-        else setItem(PREVIOUS_RECIPE_BUTTON_POSITION, (ItemStack) null);
+        if (recipeIndex > 0) setItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
+        else setItem(PREVIOUS_BUTTON_POSITION, (ItemStack) null);
 
-        if (backPage != null) setItem(BACK_BUTTON_POSITION, Items.BACK_BUTTON);
+        if (query.getBackCall() != null) setItem(BACK_BUTTON_POSITION, Items.BACK_BUTTON);
         else setItem(BACK_BUTTON_POSITION, (ItemStack) null);
 
         setItem(HELP_BUTTON_POSITION, Items.HELP);
@@ -203,6 +172,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
 
         }.runTaskTimer(JeiU.getInstance(), 0, 20);
     }
+
     @Override
     public int getInventorySize() {return 9 * 6;}
     @Override

@@ -11,8 +11,8 @@
 		{ "predicate": { "custom_model_data": 1003}, "model": "jeiu:item/stonecutter_banner" },
 
 		{ "predicate": { "custom_model_data": 1100}, "model": "jeiu:item/furnace_fire" },
-		{ "predicate": { "custom_model_data": 1101}, "model": "jeiu:item/next_recipe" },
-		{ "predicate": { "custom_model_data": 1102}, "model": "jeiu:item/previous_recipe" },
+		{ "predicate": { "custom_model_data": 1101}, "model": "jeiu:item/next" },
+		{ "predicate": { "custom_model_data": 1102}, "model": "jeiu:item/previous" },
 		{ "predicate": { "custom_model_data": 1103}, "model": "jeiu:item/help" },
 		{ "predicate": { "custom_model_data": 1104}, "model": "jeiu:item/information" }
 	]

@@ -18,7 +18,7 @@ public class RecipeUsagesCommand implements TabExecutor, CommandExecutor {
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         ItemStack targetItem = RecipeCommandUtils.getTargetItem(commandSender, args);
         if (targetItem == null) return false;
-        new RecipesMenu(new MenuQuery(targetItem, MenuQuery.Type.USAGES), (Player) commandSender);
+        new RecipesMenu((Player) commandSender).runNewQuery(new MenuQuery(targetItem, MenuQuery.Type.USAGES, true), null);
         return true;
     }
 
