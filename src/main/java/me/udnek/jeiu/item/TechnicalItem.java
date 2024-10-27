@@ -4,6 +4,7 @@ import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
 import me.udnek.jeiu.component.TechnicalItemComponent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,7 +19,7 @@ public class TechnicalItem extends ConstructableCustomItem {
     Integer customModelData;
     List<Component> lore;
     boolean hideTooltip;
-    public TechnicalItem(Material material, String rawId, String rawItemName, Integer customModelData, boolean hideTooltip, @Nullable List<Component> lore){
+    public TechnicalItem(@NotNull Material material, @NotNull String rawId, @NotNull String rawItemName, @Nullable Integer customModelData, boolean hideTooltip, @Nullable List<Component> lore){
         this.material = material;
         this.rawId = rawId;
         this.rawItemName = rawItemName;
@@ -36,6 +37,20 @@ public class TechnicalItem extends ConstructableCustomItem {
         setComponent(TechnicalItemComponent.INSTANCE);
     }
 
+    @Override
+    public boolean getAddDefaultAttributes() {return true;}
+
+    @Override
+    public @Nullable ItemFlag[] getTooltipHides() {
+        return new ItemFlag[]{ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE};
+    }
+
+    @Override
+    public void getLore(@NotNull Consumer<Component> consumer) {
+        if (lore == null) return;
+        lore.forEach(consumer);
+    }
+
     @NotNull
     @Override
     public String getRawId() {
@@ -46,12 +61,6 @@ public class TechnicalItem extends ConstructableCustomItem {
     @Override
     public Material getMaterial() {
         return material;
-    }
-
-    @Override
-    public void getLore(@NotNull Consumer<Component> consumer) {
-        if (lore == null) return;
-        lore.forEach(consumer);
     }
 
     @Nullable

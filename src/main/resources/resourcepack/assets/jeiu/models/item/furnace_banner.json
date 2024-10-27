@@ -1,6 +1,6 @@
 {
 	"parent": "jeiu:item/banner_template",
 	"textures": {
-		"0": "jeiu:item/furnace_banner"
+		"layer0": "jeiu:item/furnace_banner"
 	}
 }

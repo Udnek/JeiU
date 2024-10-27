@@ -99,7 +99,7 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
 
                 }
             }
-            setItem(craftingResultOffset, recipe.getResult());
+            menu.setItem(craftingResultOffset, recipe.getResult());
         }
 
         // SHAPELESS
@@ -116,73 +116,73 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
                 x = i % 3;
                 setItemInCraftingMatrix(x + extraOffset, y + extraOffset, recipeChoiceList.get(i));
             }
-            setItem(craftingResultOffset, recipe.getResult());
+            menu.setItem(craftingResultOffset, recipe.getResult());
         }
         // COOKING
         else if (recipe instanceof CookingRecipe) {
             RecipeChoice inputChoice = ((CookingRecipe<?>) recipe).getInputChoice();
-            setItem(cookingInputOffset, inputChoice);
-            setItem(cookingResultOffset, recipe.getResult());
+            setChoice(cookingInputOffset, inputChoice);
+            menu.setItem(cookingResultOffset, recipe.getResult());
         }
         //SMITHING
         else if (recipe instanceof SmithingTransformRecipe) {
             RecipeChoice base = ((SmithingTransformRecipe) recipe).getBase();
             RecipeChoice addition = ((SmithingTransformRecipe) recipe).getAddition();
             RecipeChoice template = ((SmithingTransformRecipe) recipe).getTemplate();
-            setItem(smithingTemplateOffset, template);
-            setItem(smithingBaseOffset, base);
-            setItem(smithingAdditionOffset, addition);
-            setItem(smithingResultOffset, recipe.getResult());
+            setChoice(smithingTemplateOffset, template);
+            setChoice(smithingBaseOffset, base);
+            setChoice(smithingAdditionOffset, addition);
+            menu.setItem(smithingResultOffset, recipe.getResult());
 
         } else if (recipe instanceof SmithingTrimRecipe) {
             RecipeChoice base = ((SmithingTrimRecipe) recipe).getBase();
             RecipeChoice addition = ((SmithingTrimRecipe) recipe).getAddition();
             RecipeChoice template = ((SmithingTrimRecipe) recipe).getTemplate();
-            setItem(smithingTemplateOffset, template);
-            setItem(smithingBaseOffset, base);
-            setItem(smithingAdditionOffset, addition);
-            setItem(smithingResultOffset, recipe.getResult());
+            setChoice(smithingTemplateOffset, template);
+            setChoice(smithingBaseOffset, base);
+            setChoice(smithingAdditionOffset, addition);
+            menu.setItem(smithingResultOffset, recipe.getResult());
         }
         //STONECUTTING
         else if (recipe instanceof StonecuttingRecipe) {
             RecipeChoice inputChoice = ((StonecuttingRecipe) recipe).getInputChoice();
-            setItem(stonecuttingInputOffset, inputChoice);
-            setItem(stonecuttingResultOffset, recipe.getResult());
+            setChoice(stonecuttingInputOffset, inputChoice);
+            menu.setItem(stonecuttingResultOffset, recipe.getResult());
         }
     }
     private void setItemInCraftingMatrix(int x, int y, RecipeChoice recipeChoice) {
-        setItem(y * 9 + x + craftingMatrixOffset, recipeChoice);
+        setChoice(y * 9 + x + craftingMatrixOffset, recipeChoice);
     }
     private void setDecorItems() {
         int bannerCustomModelData;
         Material blockMaterial;
         if (recipe instanceof ShapelessRecipe || recipe instanceof ShapedRecipe) {
-            bannerCustomModelData = 1000;
+            bannerCustomModelData = 5000;
             blockMaterial = Material.CRAFTING_TABLE;
         } else if (recipe instanceof FurnaceRecipe) {
-            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 1001;
+            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            bannerCustomModelData = 5001;
             blockMaterial = Material.FURNACE;
         } else if (recipe instanceof BlastingRecipe) {
-            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 1001;
+            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            bannerCustomModelData = 5001;
             blockMaterial = Material.BLAST_FURNACE;
         } else if (recipe instanceof SmokingRecipe) {
-            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 1001;
+            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            bannerCustomModelData = 5001;
             blockMaterial = Material.SMOKER;
         } else if (recipe instanceof CampfireRecipe) {
-            setItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 1001;
+            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            bannerCustomModelData = 5001;
             blockMaterial = Material.CAMPFIRE;
         } else if (recipe instanceof SmithingRecipe) {
-            bannerCustomModelData = 1002;
+            bannerCustomModelData = 5002;
             blockMaterial = Material.SMITHING_TABLE;
         } else if (recipe instanceof StonecuttingRecipe) {
-            bannerCustomModelData = 1003;
+            bannerCustomModelData = 5003;
             blockMaterial = Material.STONECUTTER;
         } else {
-            bannerCustomModelData = 1000;
+            bannerCustomModelData = 5000;
             blockMaterial = Material.BARRIER;
         }
 
@@ -191,8 +191,8 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
         itemMeta.setCustomModelData(bannerCustomModelData);
         itemStack.setItemMeta(itemMeta);
 
-        setItem(recipeBannerOffset, itemStack);
-        setItem(RecipesMenu.RECIPE_STATION_POSITION, blockMaterial);
+        menu.setThemedItem(recipeBannerOffset, itemStack);
+        menu.setItem(RecipesMenu.RECIPE_STATION_POSITION, blockMaterial);
     }
 }
 

@@ -10,6 +10,7 @@ import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -21,11 +22,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.function.Consumer;
 
-public class AllItemsMenu extends ConstructableCustomInventory implements ClickableMenu {
+public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMenu {
 
     public static final int PREVIOUS_BUTTON_POSITION = 7;
     public static final int NEXT_BUTTON_POSITION = 8;
@@ -77,13 +76,22 @@ public class AllItemsMenu extends ConstructableCustomInventory implements Clicka
             event.setCancelled(true);
             return;
         }
-        ClickableMenu.super.onPlayerClicksItem(event);
+        JeiUMenu.super.onPlayerClicksItem(event);
     }
 
     public void setButtons(){
         List<CustomItem> items = getAll();
         if (lastItemIndex < items.size()-1) setItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
         if (lastItemIndex - ITEMS_PER_PAGE >= 0) setItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
+    }
+
+    @Override
+    public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
+        if (event.isLeftClick()) {
+            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, getBackCall(), true), event);
+        } else if (event.isRightClick()) {
+            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.USAGES, getBackCall(), true), event);
+        }
     }
 
     @Override
@@ -107,17 +115,6 @@ public class AllItemsMenu extends ConstructableCustomInventory implements Clicka
     @Override
     public @Nullable BackCallable getBackCall() {return null;}
 
-    public void setItem(int index, @Nullable ItemStack itemStack) {
-        inventory.setItem(index, itemStack);
-    }
-    public void setItem(int index, @NotNull Material material) {
-        if (!material.isItem()) return;
-        setItem(index, new ItemStack(material));
-    }
-    public void setItem(int index, @NotNull CustomItem customItem){
-        setItem(index, customItem.getItem());
-    }
-
     @Override
     public int getInventorySize() {
         return 9*6;
@@ -126,8 +123,8 @@ public class AllItemsMenu extends ConstructableCustomInventory implements Clicka
     public Component getDisplayName() {
         return ComponentU.textWithNoSpace(
                 -8,
-                Component.text("1", TextColor.color(1f, 1f, 1f)).font(Key.key("jeiu:font")),
+                Component.text("1", RecipesMenu.MAIN_COLOR).font(Key.key("jeiu:font")),
                 175
-        ).append(Component.translatable("gui.jeiu.items_title", TextColor.color(0, 0, 0)).font(NamespacedKey.minecraft("default")));
+        ).append(Component.translatable("gui.jeiu.items_title", NamedTextColor.BLACK).font(NamespacedKey.minecraft("default")));
     }
 }

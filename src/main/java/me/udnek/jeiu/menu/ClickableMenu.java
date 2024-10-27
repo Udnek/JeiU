@@ -24,13 +24,14 @@ public interface ClickableMenu extends CustomInventory {
         } else if (Items.PREVIOUS_BUTTON.isThisItem(itemStack)) {
             openPrevious(event);
         } else if (event.isLeftClick()) {
-            runNewQuery(new MenuQuery(itemStack, MenuQuery.Type.RECIPES, getBackCall(), false), event);
+            clickedNonButtonItem(event);
         } else if (event.isRightClick()) {
-            runNewQuery(new MenuQuery(itemStack, MenuQuery.Type.USAGES, getBackCall(), false), event);
+            clickedNonButtonItem(event);
         }
     }
 
     @Nullable BackCallable getBackCall();
+    void clickedNonButtonItem(@NotNull InventoryClickEvent event);
     void openBack(@NotNull InventoryClickEvent event);
     void openNext(@NotNull InventoryClickEvent event);
     void openPrevious(@NotNull InventoryClickEvent event);

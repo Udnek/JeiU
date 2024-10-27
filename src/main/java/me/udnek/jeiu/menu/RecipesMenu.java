@@ -8,20 +8,21 @@ import me.udnek.itemscoreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.ComponentTypes;
 import me.udnek.jeiu.item.Items;
-import me.udnek.jeiu.util.*;
+import me.udnek.jeiu.util.BackCallable;
+import me.udnek.jeiu.util.MenuQuery;
+import me.udnek.jeiu.util.MenuQueryEvent;
+import me.udnek.jeiu.util.Utils;
 import me.udnek.jeiu.visualizer.abstraction.Visualizable;
 import me.udnek.jeiu.visualizer.abstraction.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.loot.LootTable;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -32,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipesMenu extends ConstructableCustomInventory implements ClickableMenu {
+public class RecipesMenu extends ConstructableCustomInventory implements JeiUMenu {
 
     // TODO: 2/11/2024 DYNAMIC CRAFTING MATRIX AND RESULT
 
@@ -92,7 +93,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
         }
 
         new MenuQueryEvent(query, newRecipes).callEvent();
-        if (newRecipes.isEmpty() && query.isOpenIfNothingFound()) return;
+        if (newRecipes.isEmpty() && !query.isOpenIfNothingFound()) return;
         this.query = query;
         visualizers = newRecipes;
         recipeIndex = 0;
@@ -100,6 +101,17 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
         open(player);
 
     }
+
+
+    @Override
+    public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
+        if (event.isLeftClick()) {
+            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, getBackCall(), false), event);
+        } else if (event.isRightClick()) {
+            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.USAGES, getBackCall(), false), event);
+        }
+    }
+
     @Override
     public @Nullable BackCallable getBackCall() {return query.getBackCall();}
 
@@ -115,16 +127,16 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
         animateRecipes();
     }
     protected void setPageButtons() {
-        if (recipeIndex < visualizers.size() - 1) setItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
+        if (recipeIndex < visualizers.size() - 1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
         else setItem(NEXT_BUTTON_POSITION, (ItemStack) null);
 
-        if (recipeIndex > 0) setItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
+        if (recipeIndex > 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
         else setItem(PREVIOUS_BUTTON_POSITION, (ItemStack) null);
 
-        if (query.getBackCall() != null) setItem(BACK_BUTTON_POSITION, Items.BACK_BUTTON);
+        if (query.getBackCall() != null) setThemedItem(BACK_BUTTON_POSITION, Items.BACK_BUTTON);
         else setItem(BACK_BUTTON_POSITION, (ItemStack) null);
 
-        setItem(HELP_BUTTON_POSITION, Items.HELP);
+        setThemedItem(HELP_BUTTON_POSITION, Items.HELP);
         setInfoItem();
     }
     protected void setInfoItem() {
@@ -140,25 +152,9 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
         }
         itemMeta.lore(formattedInformation);
         itemStack.setItemMeta(itemMeta);
-        setItem(RECIPE_INFO_POSITION, itemStack);
+        setThemedItem(RECIPE_INFO_POSITION, itemStack);
     }
-    public void setItem(int index, @Nullable ItemStack itemStack) {
-        inventory.setItem(index, itemStack);
-    }
-    public void setItem(int index, @Nullable RecipeChoice recipeChoice) {
-        if (recipeChoice == null) return;
-        setItem(index, recipeChoice.getItemStack());
-    }
-    public void setItem(int index, @NotNull Material material) {
-        if (!material.isItem()) return;
-        setItem(index, new ItemStack(material));
-    }
-    public void setItem(@NotNull RecipeChoiceAnimator animator) {
-        setItem(animator.getPosition(), animator.getFrame());
-    }
-    public void setItem(int index, @NotNull CustomItem customItem){
-        setItem(index, customItem.getItem());
-    }
+
     protected void animateRecipes() {
         this.animatorTicker = new BukkitRunnable() {
             @Override
@@ -179,8 +175,8 @@ public class RecipesMenu extends ConstructableCustomInventory implements Clickab
     public Component getDisplayName() {
         return ComponentU.textWithNoSpace(
                 -8,
-                Component.text("0", TextColor.color(1f, 1f, 1f)).font(Key.key("jeiu:font")),
+                Component.text("0", RecipesMenu.MAIN_COLOR).font(Key.key("jeiu:font")),
                 175
-        ).append(Component.translatable("gui.jeiu.recipes_title", TextColor.color(0, 0, 0)).font(NamespacedKey.minecraft("default")));
+        ).append(Component.translatable("gui.jeiu.recipes_title", NamedTextColor.BLACK).font(NamespacedKey.minecraft("default")));
     }
 }

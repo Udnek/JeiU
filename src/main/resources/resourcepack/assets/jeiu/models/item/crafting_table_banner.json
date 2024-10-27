@@ -1,6 +1,6 @@
 {
 	"parent": "jeiu:item/banner_template",
 	"textures": {
-		"0": "jeiu:item/crafting_table_banner"
+		"layer0": "jeiu:item/crafting_table_banner"
 	}
 }
