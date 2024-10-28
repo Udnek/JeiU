@@ -160,19 +160,19 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
             bannerCustomModelData = 5000;
             blockMaterial = Material.CRAFTING_TABLE;
         } else if (recipe instanceof FurnaceRecipe) {
-            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 5001;
             blockMaterial = Material.FURNACE;
         } else if (recipe instanceof BlastingRecipe) {
-            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 5001;
             blockMaterial = Material.BLAST_FURNACE;
         } else if (recipe instanceof SmokingRecipe) {
-            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 5001;
             blockMaterial = Material.SMOKER;
         } else if (recipe instanceof CampfireRecipe) {
-            menu.setItem(cookingRecipeFireIconOffset, FIRE_ICON);
+            menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
             bannerCustomModelData = 5001;
             blockMaterial = Material.CAMPFIRE;
         } else if (recipe instanceof SmithingRecipe) {
