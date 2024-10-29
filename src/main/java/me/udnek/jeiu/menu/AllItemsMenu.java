@@ -81,8 +81,8 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
 
     public void setButtons(){
         List<CustomItem> items = getAll();
-        if (lastItemIndex < items.size()-1) setItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
-        if (lastItemIndex - ITEMS_PER_PAGE >= 0) setItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
+        if (lastItemIndex < items.size()-1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
+        if (lastItemIndex - ITEMS_PER_PAGE >= 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
     }
 
     @Override
