@@ -17,22 +17,22 @@ import java.util.Map;
 
 public class VanillaRecipeVisualizer extends AbstractVisualizer {
 
-    private static final int craftingMatrixOffset = 9 * 2 + 1;
-    private static final int craftingResultOffset = 9 * 3 + 5;
+    private static final int craftingMatrixOffset = 9 * 1 + 1;
+    private static final int craftingResultOffset = 9 * 2 + 5;
     ////
-    private static final int cookingInputOffset = 9 * 2 + 2;
-    private static final int cookingResultOffset = 9 * 3 + 5;
+    private static final int cookingInputOffset = 9 * 1 + 2;
+    private static final int cookingResultOffset = 9 * 2 + 5;
     ////
-    private static final int smithingTemplateOffset = 9 * 3 + 1;
-    private static final int smithingBaseOffset = 9 * 3 + 2;
-    private static final int smithingAdditionOffset = 9 * 3 + 3;
-    private static final int smithingResultOffset = 9 * 3 + 5;
+    private static final int smithingTemplateOffset = 9 * 2 + 1;
+    private static final int smithingBaseOffset = 9 * 2 + 2;
+    private static final int smithingAdditionOffset = 9 * 2 + 3;
+    private static final int smithingResultOffset = 9 * 2 + 5;
     ////
-    private static final int stonecuttingInputOffset = 9 * 3 + 2;
-    private static final int stonecuttingResultOffset = 9 * 3 + 5;
+    private static final int stonecuttingInputOffset = 9 * 2 + 2;
+    private static final int stonecuttingResultOffset = 9 * 2 + 5;
 
-    private static final int recipeBannerOffset = RecipesMenu.BANNER_POSITION;
-    private static final int cookingRecipeFireIconOffset = 9 * 3 + 2;
+    private static final int recipeBannerOffset = RecipesMenu.getBannerPosition();
+    private static final int cookingRecipeFireIconOffset = 9 * 2 + 2;
 
     public static final ItemStack RECIPE_BANNER = Items.BANNER.getItem();
     public static final ItemStack FIRE_ICON = Items.FIRE_ICON.getItem();
@@ -167,7 +167,7 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
         itemStack.setItemMeta(itemMeta);
 
         menu.setThemedItem(recipeBannerOffset, itemStack);
-        menu.setItem(RecipesMenu.RECIPE_STATION_POSITION, blockMaterial);
+        menu.setItem(RecipesMenu.getRecipeStationPosition(), blockMaterial);
     }
 }
 

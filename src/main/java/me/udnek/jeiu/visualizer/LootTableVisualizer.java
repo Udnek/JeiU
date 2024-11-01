@@ -21,9 +21,9 @@ import java.util.List;
 
 public class LootTableVisualizer implements Visualizer {
 
-    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 2, "jeiu:small_loot_table_banner");
-    private static final Layout MIDDLE_LAYOUT = new Layout(9, 3, 9 * 2, "jeiu:middle_loot_table_banner");
-    private static final Layout BIG_LAYOUT = new Layout(9, 5, 9, "jeiu:big_loot_table_banner");
+    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 1 + 1, "jeiu:small_loot_table_banner");
+    private static final Layout MIDDLE_LAYOUT = new Layout(7, 5, 0, "jeiu:middle_loot_table_banner");
+    private static final Layout BIG_LAYOUT = new Layout(8, 6, 0, "jeiu:big_loot_table_banner");
 
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
 
@@ -57,15 +57,14 @@ public class LootTableVisualizer implements Visualizer {
         if (SMALL_LAYOUT.willFitIn(possibleLoot.size())) layout = SMALL_LAYOUT;
         else if (MIDDLE_LAYOUT.willFitIn(possibleLoot.size())) layout = MIDDLE_LAYOUT;
 
-        int i = 0;
+        int collum = 0;
         int row = 0;
 
         for (ItemStack itemStack : possibleLoot) {
-            recipesMenu.setItem(row * 9 + i + layout.offset, itemStack);
-
-            i++;
-            if (i % layout.x == 0) {
-                i = 0;
+            recipesMenu.setItem(row * 9 + collum + layout.offset, itemStack);
+            collum++;
+            if (collum % layout.x == 0) {
+                collum = 0;
                 row++;
             }
         }
@@ -92,9 +91,9 @@ public class LootTableVisualizer implements Visualizer {
 
         ItemStack banner = Items.BANNER.getItem();
         banner.editMeta(itemMeta -> itemMeta.setItemModel(NamespacedKey.fromString(layout.model)));
-        recipesMenu.setThemedItem(RecipesMenu.BANNER_POSITION, banner);
+        recipesMenu.setThemedItem(RecipesMenu.getBannerPosition(), banner);
 
-        recipesMenu.setItem(RecipesMenu.RECIPE_STATION_POSITION, chooseIcon(category, subtype));
+        recipesMenu.setItem(RecipesMenu.getRecipeStationPosition(), chooseIcon(category, subtype));
 
     }
     public Material chooseIcon(String category, String subtype) {

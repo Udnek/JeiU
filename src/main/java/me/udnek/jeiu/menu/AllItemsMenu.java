@@ -23,12 +23,11 @@ import java.util.List;
 
 public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMenu {
 
-    public static final int PREVIOUS_BUTTON_POSITION = 7;
-    public static final int NEXT_BUTTON_POSITION = 8;
+    public static final int PREVIOUS_BUTTON_POSITION = 9-1;
+    public static final int NEXT_BUTTON_POSITION = 2*9-1;
 
-    public static final int START_SLOT = 9;
-    public static final int STOP_SLOT = 9*6-1;
-    public static final int ITEMS_PER_PAGE = STOP_SLOT - START_SLOT +1;
+    public static final int MAX_COLUMN = 9-2;
+    public static final int ITEMS_PER_PAGE = 8*6;
 
     int firstItemIndex;
     int lastItemIndex;
@@ -41,6 +40,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
     public List<CustomItem> getAll(){
+        // todo fix
         if (firstRun){
             CustomRegistries.ITEM.getAll(CustomItem::getItem);
             firstRun = false;
@@ -59,15 +59,22 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
         List<CustomItem> all = getAll();
         all.sort((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.getId(), o2.getId()));
 
+        int column = 0;
+        int row = 0;
         int index = startIndex;
-        int slot = START_SLOT;
         firstItemIndex = index;
         while (index < all.size()) {
-            if (slot > STOP_SLOT) break;
+            if (row*9+column >= getInventorySize()) break;
             CustomItem customItem = all.get(index);
-            setItem(slot, customItem);
-            slot++;
+            setItem(row*9+column, customItem);
+
+            column++;
             index++;
+            if (column > MAX_COLUMN){
+                column = 0;
+                row++;
+            }
+
         }
         lastItemIndex = index-1;
         setButtons();

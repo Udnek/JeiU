@@ -36,13 +36,13 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
     // TODO: 2/11/2024 DYNAMIC CRAFTING MATRIX AND RESULT
 
-    public static final int RECIPE_STATION_POSITION = 4;
-    public static final int PREVIOUS_BUTTON_POSITION = 7;
-    public static final int NEXT_BUTTON_POSITION = 8;
-    public static final int HELP_BUTTON_POSITION = 1;
-    public static final int BACK_BUTTON_POSITION = 0;
-    public static final int RECIPE_INFO_POSITION = 3;
-    public static final int BANNER_POSITION = 2;
+    private static final int BACK_BUTTON_POSITION = 9*1-1;
+    private static final int RECIPE_INFO_POSITION = 9*2-1;
+    private static final int BANNER_POSITION = 9*2-1;
+    private static final int RECIPE_STATION_POSITION = 9*3-1;
+    private static final int HELP_BUTTON_POSITION = 9*4-1;
+    private static final int PREVIOUS_BUTTON_POSITION = 9*5-1;
+    private static final int NEXT_BUTTON_POSITION = 9*6-1;
 
     private BukkitTask animatorTicker = null;
     private List<Visualizable> visualizers;
@@ -143,16 +143,18 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         if (currentRecipe == null) return;
         List<Component> information = currentRecipe.getInformation();
         if (information == null) return;
-        ItemStack itemStack = Items.INFORMATION.getItem();
-        ItemMeta itemMeta = itemStack.getItemMeta();
+        ItemStack item = inventory.getItem(RECIPE_INFO_POSITION);
+        if (item == null) item = Items.INFORMATION.getItem();
+        ItemMeta itemMeta = item.getItemMeta();
         List<Component> formattedInformation = new ArrayList<>();
         for (Component component : information) {
             if (component.color() == null) component = component.color(NamedTextColor.GRAY);
             formattedInformation.add(component);
         }
         itemMeta.lore(formattedInformation);
-        itemStack.setItemMeta(itemMeta);
-        setThemedItem(RECIPE_INFO_POSITION, itemStack);
+        itemMeta.itemName(Items.INFORMATION.getItem().displayName());
+        item.setItemMeta(itemMeta);
+        setThemedItem(RECIPE_INFO_POSITION, item);
     }
 
     protected void animateRecipes() {
@@ -168,6 +170,9 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
         }.runTaskTimer(JeiU.getInstance(), 0, 20);
     }
+
+    public static int getBannerPosition() {return BANNER_POSITION;}
+    public static int getRecipeStationPosition() {return RECIPE_STATION_POSITION;}
 
     @Override
     public int getInventorySize() {return 9 * 6;}
