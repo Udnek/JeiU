@@ -11,13 +11,10 @@ import me.udnek.jeiu.util.MenuQuery;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,12 +33,19 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     int firstItemIndex;
     int lastItemIndex;
 
+    private static boolean firstRun = true;
+
 
     public AllItemsMenu(){
         showItems(0);
     }
 
     public List<CustomItem> getAll(){
+        if (firstRun){
+            CustomRegistries.ITEM.getAll(CustomItem::getItem);
+            firstRun = false;
+        }
+
         List<CustomItem> all = new ArrayList<>();
         CustomRegistries.ITEM.getAll(customItem -> {
             if (!customItem.hasComponent(ComponentTypes.TECHNICAL_ITEM)) all.add(customItem);
@@ -81,8 +85,8 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
 
     public void setButtons(){
         List<CustomItem> items = getAll();
-        if (lastItemIndex < items.size()-1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
-        if (lastItemIndex - ITEMS_PER_PAGE >= 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
+        if (lastItemIndex < items.size()-1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT);
+        if (lastItemIndex - ITEMS_PER_PAGE >= 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS);
     }
 
     @Override

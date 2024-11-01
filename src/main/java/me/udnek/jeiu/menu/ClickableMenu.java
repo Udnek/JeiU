@@ -17,11 +17,11 @@ public interface ClickableMenu extends CustomInventory {
 
         event.setCancelled(true);
 
-        if (Items.BACK_BUTTON.isThisItem(itemStack)) {
+        if (Items.BACK.isThisItem(itemStack)) {
             openBack(event);
-        } else if (Items.NEXT_BUTTON.isThisItem(itemStack)) {
+        } else if (Items.NEXT.isThisItem(itemStack)) {
             openNext(event);
-        } else if (Items.PREVIOUS_BUTTON.isThisItem(itemStack)) {
+        } else if (Items.PREVIOUS.isThisItem(itemStack)) {
             openPrevious(event);
         } else if (event.isLeftClick()) {
             clickedNonButtonItem(event);

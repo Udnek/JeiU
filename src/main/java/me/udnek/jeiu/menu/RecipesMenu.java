@@ -17,7 +17,6 @@ import me.udnek.jeiu.visualizer.abstraction.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -43,6 +42,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     public static final int HELP_BUTTON_POSITION = 1;
     public static final int BACK_BUTTON_POSITION = 0;
     public static final int RECIPE_INFO_POSITION = 3;
+    public static final int BANNER_POSITION = 2;
 
     private BukkitTask animatorTicker = null;
     private List<Visualizable> visualizers;
@@ -127,13 +127,13 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         animateRecipes();
     }
     protected void setPageButtons() {
-        if (recipeIndex < visualizers.size() - 1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT_BUTTON);
+        if (recipeIndex < visualizers.size() - 1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT);
         else setItem(NEXT_BUTTON_POSITION, (ItemStack) null);
 
-        if (recipeIndex > 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS_BUTTON);
+        if (recipeIndex > 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS);
         else setItem(PREVIOUS_BUTTON_POSITION, (ItemStack) null);
 
-        if (query.getBackCall() != null) setThemedItem(BACK_BUTTON_POSITION, Items.BACK_BUTTON);
+        if (query.getBackCall() != null) setThemedItem(BACK_BUTTON_POSITION, Items.BACK);
         else setItem(BACK_BUTTON_POSITION, (ItemStack) null);
 
         setThemedItem(HELP_BUTTON_POSITION, Items.HELP);

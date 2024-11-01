@@ -1,10 +1,13 @@
 package me.udnek.jeiu;
 
+import me.udnek.itemscoreu.customcomponent.CustomComponentType;
 import me.udnek.itemscoreu.customhelp.CustomHelpCommand;
+import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.resourcepack.ResourcePackablePlugin;
 import me.udnek.jeiu.commands.AllItemsCommand;
 import me.udnek.jeiu.commands.RecipeCommand;
 import me.udnek.jeiu.commands.RecipeUsagesCommand;
+import me.udnek.jeiu.component.ComponentTypes;
 import me.udnek.jeiu.item.Items;
 import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
@@ -23,7 +26,7 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
     @Override
     public void onEnable() {
         instance = this;
-        ItemStack item = Items.INFORMATION.getItem();
+        ComponentTypes.TECHNICAL_ITEM.getDefault();
 
         getCommand("recipe").setExecutor(new RecipeCommand());
         getCommand("recipe_usages").setExecutor(new RecipeUsagesCommand());

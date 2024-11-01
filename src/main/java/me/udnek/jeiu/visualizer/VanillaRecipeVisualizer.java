@@ -6,6 +6,7 @@ import me.udnek.jeiu.visualizer.abstraction.AbstractVisualizer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +31,7 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
     private static final int stonecuttingInputOffset = 9 * 3 + 2;
     private static final int stonecuttingResultOffset = 9 * 3 + 5;
 
-    private static final int recipeBannerOffset = 9 + 2;
+    private static final int recipeBannerOffset = RecipesMenu.BANNER_POSITION;
     private static final int cookingRecipeFireIconOffset = 9 * 3 + 2;
 
     public static final ItemStack RECIPE_BANNER = Items.BANNER.getItem();
@@ -46,32 +47,6 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
         if (recipe instanceof Keyed keyed) return List.of(Component.text("ID: " + keyed.getKey().asString()));
         return null;
     }
-
-/*    @Override
-    public void tickAnimation() {
-        if (!(recipe instanceof SmithingTrimRecipe)){
-            super.tickAnimation();
-            return;
-        }
-
-        // TODO: 9/9/2024 ANIMATION
-        ItemStack template = animators.get(0).getFrame();
-        ItemStack base = animators.get(1).getFrame();
-        ItemStack addition = animators.get(2).getFrame();
-
-        if (template == null || base == null || addition == null) {
-            super.tickAnimation();
-            return;
-        }
-
-        ItemStack result = base.clone();
-        ArmorMeta itemMeta = (ArmorMeta) result.getItemMeta();
-
-        if (trimMaterial == null) return;
-
-        itemMeta.setTrim();
-
-    }*/
 
     public void visualize(@NotNull RecipesMenu recipesMenu) {
         super.visualize(recipesMenu);
@@ -154,41 +129,41 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
         setChoice(y * 9 + x + craftingMatrixOffset, recipeChoice);
     }
     private void setDecorItems() {
-        int bannerCustomModelData;
+        @NotNull String bannerModel;
         Material blockMaterial;
         if (recipe instanceof ShapelessRecipe || recipe instanceof ShapedRecipe) {
-            bannerCustomModelData = 5000;
+            bannerModel = "jeiu:crafting_table_banner";
             blockMaterial = Material.CRAFTING_TABLE;
         } else if (recipe instanceof FurnaceRecipe) {
             menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 5001;
+            bannerModel = "jeiu:furnace_banner";
             blockMaterial = Material.FURNACE;
         } else if (recipe instanceof BlastingRecipe) {
             menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 5001;
+            bannerModel = "jeiu:furnace_banner";
             blockMaterial = Material.BLAST_FURNACE;
         } else if (recipe instanceof SmokingRecipe) {
             menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 5001;
+            bannerModel = "jeiu:furnace_banner";
             blockMaterial = Material.SMOKER;
         } else if (recipe instanceof CampfireRecipe) {
             menu.setThemedItem(cookingRecipeFireIconOffset, FIRE_ICON);
-            bannerCustomModelData = 5001;
+            bannerModel = "jeiu:furnace_banner";
             blockMaterial = Material.CAMPFIRE;
         } else if (recipe instanceof SmithingRecipe) {
-            bannerCustomModelData = 5002;
+            bannerModel = "jeiu:smithing_table_banner";
             blockMaterial = Material.SMITHING_TABLE;
         } else if (recipe instanceof StonecuttingRecipe) {
-            bannerCustomModelData = 5003;
+            bannerModel = "jeiu:stonecutter_banner";
             blockMaterial = Material.STONECUTTER;
         } else {
-            bannerCustomModelData = 5000;
+            bannerModel = "jeiu:banner";
             blockMaterial = Material.BARRIER;
         }
 
         ItemStack itemStack = RECIPE_BANNER;
         ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setCustomModelData(bannerCustomModelData);
+        itemMeta.setItemModel(NamespacedKey.fromString(bannerModel));
         itemStack.setItemMeta(itemMeta);
 
         menu.setThemedItem(recipeBannerOffset, itemStack);

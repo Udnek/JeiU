@@ -4,10 +4,12 @@ import me.udnek.itemscoreu.customloot.LootTableUtils;
 import me.udnek.itemscoreu.customloot.table.CustomLootTable;
 import me.udnek.itemscoreu.nms.Nms;
 import me.udnek.itemscoreu.util.LogUtils;
+import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.abstraction.Visualizer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
@@ -19,9 +21,9 @@ import java.util.List;
 
 public class LootTableVisualizer implements Visualizer {
 
-    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 2);
-    private static final Layout MIDDLE_LAYOUT = new Layout(9, 3, 9 * 2);
-    private static final Layout BIG_LAYOUT = new Layout(9, 5, 9);
+    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 2 + 2, "jeiu:small_loot_table_banner");
+    private static final Layout MIDDLE_LAYOUT = new Layout(9, 3, 9 * 2, "jeiu:middle_loot_table_banner");
+    private static final Layout BIG_LAYOUT = new Layout(9, 5, 9, "jeiu:big_loot_table_banner");
 
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
 
@@ -59,18 +61,16 @@ public class LootTableVisualizer implements Visualizer {
         int row = 0;
 
         for (ItemStack itemStack : possibleLoot) {
-
-
-            recipesMenu.setItem(row * 9 + i + layout.getOffset(), itemStack);
+            recipesMenu.setItem(row * 9 + i + layout.offset, itemStack);
 
             i++;
-            if (i % layout.getX() == 0) {
+            if (i % layout.x == 0) {
                 i = 0;
                 row++;
             }
         }
 
-        setDecoration();
+        setDecoration(layout);
     }
     public List<ItemStack> clearDuplicates(List<ItemStack> itemStacks) {
         List<ItemStack> newItems = new ArrayList<>();
@@ -79,7 +79,7 @@ public class LootTableVisualizer implements Visualizer {
         }
         return newItems;
     }
-    private void setDecoration() {
+    private void setDecoration(Layout layout) {
         String key = lootTable.getKey().getKey();
         String[] split = key.split("/");
 
@@ -90,6 +90,9 @@ public class LootTableVisualizer implements Visualizer {
         String customText = (lootTable instanceof CustomLootTable ? " (Custom)" : " (Vanilla)");
         LogUtils.log(lootTable.getKey().asString() + " ( " + category + ", " + subtype + " )" + customText);
 
+        ItemStack banner = Items.BANNER.getItem();
+        banner.editMeta(itemMeta -> itemMeta.setItemModel(NamespacedKey.fromString(layout.model)));
+        recipesMenu.setThemedItem(RecipesMenu.BANNER_POSITION, banner);
 
         recipesMenu.setItem(RecipesMenu.RECIPE_STATION_POSITION, chooseIcon(category, subtype));
 
@@ -140,28 +143,21 @@ public class LootTableVisualizer implements Visualizer {
 
     public static class Layout {
 
-        private final int x;
-        private final int y;
-        private final int offset;
-        Layout(int x, int y, int offset) {
+        public final int x;
+        public final int y;
+        public final int offset;
+        public final @NotNull String model;
+        Layout(int x, int y, int offset, @NotNull String model) {
             this.x = x;
             this.y = y;
             this.offset = offset;
+            this.model = model;
         }
         int getCapacity() {
             return x * y;
         }
         boolean willFitIn(int capacity) {
             return capacity <= getCapacity();
-        }
-        public int getX() {
-            return x;
-        }
-        public int getY() {
-            return y;
-        }
-        public int getOffset() {
-            return offset;
         }
     }
 }

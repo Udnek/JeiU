@@ -1,6 +1,7 @@
 package me.udnek.jeiu.item;
 
 import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
+import me.udnek.jeiu.component.ComponentTypes;
 import me.udnek.jeiu.component.TechnicalItemComponent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -16,31 +17,22 @@ public class TechnicalItem extends ConstructableCustomItem {
 
     Material material;
     String rawId;
-    String rawItemName;
-    Integer customModelData;
     List<Component> lore;
     boolean hideTooltip;
-    public TechnicalItem(@NotNull Material material, @NotNull String rawId, @NotNull String rawItemName, @Nullable Integer customModelData, boolean hideTooltip, @Nullable List<Component> lore){
+    public TechnicalItem(@NotNull Material material, @NotNull String rawId, boolean hideTooltip, @Nullable List<Component> lore){
         this.material = material;
         this.rawId = rawId;
-        this.rawItemName = rawItemName;
-        this.customModelData = customModelData;
         this.hideTooltip = hideTooltip;
         this.lore = lore;
     }
-    public TechnicalItem(Material material, String rawId, String rawItemName, Integer customModelData, boolean hideTooltip){
-        this(material, rawId, rawItemName, customModelData, hideTooltip, null);
+    public TechnicalItem(@NotNull Material material, @NotNull String rawId, boolean hideTooltip){
+        this(material, rawId, hideTooltip, null);
     }
 
     @Override
-    public void afterInitialization() {
-        super.afterInitialization();
-        setComponent(TechnicalItemComponent.INSTANCE);
-    }
-
-    @Override
-    public @Nullable NamespacedKey getItemModel() {
-        return null;
+    public void initializeComponents() {
+        super.initializeComponents();
+        setComponent(ComponentTypes.TECHNICAL_ITEM.getDefault());
     }
 
     @Override
@@ -67,18 +59,6 @@ public class TechnicalItem extends ConstructableCustomItem {
     @Override
     public Material getMaterial() {
         return material;
-    }
-
-    @Nullable
-    @Override
-    public Integer getCustomModelData() {
-        return customModelData;
-    }
-
-    @Nullable
-    @Override
-    public String getRawItemName() {
-        return rawItemName;
     }
 
     @Override
