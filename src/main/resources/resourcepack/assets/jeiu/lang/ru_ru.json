@@ -1,11 +1,13 @@
 ﻿{
-	"gui.jeiu.title": "Рецепты",
+	"gui.jeiu.recipes_title": "Рецепты",
+	"gui.jeiu.items_title": "Все предметы",
 
-	"gui.jeiu.arrow_right_active": "Следующий рецепт",
-	"gui.jeiu.arrow_left_active": "Предыдущий рецепт",
-	"gui.jeiu.back": "Назад",
+	"item.jeiu.next": "Следующий",
+	"item.jeiu.previous": "Предыдущий",
+	"item.jeiu.back": "Назад",
 	
-	"gui.jeiu.help": "Помощь",
+	"item.jeiu.help": "Помощь",
+	"item.jeiu.information": "Информация",
 	
 	"gui.jeiu.help.description.1": "§f[%s§f] - рецепты",
 	"gui.jeiu.help.description.2": "§f[%s§f] - рецепты, где используется предмет",
