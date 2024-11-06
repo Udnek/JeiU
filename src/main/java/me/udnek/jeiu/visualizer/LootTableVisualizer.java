@@ -86,9 +86,6 @@ public class LootTableVisualizer implements Visualizer {
         String subtype = "";
         if (split.length >= 2) subtype = split[1];
 
-        String customText = (lootTable instanceof CustomLootTable ? " (Custom)" : " (Vanilla)");
-        LogUtils.log(lootTable.getKey().asString() + " ( " + category + ", " + subtype + " )" + customText);
-
         ItemStack banner = Items.BANNER.getItem();
         banner.editMeta(itemMeta -> itemMeta.setItemModel(NamespacedKey.fromString(layout.model)));
         recipesMenu.setThemedItem(RecipesMenu.getBannerPosition(), banner);
