@@ -30,6 +30,7 @@ public class Utils {
 
     public static void toVisualizables(List<Recipe> recipes, List<LootTable> lootTables, Consumer<Visualizable> consumer){
         for (Recipe recipe : recipes) {
+            if (recipe instanceof SmithingTrimRecipe) continue;
             if (recipe instanceof Visualizable visualizable) consumer.accept(visualizable);
             else if (Utils.isVanillaRecipe(recipe)) consumer.accept(new VanillaNonVisualizableHolder(recipe));
         }
