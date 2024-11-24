@@ -27,6 +27,7 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
     public void onEnable() {
         instance = this;
         ComponentTypes.TECHNICAL_ITEM.getDefault();
+        Items.BANNER.getItem();
 
         getCommand("recipe").setExecutor(new RecipeCommand());
         getCommand("recipe_usages").setExecutor(new RecipeUsagesCommand());

@@ -94,47 +94,40 @@ public class LootTableVisualizer implements Visualizer {
 
     }
     public Material chooseIcon(String category, String subtype) {
-        switch (category) {
-            case "chests":
-                return Material.CHEST;
-            case "entities":
-                EntityType entityType = EntityType.fromName(subtype);
-                if (entityType == null) return Material.EGG;
-                ItemStack egg = Nms.get().getSpawnEggByType(entityType);
-                if (egg == null) return Material.EGG;
-                return egg.getType();
-            case "archaeology":
-                return Material.BRUSH;
-            case "pots":
-                return Material.DECORATED_POT;
-            case "spawners":
-                return Material.TRIAL_SPAWNER;
-            case "dispensers":
-                return Material.DISPENSER;
-            case "shearing":
-                return Material.SHEARS;
-            case "equipment":
-                return Material.IRON_CHESTPLATE;
-            case "blocks":
+        return switch (category) {
+            case "archaeology" ->  Material.BRUSH;
+            case "blocks" -> {
                 Material material = Material.getMaterial(subtype.toUpperCase());
-                if (material != null) return material;
-                return Material.STRUCTURE_VOID;
-            case "gameplay":
-                switch (subtype) {
-                    case "hero_of_the_village":
-                        return Material.EMERALD;
-                    case "fishing":
-                        return Material.FISHING_ROD;
-                    case "sniffer_digging":
-                        return Material.SNIFFER_SPAWN_EGG;
-                    case "piglin_bartering":
-                        return Material.GOLD_INGOT;
-                    case "cat_morning_gift":
-                        return Material.CAT_SPAWN_EGG;
-                }
-            default:
-                return Material.BARRIER;
-        }
+                if (material != null) yield material;
+                yield Material.STRUCTURE_VOID;
+            }
+            case "chests" -> Material.CHEST;
+            case "dispensers" -> Material.DISPENSER;
+            case "entities"-> {
+                EntityType entityType = EntityType.fromName(subtype);
+                if (entityType == null) yield Material.EGG;
+                ItemStack egg = Nms.get().getSpawnEggByType(entityType);
+                if (egg == null) yield Material.EGG;
+                yield egg.getType();
+            }
+            case "equipment" -> Material.IRON_CHESTPLATE;
+            case "gameplay" -> switch (subtype) {
+                case "fishing" -> Material.FISHING_ROD;
+                case "hero_of_the_village" -> Material.EMERALD;
+                case "armadillo_shed" -> Material.ARMADILLO_SPAWN_EGG;
+                case "cat_morning_gift" -> Material.CAT_SPAWN_EGG;
+                case "chicken_lay" -> Material.CHICKEN_SPAWN_EGG;
+                case "panda_sneeze" -> Material.PANDA_SPAWN_EGG;
+                case "piglin_bartering" -> Material.GOLD_INGOT;
+                case "sniffer_digging" -> Material.SNIFFER_SPAWN_EGG;
+                default -> Material.BARRIER;
+            };
+            case "pots" -> Material.DECORATED_POT;
+            case "shearing" -> Material.SHEARS;
+            case "spawners" -> Material.TRIAL_SPAWNER;
+
+            default -> Material.BARRIER;
+        };
     }
 
     public static class Layout {
