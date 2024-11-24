@@ -73,7 +73,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
     private boolean isTechnical(@Nullable ItemStack itemStack){
         if (itemStack == null) return false;
-        return CustomItem.isCustom(itemStack) && CustomItem.get(itemStack).hasComponent(ComponentTypes.TECHNICAL_ITEM);
+        return CustomItem.isCustom(itemStack) && CustomItem.get(itemStack).getComponents().has(ComponentTypes.TECHNICAL_ITEM);
     }
 
     @Override

@@ -48,7 +48,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
 
         List<CustomItem> all = new ArrayList<>();
         CustomRegistries.ITEM.getAll(customItem -> {
-            if (!customItem.hasComponent(ComponentTypes.TECHNICAL_ITEM)) all.add(customItem);
+            if (!customItem.getComponents().has(ComponentTypes.TECHNICAL_ITEM)) all.add(customItem);
         });
         return all;
     }
