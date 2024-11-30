@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,6 +20,7 @@ public class TechnicalItem extends ConstructableCustomItem {
     String rawId;
     List<Component> lore;
     boolean hideTooltip;
+
     public TechnicalItem(@NotNull Material material, @NotNull String rawId, boolean hideTooltip, @Nullable List<Component> lore){
         this.material = material;
         this.rawId = rawId;
@@ -28,6 +30,7 @@ public class TechnicalItem extends ConstructableCustomItem {
     public TechnicalItem(@NotNull Material material, @NotNull String rawId, boolean hideTooltip){
         this(material, rawId, hideTooltip, null);
     }
+
 
     @Override
     public void initializeComponents() {

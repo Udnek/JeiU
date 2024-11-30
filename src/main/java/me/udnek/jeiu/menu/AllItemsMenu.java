@@ -32,23 +32,14 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     int firstItemIndex;
     int lastItemIndex;
 
-    private static boolean firstRun = true;
-
-
-    public AllItemsMenu(){
-        showItems(0);
-    }
-
-    public List<CustomItem> getAll(){
-        // todo fix
-        if (firstRun){
-            CustomRegistries.ITEM.getAll(CustomItem::getItem);
-            firstRun = false;
-        }
+    public @NotNull List<CustomItem> getAll(){
+        boolean forceShowHidden = inventory.getViewers().stream().anyMatch(humanEntity -> humanEntity.getGameMode() == GameMode.CREATIVE);
 
         List<CustomItem> all = new ArrayList<>();
         CustomRegistries.ITEM.getAll(customItem -> {
-            if (!customItem.getComponents().has(ComponentTypes.TECHNICAL_ITEM)) all.add(customItem);
+            if (customItem.getComponents().has(ComponentTypes.TECHNICAL_ITEM)) return;
+            if (!forceShowHidden && customItem.getComponents().has(ComponentTypes.HIDDEN_ITEM)) return;
+            all.add(customItem);
         });
         return all;
     }

@@ -1,5 +1,7 @@
 package me.udnek.jeiu.menu;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.DyedItemColor;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.jeiu.util.RecipeChoiceAnimator;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -20,8 +22,8 @@ public interface JeiUMenu extends ClickableMenu{
     @NotNull TextColor MAIN_COLOR = Objects.requireNonNull(TextColor.fromHexString("#a3806a"));
 
     default @NotNull ItemStack colorItemToTheme(@NotNull ItemStack itemStack){
-        itemStack.editMeta(ColorableArmorMeta.class, colorableArmorMeta ->
-                colorableArmorMeta.setColor(Color.fromRGB(MAIN_COLOR.value())));
+        itemStack.setData(DataComponentTypes.DYED_COLOR,
+                DyedItemColor.dyedItemColor(Color.fromRGB(MAIN_COLOR.value()), false));
         return itemStack;
     }
 
@@ -50,5 +52,10 @@ public interface JeiUMenu extends ClickableMenu{
     }
     default void setItem(int index, @NotNull CustomItem customItem){
         setItem(index, customItem.getItem());
+    }
+
+    @Override
+    default boolean shouldAutoUpdateItems() {
+        return false;
     }
 }

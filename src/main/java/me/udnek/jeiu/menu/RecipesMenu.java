@@ -1,5 +1,7 @@
 package me.udnek.jeiu.menu;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
 import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.customloot.LootTableUtils;
@@ -22,7 +24,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.loot.LootTable;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -37,8 +38,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     // TODO: 2/11/2024 DYNAMIC CRAFTING MATRIX AND RESULT
 
     private static final int BACK_BUTTON_POSITION = 9*1-1;
-    private static final int RECIPE_INFO_POSITION = 9*2-1;
-    private static final int BANNER_POSITION = 9*2-1;
+    private static final int BANNER_AND_INFO_POSITION = 9*2-1;
     private static final int RECIPE_STATION_POSITION = 9*3-1;
     private static final int HELP_BUTTON_POSITION = 9*4-1;
     private static final int PREVIOUS_BUTTON_POSITION = 9*5-1;
@@ -79,18 +79,17 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     @Override
     public void runNewQuery(@NotNull MenuQuery query, @Nullable InventoryClickEvent event){
         List<Visualizable> newRecipes = new ArrayList<>();
-        if (!isTechnical(query.getItemStack())) {
 
-            List<Recipe> rawRecipes = new ArrayList<>();
-            if (query.getType() == MenuQuery.Type.USAGES){
-                RecipeManager.getInstance().getRecipesAsIngredient(query.getItemStack(), rawRecipes::add);
-                Utils.toVisualizables(rawRecipes, List.of(), newRecipes::add);
-            } else {
-                List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(query.getItemStack());
-                RecipeManager.getInstance().getRecipesAsResult(query.getItemStack(), rawRecipes::add);
-                Utils.toVisualizables(rawRecipes, lootTables, newRecipes::add);
-            }
+        List<Recipe> rawRecipes = new ArrayList<>();
+        if (query.getType() == MenuQuery.Type.USAGES){
+            RecipeManager.getInstance().getRecipesAsIngredient(query.getItemStack(), rawRecipes::add);
+            Utils.toVisualizables(rawRecipes, List.of(), newRecipes::add);
+        } else {
+            List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(query.getItemStack());
+            RecipeManager.getInstance().getRecipesAsResult(query.getItemStack(), rawRecipes::add);
+            Utils.toVisualizables(rawRecipes, lootTables, newRecipes::add);
         }
+
 
         new MenuQueryEvent(query, newRecipes).callEvent();
         if (newRecipes.isEmpty() && !query.isOpenIfNothingFound()) return;
@@ -105,6 +104,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
     @Override
     public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
+        if (isTechnical(event.getCurrentItem())) return;
         if (event.isLeftClick()) {
             runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, getBackCall(), false), event);
         } else if (event.isRightClick()) {
@@ -143,18 +143,16 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         if (currentRecipe == null) return;
         List<Component> information = currentRecipe.getInformation();
         if (information == null) return;
-        ItemStack item = inventory.getItem(RECIPE_INFO_POSITION);
-        if (item == null) item = Items.INFORMATION.getItem();
-        ItemMeta itemMeta = item.getItemMeta();
+        ItemStack item = inventory.getItem(getBannerPosition());
+        if (item == null) item = Items.BANNER.getItem();
+
         List<Component> formattedInformation = new ArrayList<>();
         for (Component component : information) {
             if (component.color() == null) component = component.color(NamedTextColor.GRAY);
             formattedInformation.add(component);
         }
-        itemMeta.lore(formattedInformation);
-        itemMeta.itemName(Items.INFORMATION.getItem().displayName());
-        item.setItemMeta(itemMeta);
-        setThemedItem(RECIPE_INFO_POSITION, item);
+        item.setData(DataComponentTypes.LORE, ItemLore.lore(formattedInformation));
+        setThemedItem(getBannerPosition(), item);
     }
 
     protected void animateRecipes() {
@@ -171,7 +169,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         }.runTaskTimer(JeiU.getInstance(), 0, 20);
     }
 
-    public static int getBannerPosition() {return BANNER_POSITION;}
+    public static int getBannerPosition() {return BANNER_AND_INFO_POSITION;}
     public static int getRecipeStationPosition() {return RECIPE_STATION_POSITION;}
 
     @Override

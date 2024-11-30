@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 public class Items {
     public static final CustomItem HELP;
-    public static final CustomItem INFORMATION = register(new TechnicalItem(Material.LEATHER_HELMET, "information", false));
     public static final CustomItem FIRE_ICON = register(new TechnicalItem(Material.LEATHER_HELMET, "fire_icon",  true));
     public static final CustomItem NEXT = register(new TechnicalItem(Material.LEATHER_HELMET, "next", true));
     public static final CustomItem PREVIOUS = register(new TechnicalItem(Material.LEATHER_HELMET, "previous", true));

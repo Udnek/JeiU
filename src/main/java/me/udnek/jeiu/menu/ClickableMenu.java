@@ -23,9 +23,7 @@ public interface ClickableMenu extends CustomInventory {
             openNext(event);
         } else if (Items.PREVIOUS.isThisItem(itemStack)) {
             openPrevious(event);
-        } else if (event.isLeftClick()) {
-            clickedNonButtonItem(event);
-        } else if (event.isRightClick()) {
+        } else if (event.isLeftClick() || event.isRightClick()) {
             clickedNonButtonItem(event);
         }
     }
