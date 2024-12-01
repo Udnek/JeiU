@@ -32,6 +32,11 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     int firstItemIndex;
     int lastItemIndex;
 
+    public void openAndShow(@NotNull Player player){
+        open(player);
+        showItems(0);
+    }
+
     public @NotNull List<CustomItem> getAll(){
         boolean forceShowHidden = inventory.getViewers().stream().anyMatch(humanEntity -> humanEntity.getGameMode() == GameMode.CREATIVE);
 
@@ -99,7 +104,11 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     @Override
     public void runNewQuery(@NotNull MenuQuery menuQuery, @Nullable InventoryClickEvent event) {
         if (event == null) return;
-        menuQuery.setBackCall(() -> new AllItemsMenu().open((Player) event.getWhoClicked()));
+        menuQuery.setBackCall(() -> {
+            AllItemsMenu menu = new AllItemsMenu();
+            menu.open((Player) event.getWhoClicked());
+            menu.showItems(firstItemIndex);
+        });
         new RecipesMenu((Player) event.getWhoClicked()).runNewQuery(menuQuery, event);
     }
 
@@ -115,7 +124,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     public void openBack(@NotNull InventoryClickEvent event) {}
 
     @Override
-    public @Nullable BackCallable getBackCall() {return null;}
+    public @NotNull BackCallable getBackCall() {return BackCallable.EMPTY;}
 
     @Override
     public int getInventorySize() {

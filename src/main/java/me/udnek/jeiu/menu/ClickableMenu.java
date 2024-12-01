@@ -28,7 +28,7 @@ public interface ClickableMenu extends CustomInventory {
         }
     }
 
-    @Nullable BackCallable getBackCall();
+    @NotNull BackCallable getBackCall();
     void clickedNonButtonItem(@NotNull InventoryClickEvent event);
     void openBack(@NotNull InventoryClickEvent event);
     void openNext(@NotNull InventoryClickEvent event);

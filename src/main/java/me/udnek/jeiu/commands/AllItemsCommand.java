@@ -11,9 +11,7 @@ public class AllItemsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (!(commandSender instanceof Player player)) return false;
-        AllItemsMenu itemsMenu = new AllItemsMenu();
-        itemsMenu.open(player);
-        itemsMenu.showItems(0);
+        new AllItemsMenu().openAndShow(player);
         return true;
     }
 }

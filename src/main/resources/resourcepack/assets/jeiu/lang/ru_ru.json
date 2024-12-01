@@ -7,10 +7,10 @@
 	"item.jeiu.back": "Назад",
 	
 	"item.jeiu.help": "Помощь",
-	"item.jeiu.information": "Информация",
+	"item.jeiu.banner": "Информация",
 	
-	"gui.jeiu.help.description.1": "§f[%s§f] - рецепты",
-	"gui.jeiu.help.description.2": "§f[%s§f] - рецепты, где используется предмет",
+	"gui.jeiu.help.description.1":  "§f[%s§f] - рецепты",
+	"gui.jeiu.help.description.2":  "§f[%s§f] - рецепты, где используется предмет",
 	"gui.jeiu.help.description.3":  "",
 	"gui.jeiu.help.description.4":  "§f/recipe §7- посмотреть рецепты предмета в руке",
 	"gui.jeiu.help.description.5":  "§f/recipe [item_id] §7- посмотреть рецепты",

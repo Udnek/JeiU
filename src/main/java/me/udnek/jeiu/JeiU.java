@@ -35,6 +35,7 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
 
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe"));
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe_usages"));
+        CustomHelpCommand.getInstance().addLine(Component.text("/items"));
     }
 
     @Override

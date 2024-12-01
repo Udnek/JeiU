@@ -58,8 +58,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
     @Override
     public void openBack(@NotNull InventoryClickEvent event) {
-        BackCallable backCallable = query.getBackCall();
-        if (backCallable != null) backCallable.backCall();
+        query.getBackCall().backCall();
     }
     @Override
     public void openNext(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex+1);}
@@ -113,7 +112,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     }
 
     @Override
-    public @Nullable BackCallable getBackCall() {return query.getBackCall();}
+    public @NotNull BackCallable getBackCall() {return query.getBackCall();}
 
     public boolean hasViewers() {return !inventory.getViewers().isEmpty();}
     protected void runPage() {
