@@ -124,7 +124,9 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     public void openBack(@NotNull InventoryClickEvent event) {}
 
     @Override
-    public @NotNull BackCallable getBackCall() {return BackCallable.EMPTY;}
+    public @Nullable BackCallable getBackCall() {
+        return null;
+    }
 
     @Override
     public int getInventorySize() {

@@ -1,7 +1,6 @@
 package me.udnek.jeiu.visualizer;
 
 import me.udnek.itemscoreu.customloot.LootTableUtils;
-import me.udnek.itemscoreu.customloot.table.CustomLootTable;
 import me.udnek.itemscoreu.nms.Nms;
 import me.udnek.itemscoreu.util.LogUtils;
 import me.udnek.jeiu.item.Items;

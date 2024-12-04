@@ -4,19 +4,15 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.DyedItemColor;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.jeiu.util.RecipeChoiceAnimator;
-import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
-import org.bukkit.inventory.meta.ColorableArmorMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public interface JeiUMenu extends ClickableMenu{
     @NotNull TextColor MAIN_COLOR = Objects.requireNonNull(TextColor.fromHexString("#a3806a"));
