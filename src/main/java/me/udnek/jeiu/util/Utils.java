@@ -25,6 +25,8 @@ public class Utils {
         if (recipe instanceof SmithingTrimRecipe) return true;
         if (recipe instanceof SmithingTransformRecipe) return true;
 
+        if (recipe instanceof TransmuteRecipe) return true;
+
         return false;
     }
 

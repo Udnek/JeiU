@@ -35,8 +35,6 @@ import java.util.List;
 
 public class RecipesMenu extends ConstructableCustomInventory implements JeiUMenu {
 
-    // TODO: 2/11/2024 DYNAMIC CRAFTING MATRIX AND RESULT
-
     private static final int BACK_BUTTON_POSITION = 9*1-1;
     private static final int BANNER_AND_INFO_POSITION = 9*2-1;
     private static final int RECIPE_STATION_POSITION = 9*3-1;

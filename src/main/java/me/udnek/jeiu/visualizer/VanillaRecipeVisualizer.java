@@ -76,7 +76,6 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
             }
             menu.setItem(craftingResultOffset, recipe.getResult());
         }
-
         // SHAPELESS
         else if (recipe instanceof ShapelessRecipe) {
             List<RecipeChoice> recipeChoiceList = ((ShapelessRecipe) recipe).getChoiceList();
@@ -93,34 +92,40 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
             }
             menu.setItem(craftingResultOffset, recipe.getResult());
         }
+        else if (recipe instanceof TransmuteRecipe transmuteRecipe){
+            setItemInCraftingMatrix(0, 0, transmuteRecipe.getInput());
+            setItemInCraftingMatrix(1, 0, transmuteRecipe.getMaterial());
+            menu.setItem(craftingResultOffset, recipe.getResult());
+        }
+
         // COOKING
-        else if (recipe instanceof CookingRecipe) {
-            RecipeChoice inputChoice = ((CookingRecipe<?>) recipe).getInputChoice();
+        else if (recipe instanceof CookingRecipe<?> cookingRecipe) {
+            RecipeChoice inputChoice = cookingRecipe.getInputChoice();
             setChoice(cookingInputOffset, inputChoice);
             menu.setItem(cookingResultOffset, recipe.getResult());
         }
         //SMITHING
-        else if (recipe instanceof SmithingTransformRecipe) {
-            RecipeChoice base = ((SmithingTransformRecipe) recipe).getBase();
-            RecipeChoice addition = ((SmithingTransformRecipe) recipe).getAddition();
-            RecipeChoice template = ((SmithingTransformRecipe) recipe).getTemplate();
+        else if (recipe instanceof SmithingTransformRecipe transformRecipe) {
+            RecipeChoice base = transformRecipe.getBase();
+            RecipeChoice addition = transformRecipe.getAddition();
+            RecipeChoice template = transformRecipe.getTemplate();
             setChoice(smithingTemplateOffset, template);
             setChoice(smithingBaseOffset, base);
             setChoice(smithingAdditionOffset, addition);
             menu.setItem(smithingResultOffset, recipe.getResult());
 
-        } else if (recipe instanceof SmithingTrimRecipe) {
-            RecipeChoice base = ((SmithingTrimRecipe) recipe).getBase();
-            RecipeChoice addition = ((SmithingTrimRecipe) recipe).getAddition();
-            RecipeChoice template = ((SmithingTrimRecipe) recipe).getTemplate();
+        } else if (recipe instanceof SmithingTrimRecipe trimRecipe) {
+            RecipeChoice base = trimRecipe.getBase();
+            RecipeChoice addition = trimRecipe.getAddition();
+            RecipeChoice template = trimRecipe.getTemplate();
             setChoice(smithingTemplateOffset, template);
             setChoice(smithingBaseOffset, base);
             setChoice(smithingAdditionOffset, addition);
             menu.setItem(smithingResultOffset, recipe.getResult());
         }
         //STONECUTTING
-        else if (recipe instanceof StonecuttingRecipe) {
-            RecipeChoice inputChoice = ((StonecuttingRecipe) recipe).getInputChoice();
+        else if (recipe instanceof StonecuttingRecipe stonecuttingRecipe) {
+            RecipeChoice inputChoice = stonecuttingRecipe.getInputChoice();
             setChoice(stonecuttingInputOffset, inputChoice);
             menu.setItem(stonecuttingResultOffset, recipe.getResult());
         }
@@ -131,7 +136,7 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
     private void setDecorItems() {
         @NotNull String bannerModel;
         Material blockMaterial;
-        if (recipe instanceof ShapelessRecipe || recipe instanceof ShapedRecipe) {
+        if (recipe instanceof ShapelessRecipe || recipe instanceof ShapedRecipe || recipe instanceof TransmuteRecipe) {
             bannerModel = "jeiu:crafting_table_banner";
             blockMaterial = Material.CRAFTING_TABLE;
         } else if (recipe instanceof FurnaceRecipe) {
