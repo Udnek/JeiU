@@ -7,6 +7,7 @@ import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.itemscoreu.customloot.LootTableUtils;
 import me.udnek.itemscoreu.customrecipe.RecipeManager;
 import me.udnek.itemscoreu.util.ComponentU;
+import me.udnek.itemscoreu.util.ItemUtils;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.ComponentTypes;
 import me.udnek.jeiu.item.Items;
@@ -14,6 +15,7 @@ import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
 import me.udnek.jeiu.util.MenuQueryEvent;
 import me.udnek.jeiu.util.Utils;
+import me.udnek.jeiu.visualizer.RepairVisualizer;
 import me.udnek.jeiu.visualizer.abstraction.Visualizable;
 import me.udnek.jeiu.visualizer.abstraction.Visualizer;
 import net.kyori.adventure.key.Key;
@@ -43,7 +45,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     private static final int NEXT_BUTTON_POSITION = 9*6-1;
 
     private BukkitTask animatorTicker = null;
-    private List<Visualizable> visualizers;
+    private List<Visualizable> visualizables;
     private int recipeIndex;
     private Visualizer currentRecipe;
 
@@ -65,7 +67,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     public void openPrevious(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex-1);}
 
     protected void openRecipeNumber(int recipeIndex) {
-        this.recipeIndex = Math.clamp(recipeIndex, 0, Math.max(0, visualizers.size()-1));
+        this.recipeIndex = Math.clamp(recipeIndex, 0, Math.max(0, visualizables.size()-1));
         runPage();
     }
 
@@ -86,13 +88,16 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
             List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(query.getItemStack());
             RecipeManager.getInstance().getRecipesAsResult(query.getItemStack(), rawRecipes::add);
             Utils.toVisualizables(rawRecipes, lootTables, newRecipes::add);
+            if (ItemUtils.isRepairable(query.getItemStack())){
+                newRecipes.add(new Visualizable.Simple(new RepairVisualizer(query.getItemStack())));
+            }
         }
 
 
         new MenuQueryEvent(query, newRecipes).callEvent();
         if (newRecipes.isEmpty() && !query.isOpenIfNothingFound()) return;
         this.query = query;
-        visualizers = newRecipes;
+        visualizables = newRecipes;
         recipeIndex = 0;
         runPage();
         open(player);
@@ -117,15 +122,15 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     protected void runPage() {
         if (animatorTicker != null) animatorTicker.cancel();
         inventory.clear();
-        if (!visualizers.isEmpty()) {
-            currentRecipe = visualizers.get(recipeIndex).getVisualizer();
+        if (!visualizables.isEmpty()) {
+            currentRecipe = visualizables.get(recipeIndex).getVisualizer();
             currentRecipe.visualize(this);
         }
         setPageButtons();
         animateRecipes();
     }
     protected void setPageButtons() {
-        if (recipeIndex < visualizers.size() - 1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT);
+        if (recipeIndex < visualizables.size() - 1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT);
         else setItem(NEXT_BUTTON_POSITION, (ItemStack) null);
 
         if (recipeIndex > 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS);

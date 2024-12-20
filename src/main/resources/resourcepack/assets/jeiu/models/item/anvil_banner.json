@@ -1,0 +1,6 @@
+{
+	"parent": "jeiu:item/banner_template",
+	"textures": {
+		"layer0": "jeiu:item/anvil_banner"
+	}
+}

@@ -3,7 +3,7 @@ package me.udnek.jeiu.menu;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.DyedItemColor;
 import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.jeiu.util.RecipeChoiceAnimator;
+import me.udnek.jeiu.visualizer.animator.Animator;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -43,8 +43,8 @@ public interface JeiUMenu extends ClickableMenu{
         if (!material.isItem()) return;
         setItem(index, new ItemStack(material));
     }
-    default void setItem(@NotNull RecipeChoiceAnimator animator) {
-        setItem(animator.getPosition(), animator.getFrame());
+    default void setItem(@NotNull Animator animator) {
+        setItem(animator.getPosition(), animator.getNextFrame());
     }
     default void setItem(int index, @NotNull CustomItem customItem){
         setItem(index, customItem.getItem());

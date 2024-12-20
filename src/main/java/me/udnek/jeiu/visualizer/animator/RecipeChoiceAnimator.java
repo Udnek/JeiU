@@ -1,4 +1,4 @@
-package me.udnek.jeiu.util;
+package me.udnek.jeiu.visualizer.animator;
 
 import com.google.common.base.Preconditions;
 import me.udnek.itemscoreu.customrecipe.choice.CustomRecipeChoice;
@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.Nullable;
 
-public class RecipeChoiceAnimator {
+public class RecipeChoiceAnimator implements Animator {
 
     protected int position;
     protected @Nullable RecipeChoice choice;
@@ -38,7 +38,8 @@ public class RecipeChoiceAnimator {
         return frameIndex;
     }
 
-    public @Nullable ItemStack getFrame(){
+    @Override
+    public @Nullable ItemStack getNextFrame(){
         if (choice == null) return null;
         if (choice instanceof RecipeChoice.MaterialChoice materialChoice){
             return new ItemStack(materialChoice.getChoices().get(getNewIndex()));
@@ -50,6 +51,7 @@ public class RecipeChoiceAnimator {
     }
 
 
+    @Override
     public int getPosition() {
         return position;
     }

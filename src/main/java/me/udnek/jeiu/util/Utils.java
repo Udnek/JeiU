@@ -4,41 +4,49 @@ import me.udnek.jeiu.visualizer.VanillaNonVisualizableHolder;
 import me.udnek.jeiu.visualizer.abstraction.Visualizable;
 import org.bukkit.inventory.*;
 import org.bukkit.loot.LootTable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class Utils {
 
-    public static boolean isVanillaRecipe(Recipe recipe) {
+    public static boolean isVanillaRecipe(@NotNull Recipe recipe) {
 
-        if (recipe instanceof ShapedRecipe) return true;
-        if (recipe instanceof ShapelessRecipe) return true;
+        return switch (recipe) {
+            case ShapedRecipe ignored -> true;
+            case ShapelessRecipe ignored -> true;
+            case FurnaceRecipe ignored -> true;
+            case BlastingRecipe ignored -> true;
+            case SmokingRecipe ignored -> true;
+            case CampfireRecipe ignored -> true;
+            case StonecuttingRecipe ignored -> true;
+            case SmithingTrimRecipe ignored -> true;
+            case SmithingTransformRecipe ignored -> true;
+            case TransmuteRecipe ignored -> true;
+            default -> false;
+        };
 
-        if (recipe instanceof FurnaceRecipe) return true;
-        if (recipe instanceof BlastingRecipe) return true;
-        if (recipe instanceof SmokingRecipe) return true;
-        if (recipe instanceof CampfireRecipe) return true;
-
-        if (recipe instanceof StonecuttingRecipe) return true;
-
-        if (recipe instanceof SmithingTrimRecipe) return true;
-        if (recipe instanceof SmithingTransformRecipe) return true;
-
-        if (recipe instanceof TransmuteRecipe) return true;
-
-        return false;
     }
 
-    public static void toVisualizables(List<Recipe> recipes, List<LootTable> lootTables, Consumer<Visualizable> consumer){
-        for (Recipe recipe : recipes) {
-            if (recipe instanceof SmithingTrimRecipe) continue;
-            if (recipe instanceof Visualizable visualizable) consumer.accept(visualizable);
-            else if (Utils.isVanillaRecipe(recipe)) consumer.accept(new VanillaNonVisualizableHolder(recipe));
-        }
+    public static void toVisualizables(@NotNull List<Recipe> recipes, @NotNull List<LootTable> lootTables, @NotNull Consumer<Visualizable> consumer){
+        List<Visualizable> result = new ArrayList<>();
+
         for (LootTable lootTable : lootTables) {
-            if (lootTable instanceof Visualizable visualizable) consumer.accept(visualizable);
-            else consumer.accept(new VanillaNonVisualizableHolder(lootTable));
+            if (lootTable instanceof Visualizable visualizable) result.add(visualizable);
+            else result.add(new VanillaNonVisualizableHolder(lootTable));
         }
+
+        for (Recipe recipe : recipes) {
+            if (Utils.isVanillaRecipe(recipe) && !(recipe instanceof Visualizable)){
+                if (recipe instanceof SmithingTrimRecipe) result.add(new VanillaNonVisualizableHolder(recipe));
+                else result.addFirst(new VanillaNonVisualizableHolder(recipe));
+            }
+            else if (recipe instanceof Visualizable visualizable) result.addFirst(visualizable);
+        }
+
+
+        result.forEach(consumer);
     }
 }
