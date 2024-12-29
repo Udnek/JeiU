@@ -1,5 +1,6 @@
 package me.udnek.jeiu.item;
 
+import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
 import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
 import me.udnek.jeiu.component.ComponentTypes;
 import net.kyori.adventure.text.Component;
@@ -35,6 +36,10 @@ public class TechnicalItem extends ConstructableCustomItem {
         getComponents().set(ComponentTypes.TECHNICAL_ITEM.getDefault());
     }
 
+    @Override
+    public @Nullable DataSupplier<ItemAttributeModifiers> getAttributeModifiers() {
+        return DataSupplier.of(null);
+    }
 
     @Override
     public @Nullable List<ItemFlag> getTooltipHides() {

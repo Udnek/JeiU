@@ -42,7 +42,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     protected int firstItemIndex;
     protected int lastItemIndex;
 
-    protected Mode mode = Mode.ITEMS;
+    protected Mode mode = Mode.CUSTOM_ITEMS;
 
     public void openAndShow(@NotNull Player player){
         open(player);
@@ -108,9 +108,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
 
     @Override
     public void pressedSwitch(@NotNull InventoryClickEvent event) {
-        if (mode == Mode.ITEMS)
-            mode = Mode.RECIPES;
-        else mode = Mode.ITEMS;
+        mode = mode.next();
         showItems(0);
     }
 
@@ -152,7 +150,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
     public enum Mode{
-        ITEMS {
+        CUSTOM_ITEMS {
             @Override
             public @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context) {
                 boolean forceShowHidden = context.inventory.getViewers().stream().anyMatch(humanEntity -> humanEntity.getGameMode() == GameMode.CREATIVE);
@@ -202,8 +200,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
                         if (customItem != null) {
                             if (VanillaItemManager.isReplaced(customItem)) customItems.add(customItem);
                         } else {
-                            if (itemStack.getType() == Material.ENCHANTED_BOOK) stacks.add(itemStack);
-                            else materials.add(itemStack.getType());
+                            if (itemStack.getType() != Material.ENCHANTED_BOOK) materials.add(itemStack.getType());
                         }
                     }
                 }
@@ -219,9 +216,50 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
                 item.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "custom_recipes"));
                 return item;
             }
+        },
+        ENCHANTED_BOOKS {
+            @Override
+            public @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context) {
+                List<Recipe> recipes = new ArrayList<>();
+                RecipeManager.getInstance().getAll(recipes::add);
+
+                List<ItemStack> stacks = new ArrayList<>();
+                for (Recipe recipe : recipes) {
+                    List<ItemStack> toProceed = new ArrayList<>();
+                    if (recipe instanceof CustomRecipe<?> customRecipe){
+                        toProceed.addAll(customRecipe.getResults());
+                    } else {
+                        toProceed.add(recipe.getResult());
+                    }
+
+                    for (ItemStack itemStack : toProceed) {
+                        if (itemStack.getType() == Material.ENCHANTED_BOOK) stacks.add(itemStack);
+                    }
+                }
+                return stacks;
+            }
+
+            @Override
+            public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
+                ItemStack item = Items.SWITCH.getItem();
+                item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.enchanted_books"));
+                item.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "enchanted_books"));
+                return item;
+            }
         };
+
+        public static @NotNull Mode next(@NotNull Mode current){
+            return switch (current) {
+                case CUSTOM_ITEMS -> RECIPES;
+                case RECIPES -> ENCHANTED_BOOKS;
+                case ENCHANTED_BOOKS -> CUSTOM_ITEMS;
+            };
+        }
 
         public abstract @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context);
         public abstract @NotNull ItemStack getIcon(@NotNull AllItemsMenu context);
+        public @NotNull Mode next(){
+            return next(this);
+        }
     }
 }
