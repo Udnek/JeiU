@@ -13,9 +13,9 @@ import java.util.function.Consumer;
 
 public class TechnicalItem extends ConstructableCustomItem {
 
-    Material material;
-    String rawId;
-    List<Component> lore;
+    protected Material material;
+    protected String rawId;
+    protected List<Component> lore;
     boolean hideTooltip;
 
     public TechnicalItem(@NotNull Material material, @NotNull String rawId, boolean hideTooltip, @Nullable List<Component> lore){
