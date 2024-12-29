@@ -8,6 +8,9 @@
 	
 	"item.jeiu.help": "Help",
 	"item.jeiu.banner": "Information",
+
+	"item.jeiu.custom_items": "Custom Items",
+	"item.jeiu.custom_recipes": "Custom Recipes",
 	
 	"gui.jeiu.help.description.1":  "§f[%s§f] to recipes",
 	"gui.jeiu.help.description.2":  "§f[%s§f] to recipes where is used in",

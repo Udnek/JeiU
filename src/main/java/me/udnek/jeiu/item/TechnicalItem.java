@@ -35,12 +35,10 @@ public class TechnicalItem extends ConstructableCustomItem {
         getComponents().set(ComponentTypes.TECHNICAL_ITEM.getDefault());
     }
 
-    @Override
-    public boolean getAddDefaultAttributes() {return true;}
 
     @Override
-    public @Nullable ItemFlag[] getTooltipHides() {
-        return new ItemFlag[]{ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE};
+    public @Nullable List<ItemFlag> getTooltipHides() {
+        return List.of(ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE);
     }
 
     @Override
@@ -62,7 +60,7 @@ public class TechnicalItem extends ConstructableCustomItem {
     }
 
     @Override
-    public boolean getHideTooltip() {
+    public @Nullable Boolean getHideTooltip() {
         return hideTooltip;
     }
 }

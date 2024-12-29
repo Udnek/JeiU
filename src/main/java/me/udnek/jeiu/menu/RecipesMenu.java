@@ -57,14 +57,14 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     }
 
     @Override
-    public void openBack(@NotNull InventoryClickEvent event) {
+    public void pressedBack(@NotNull InventoryClickEvent event) {
         BackCallable backCall = query.getBackCall();
         if (backCall != null) backCall.backCall();
     }
     @Override
-    public void openNext(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex+1);}
+    public void pressedNext(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex+1);}
     @Override
-    public void openPrevious(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex-1);}
+    public void pressedPrevious(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex-1);}
 
     protected void openRecipeNumber(int recipeIndex) {
         this.recipeIndex = Math.clamp(recipeIndex, 0, Math.max(0, visualizables.size()-1));
@@ -175,6 +175,8 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     public static int getBannerPosition() {return BANNER_AND_INFO_POSITION;}
     public static int getRecipeStationPosition() {return RECIPE_STATION_POSITION;}
 
+    @Override
+    public void pressedSwitch(@NotNull InventoryClickEvent event) {}
     @Override
     public int getInventorySize() {return 9 * 6;}
     @Override

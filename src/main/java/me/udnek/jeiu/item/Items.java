@@ -18,6 +18,7 @@ public class Items {
     public static final CustomItem PREVIOUS = register(new TechnicalItem(Material.LEATHER_HELMET, "previous", true));
     public static final CustomItem BACK = register(new TechnicalItem(Material.LEATHER_HELMET, "back", true));
     public static final CustomItem BANNER = register(new TechnicalItem(Material.LEATHER_HELMET, "banner", false));
+    public static final CustomItem SWITCH = register(new TechnicalItem(Material.LEATHER_HELMET, "switch", false));
 
     static {
         ArrayList<Component> lore = new ArrayList<>();

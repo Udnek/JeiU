@@ -18,11 +18,13 @@ public interface ClickableMenu extends CustomInventory {
         event.setCancelled(true);
 
         if (Items.BACK.isThisItem(itemStack)) {
-            openBack(event);
+            pressedBack(event);
         } else if (Items.NEXT.isThisItem(itemStack)) {
-            openNext(event);
+            pressedNext(event);
         } else if (Items.PREVIOUS.isThisItem(itemStack)) {
-            openPrevious(event);
+            pressedPrevious(event);
+        } else if (Items.SWITCH.isThisItem(itemStack)) {
+            pressedSwitch(event);
         } else if (event.isLeftClick() || event.isRightClick()) {
             clickedNonButtonItem(event);
         }
@@ -30,8 +32,9 @@ public interface ClickableMenu extends CustomInventory {
 
     @Nullable BackCallable getBackCall();
     void clickedNonButtonItem(@NotNull InventoryClickEvent event);
-    void openBack(@NotNull InventoryClickEvent event);
-    void openNext(@NotNull InventoryClickEvent event);
-    void openPrevious(@NotNull InventoryClickEvent event);
+    void pressedBack(@NotNull InventoryClickEvent event);
+    void pressedNext(@NotNull InventoryClickEvent event);
+    void pressedPrevious(@NotNull InventoryClickEvent event);
+    void pressedSwitch(@NotNull InventoryClickEvent event);
     void runNewQuery(@NotNull MenuQuery menuQuery, @Nullable InventoryClickEvent event);
 }
