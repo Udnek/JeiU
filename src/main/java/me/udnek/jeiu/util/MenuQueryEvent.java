@@ -4,7 +4,6 @@ import me.udnek.itemscoreu.customevent.CustomEvent;
 import me.udnek.jeiu.visualizer.abstraction.Visualizable;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 

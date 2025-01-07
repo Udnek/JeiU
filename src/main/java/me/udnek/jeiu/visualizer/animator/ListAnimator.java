@@ -1,9 +1,6 @@
 package me.udnek.jeiu.visualizer.animator;
 
-import com.google.common.base.Preconditions;
-import me.udnek.itemscoreu.customrecipe.choice.CustomRecipeChoice;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

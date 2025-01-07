@@ -3,7 +3,6 @@ package me.udnek.jeiu.visualizer.abstraction;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.animator.Animator;
 import me.udnek.jeiu.visualizer.animator.RecipeChoiceAnimator;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

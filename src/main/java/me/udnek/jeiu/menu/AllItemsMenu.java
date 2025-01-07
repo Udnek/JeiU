@@ -3,12 +3,12 @@ package me.udnek.jeiu.menu;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
 import me.udnek.itemscoreu.customitem.CustomItem;
+import me.udnek.itemscoreu.customitem.ItemUtils;
+import me.udnek.itemscoreu.customitem.VanillaItemManager;
 import me.udnek.itemscoreu.customrecipe.CustomRecipe;
 import me.udnek.itemscoreu.customrecipe.RecipeManager;
 import me.udnek.itemscoreu.customregistry.CustomRegistries;
 import me.udnek.itemscoreu.util.ComponentU;
-import me.udnek.itemscoreu.util.ItemUtils;
-import me.udnek.itemscoreu.util.VanillaItemManager;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.ComponentTypes;
 import me.udnek.jeiu.item.Items;
@@ -28,7 +28,10 @@ import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMenu {
 

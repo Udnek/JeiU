@@ -1,6 +1,5 @@
 package me.udnek.jeiu.visualizer;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.abstraction.AbstractVisualizer;
