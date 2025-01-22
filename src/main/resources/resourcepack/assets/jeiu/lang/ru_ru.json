@@ -22,5 +22,10 @@
 	"gui.jeiu.help.description.11": "§7 указанный предмет используется",
 	"gui.jeiu.help.description.12": "",
 	"gui.jeiu.help.description.13": "§7⚠ Мод 'Just Enough Items' может",
-	"gui.jeiu.help.description.14": "§7 показывать рецепты не точно!"
+	"gui.jeiu.help.description.14": "§7 показывать рецепты не точно!",
+
+
+	"item.jeiu.custom_items": "Касмтоные предметы",
+	"item.jeiu.custom_recipes": "Предметы с изменёнными крафтами",
+	"item.jeiu.enchanted_books": "Зачарованные книги"
 }
