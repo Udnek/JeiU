@@ -1,6 +1,0 @@
-{
-	"parent": "jeiu:item/banner_template",
-	"textures": {
-		"layer0": "jeiu:item/smithing_table_banner"
-	}
-}

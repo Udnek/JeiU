@@ -1,0 +1,6 @@
+{
+	"parent": "jeiu:item/banner/template",
+	"textures": {
+		"layer0": "jeiu:item/banner/crafting_table"
+	}
+}

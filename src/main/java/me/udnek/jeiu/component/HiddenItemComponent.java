@@ -12,6 +12,6 @@ public class HiddenItemComponent implements CustomComponent<CustomItem> {
 
     @Override
     public @NotNull CustomComponentType<CustomItem, ?> getType() {
-        return ComponentTypes.HIDDEN_ITEM;
+        return Components.HIDDEN_ITEM;
     }
 }

@@ -1,6 +1,0 @@
-{
-	"parent": "jeiu:item/colorable_base",
-	"textures": {
-		"layer0": "jeiu:item/back"
-	}
-}

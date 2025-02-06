@@ -1,8 +1,11 @@
 package me.udnek.jeiu.visualizer;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.abstraction.AbstractVisualizer;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
@@ -34,7 +37,6 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
     public static final int RECIPE_BANNER_OFFSET = RecipesMenu.getBannerPosition();
     public static final int COOKING_RECIPE_FIRE_ICON_OFFSET = 9 * 2 + 2;
 
-    public static final ItemStack RECIPE_BANNER = Items.BANNER.getItem();
     public static final ItemStack FIRE_ICON = Items.FIRE_ICON.getItem();
 
     private final @NotNull Recipe recipe;
@@ -141,42 +143,40 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
         setChoice(y * 9 + x + CRAFTING_MATRIX_OFFSET, recipeChoice);
     }
     private void setDecorItems() {
-        @NotNull String bannerModel;
+        Key bannerModel;
         Material blockMaterial;
         if (recipe instanceof ShapelessRecipe || recipe instanceof ShapedRecipe || recipe instanceof TransmuteRecipe) {
-            bannerModel = "jeiu:crafting_table_banner";
+            bannerModel = BannerItem.CRAFTING_TABLE;
             blockMaterial = Material.CRAFTING_TABLE;
         } else if (recipe instanceof FurnaceRecipe) {
             menu.setThemedItem(COOKING_RECIPE_FIRE_ICON_OFFSET, FIRE_ICON);
-            bannerModel = "jeiu:furnace_banner";
+            bannerModel = BannerItem.FURNACE;
             blockMaterial = Material.FURNACE;
         } else if (recipe instanceof BlastingRecipe) {
             menu.setThemedItem(COOKING_RECIPE_FIRE_ICON_OFFSET, FIRE_ICON);
-            bannerModel = "jeiu:furnace_banner";
+            bannerModel = BannerItem.FURNACE;
             blockMaterial = Material.BLAST_FURNACE;
         } else if (recipe instanceof SmokingRecipe) {
             menu.setThemedItem(COOKING_RECIPE_FIRE_ICON_OFFSET, FIRE_ICON);
-            bannerModel = "jeiu:furnace_banner";
+            bannerModel = BannerItem.FURNACE;
             blockMaterial = Material.SMOKER;
         } else if (recipe instanceof CampfireRecipe) {
             menu.setThemedItem(COOKING_RECIPE_FIRE_ICON_OFFSET, FIRE_ICON);
-            bannerModel = "jeiu:furnace_banner";
+            bannerModel = BannerItem.FURNACE;
             blockMaterial = Material.CAMPFIRE;
         } else if (recipe instanceof SmithingRecipe) {
-            bannerModel = "jeiu:smithing_table_banner";
+            bannerModel = BannerItem.SMITHING_TABLE;
             blockMaterial = Material.SMITHING_TABLE;
         } else if (recipe instanceof StonecuttingRecipe) {
-            bannerModel = "jeiu:stonecutter_banner";
+            bannerModel = BannerItem.STONECUTTER;
             blockMaterial = Material.STONECUTTER;
         } else {
-            bannerModel = "jeiu:banner";
+            bannerModel = Items.BANNER.getItem().getData(DataComponentTypes.ITEM_MODEL);
             blockMaterial = Material.BARRIER;
         }
 
-        ItemStack itemStack = RECIPE_BANNER;
-        ItemMeta itemMeta = itemStack.getItemMeta();
-        itemMeta.setItemModel(NamespacedKey.fromString(bannerModel));
-        itemStack.setItemMeta(itemMeta);
+        ItemStack itemStack = Items.BANNER.getItem().clone();
+        itemStack.setData(DataComponentTypes.ITEM_MODEL, bannerModel);
 
         menu.setThemedItem(RECIPE_BANNER_OFFSET, itemStack);
         menu.setItem(RecipesMenu.getRecipeStationPosition(), blockMaterial);

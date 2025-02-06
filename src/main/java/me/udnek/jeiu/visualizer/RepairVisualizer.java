@@ -70,7 +70,7 @@ public class RepairVisualizer extends AbstractVisualizer {
 
     void setBanner(){
         ItemStack stack = Items.BANNER.getItem();
-        stack.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "anvil_banner"));
+        stack.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "banner/anvil"));
         menu.setThemedItem(RecipesMenu.getBannerPosition(), stack);
         menu.setItem(RecipesMenu.getRecipeStationPosition(), Material.ANVIL);
     }

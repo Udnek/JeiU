@@ -19,6 +19,6 @@ public interface VisualizableInRecipesMenuComponent extends CustomComponent<Obje
 
     @Override
     default @NotNull CustomComponentType<Object, ?> getType(){
-        return ComponentTypes.VISUALIZABLE_IN_RECIPES_MENU;
+        return Components.VISUALIZABLE_IN_RECIPES_MENU;
     }
 }

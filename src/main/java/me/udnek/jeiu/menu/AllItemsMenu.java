@@ -10,8 +10,9 @@ import me.udnek.itemscoreu.customrecipe.RecipeManager;
 import me.udnek.itemscoreu.customregistry.CustomRegistries;
 import me.udnek.itemscoreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
-import me.udnek.jeiu.component.ComponentTypes;
+import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.item.Items;
+import me.udnek.jeiu.item.SwitchItem;
 import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
 import net.kyori.adventure.key.Key;
@@ -152,7 +153,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
         ).append(Component.translatable("gui.jeiu.items_title", NamedTextColor.BLACK).font(NamespacedKey.minecraft("default")));
     }
 
-    public enum Mode{
+    public enum Mode {
         CUSTOM_ITEMS {
             @Override
             public @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context) {
@@ -160,8 +161,8 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
 
                 List<ItemStack> all = new ArrayList<>();
                 CustomRegistries.ITEM.getAll(customItem -> {
-                    if (customItem.getComponents().has(ComponentTypes.TECHNICAL_ITEM)) return;
-                    if (!forceShowHidden && customItem.getComponents().has(ComponentTypes.HIDDEN_ITEM)) return;
+                    if (customItem.getComponents().has(Components.TECHNICAL_ITEM)) return;
+                    if (!forceShowHidden && customItem.getComponents().has(Components.HIDDEN_ITEM)) return;
                     all.add(customItem.getItem());
                 });
 
@@ -172,7 +173,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
             public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
                 ItemStack item = Items.SWITCH.getItem();
                 item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.custom_items"));
-                item.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "custom_items"));
+                item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.CUSTOM_ITEMS);
                 return item;
             }
         },
@@ -216,7 +217,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
             public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
                 ItemStack item = Items.SWITCH.getItem();
                 item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.custom_recipes"));
-                item.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "custom_recipes"));
+                item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.CUSTOM_RECIPES);
                 return item;
             }
         },
@@ -246,7 +247,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
             public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
                 ItemStack item = Items.SWITCH.getItem();
                 item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.enchanted_books"));
-                item.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "enchanted_books"));
+                item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.ENCHANTED_BOOKS);
                 return item;
             }
         };

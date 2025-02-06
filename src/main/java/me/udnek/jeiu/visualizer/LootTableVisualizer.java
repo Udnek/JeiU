@@ -1,11 +1,14 @@
 package me.udnek.jeiu.visualizer;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.udnek.itemscoreu.customloot.LootTableUtils;
 import me.udnek.itemscoreu.nms.Nms;
 import me.udnek.itemscoreu.util.LogUtils;
+import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.abstraction.Visualizer;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -20,9 +23,9 @@ import java.util.List;
 
 public class LootTableVisualizer implements Visualizer {
 
-    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 1 + 1, "jeiu:small_loot_table_banner");
-    private static final Layout MIDDLE_LAYOUT = new Layout(7, 5, 0, "jeiu:middle_loot_table_banner");
-    private static final Layout BIG_LAYOUT = new Layout(8, 6, 0, "jeiu:big_loot_table_banner");
+    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9 * 1 + 1, BannerItem.SMALL_LOOT_TABLE);
+    private static final Layout MIDDLE_LAYOUT = new Layout(7, 5, 0, BannerItem.MIDDLE_LOOT_TABLE);
+    private static final Layout BIG_LAYOUT = new Layout(8, 6, 0, BannerItem.BIG_LOOT_TABLE);
 
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
 
@@ -70,14 +73,14 @@ public class LootTableVisualizer implements Visualizer {
 
         setDecoration(layout);
     }
-    public List<ItemStack> clearDuplicates(List<ItemStack> itemStacks) {
+    public @NotNull List<ItemStack> clearDuplicates(@NotNull List<ItemStack> itemStacks) {
         List<ItemStack> newItems = new ArrayList<>();
         for (ItemStack itemStack : itemStacks) {
             if (!newItems.contains(itemStack)) newItems.add(itemStack);
         }
         return newItems;
     }
-    private void setDecoration(Layout layout) {
+    private void setDecoration(@NotNull Layout layout) {
         String key = lootTable.getKey().getKey();
         String[] split = key.split("/");
 
@@ -86,13 +89,13 @@ public class LootTableVisualizer implements Visualizer {
         if (split.length >= 2) subtype = split[1];
 
         ItemStack banner = Items.BANNER.getItem();
-        banner.editMeta(itemMeta -> itemMeta.setItemModel(NamespacedKey.fromString(layout.model)));
+        banner.setData(DataComponentTypes.ITEM_MODEL, layout.model);
         recipesMenu.setThemedItem(RecipesMenu.getBannerPosition(), banner);
 
         recipesMenu.setItem(RecipesMenu.getRecipeStationPosition(), chooseIcon(category, subtype));
 
     }
-    public Material chooseIcon(String category, String subtype) {
+    public @NotNull Material chooseIcon(@NotNull String category, @NotNull String subtype) {
         return switch (category) {
             case "archaeology" ->  Material.BRUSH;
             case "blocks" -> {
@@ -134,12 +137,12 @@ public class LootTableVisualizer implements Visualizer {
         public final int x;
         public final int y;
         public final int offset;
-        public final @NotNull String model;
-        Layout(int x, int y, int offset, @NotNull String model) {
+        public final @NotNull Key model;
+        Layout(int x, int y, int offset, @NotNull Key key) {
             this.x = x;
             this.y = y;
             this.offset = offset;
-            this.model = model;
+            this.model = key;
         }
         int getCapacity() {
             return x * y;

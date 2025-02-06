@@ -1,4 +1,4 @@
-package me.udnek.jeiu.commands;
+package me.udnek.jeiu.command;
 
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.util.MenuQuery;
@@ -13,12 +13,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RecipeUsagesCommand implements TabExecutor, CommandExecutor {
+public class RecipeCommand implements CommandExecutor, TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         ItemStack targetItem = RecipeCommandUtils.getTargetItem(commandSender, args);
         if (targetItem == null) return false;
-        new RecipesMenu((Player) commandSender).runNewQuery(new MenuQuery(targetItem, MenuQuery.Type.USAGES, true), null);
+        new RecipesMenu((Player) commandSender).runNewQuery(new MenuQuery(targetItem, MenuQuery.Type.RECIPES, true), null);
         return true;
     }
 

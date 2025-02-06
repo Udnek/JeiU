@@ -9,7 +9,7 @@ import me.udnek.itemscoreu.customloot.LootTableUtils;
 import me.udnek.itemscoreu.customrecipe.RecipeManager;
 import me.udnek.itemscoreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
-import me.udnek.jeiu.component.ComponentTypes;
+import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
@@ -73,7 +73,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
     private boolean isTechnical(@Nullable ItemStack itemStack){
         if (itemStack == null) return false;
-        return CustomItem.isCustom(itemStack) && CustomItem.get(itemStack).getComponents().has(ComponentTypes.TECHNICAL_ITEM);
+        return CustomItem.isCustom(itemStack) && CustomItem.get(itemStack).getComponents().has(Components.TECHNICAL_ITEM);
     }
 
     @Override

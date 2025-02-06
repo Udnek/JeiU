@@ -1,10 +1,10 @@
 package me.udnek.jeiu.item;
 
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
+import me.udnek.itemscoreu.customcomponent.instance.AutoGeneratingFilesItem;
 import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
-import me.udnek.jeiu.component.ComponentTypes;
+import me.udnek.jeiu.component.Components;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,26 +14,25 @@ import java.util.function.Consumer;
 
 public class TechnicalItem extends ConstructableCustomItem {
 
-    protected Material material;
     protected String rawId;
     protected List<Component> lore;
-    boolean hideTooltip;
+    protected boolean hideTooltip;
 
-    public TechnicalItem(@NotNull Material material, @NotNull String rawId, boolean hideTooltip, @Nullable List<Component> lore){
-        this.material = material;
+    public TechnicalItem(@NotNull String rawId, boolean hideTooltip, @Nullable List<Component> lore){
         this.rawId = rawId;
         this.hideTooltip = hideTooltip;
         this.lore = lore;
     }
-    public TechnicalItem(@NotNull Material material, @NotNull String rawId, boolean hideTooltip){
-        this(material, rawId, hideTooltip, null);
+    public TechnicalItem(@NotNull String rawId, boolean hideTooltip){
+        this(rawId, hideTooltip, null);
     }
 
 
     @Override
     public void initializeComponents() {
         super.initializeComponents();
-        getComponents().set(ComponentTypes.TECHNICAL_ITEM.getDefault());
+        getComponents().set(Components.TECHNICAL_ITEM.getDefault());
+        getComponents().set(AutoGeneratingFilesItem.CUSTOM_MODEL_DATA_COLORABLE);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class TechnicalItem extends ConstructableCustomItem {
 
     @Override
     public @Nullable List<ItemFlag> getTooltipHides() {
-        return List.of(ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE);
+        return List.of(ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ATTRIBUTES);
     }
 
     @Override
@@ -58,14 +57,8 @@ public class TechnicalItem extends ConstructableCustomItem {
         return rawId;
     }
 
-    @NotNull
-    @Override
-    public Material getMaterial() {
-        return material;
-    }
-
     @Override
     public @Nullable Boolean getHideTooltip() {
-        return hideTooltip;
+        return false;
     }
 }

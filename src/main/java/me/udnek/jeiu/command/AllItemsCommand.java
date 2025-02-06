@@ -1,4 +1,4 @@
-package me.udnek.jeiu.commands;
+package me.udnek.jeiu.command;
 
 import me.udnek.jeiu.menu.AllItemsMenu;
 import org.bukkit.command.Command;

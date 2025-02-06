@@ -1,4 +1,4 @@
-package me.udnek.jeiu.commands;
+package me.udnek.jeiu.command;
 
 import me.udnek.itemscoreu.customitem.ItemUtils;
 import me.udnek.itemscoreu.customregistry.CustomRegistries;

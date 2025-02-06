@@ -1,6 +1,7 @@
 package me.udnek.jeiu.menu;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.CustomModelData;
 import io.papermc.paper.datacomponent.item.DyedItemColor;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.jeiu.visualizer.animator.Animator;
@@ -15,11 +16,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public interface JeiUMenu extends ClickableMenu{
-    @NotNull TextColor MAIN_COLOR = Objects.requireNonNull(TextColor.fromHexString("#a3806a"));
+    @NotNull TextColor MAIN_COLOR = TextColor.color(163, 128, 106);
 
     default @NotNull ItemStack colorItemToTheme(@NotNull ItemStack itemStack){
-        itemStack.setData(DataComponentTypes.DYED_COLOR,
-                DyedItemColor.dyedItemColor(Color.fromRGB(MAIN_COLOR.value()), false));
+        itemStack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addColor(Color.fromRGB(MAIN_COLOR.value())).build());
         return itemStack;
     }
 
