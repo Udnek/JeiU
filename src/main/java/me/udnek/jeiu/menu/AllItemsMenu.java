@@ -70,7 +70,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
     @Override
-    public void onPlayerClicksItem(InventoryClickEvent event) {
+    public void onPlayerClicksItem(@NotNull InventoryClickEvent event) {
         if (event.isShiftClick() && event.getWhoClicked().getGameMode() == GameMode.CREATIVE && event.getCurrentItem() != null){
             event.getWhoClicked().getInventory().addItem(event.getCurrentItem());
             event.setCancelled(true);
@@ -133,7 +133,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
         return 9*6;
     }
     @Override
-    public Component getDisplayName() {
+    public @Nullable Component getTitle() {
         return ComponentU.textWithNoSpace(
                 -8,
                 Component.text("1", RecipesMenu.MAIN_COLOR).font(Key.key("jeiu:font")),
