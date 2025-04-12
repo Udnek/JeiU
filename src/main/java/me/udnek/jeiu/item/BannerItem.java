@@ -6,7 +6,6 @@ import me.udnek.itemscoreu.resourcepack.path.VirtualRpJsonFile;
 import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.key.Key;
 import org.bukkit.NamespacedKey;
-import org.checkerframework.checker.units.qual.A;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

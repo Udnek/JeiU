@@ -181,7 +181,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     public int getInventorySize() {return 9 * 6;}
     @Override
     public @Nullable Component getTitle() {
-        return ComponentU.textWithNoSpace(
+        return ComponentU.textWithNoSpaceSpaceFont(
                 -8,
                 Component.text("0", RecipesMenu.MAIN_COLOR).font(Key.key("jeiu:font")),
                 175
