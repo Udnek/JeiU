@@ -118,10 +118,10 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     @Override
     public @Nullable BackCallable getBackCall() {return query.getBackCall();}
 
-    public boolean hasViewers() {return !inventory.getViewers().isEmpty();}
+    public boolean hasViewers() {return !getInventory().getViewers().isEmpty();}
     protected void runPage() {
         if (animatorTicker != null) animatorTicker.cancel();
-        inventory.clear();
+        getInventory().clear();
         if (!visualizables.isEmpty()) {
             currentRecipe = visualizables.get(recipeIndex).getVisualizer();
             currentRecipe.visualize(this);
@@ -146,7 +146,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         if (currentRecipe == null) return;
         List<Component> information = currentRecipe.getInformation();
         if (information == null) return;
-        ItemStack item = inventory.getItem(getBannerPosition());
+        ItemStack item = getInventory().getItem(getBannerPosition());
         if (item == null) item = Items.BANNER.getItem();
 
         List<Component> formattedInformation = new ArrayList<>();

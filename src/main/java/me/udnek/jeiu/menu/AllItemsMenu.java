@@ -43,7 +43,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
     public void showItems(int startIndex){
-        inventory.clear();
+        getInventory().clear();
 
         List<ItemStack> all = getAll();
         all.sort((o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(ItemUtils.getId(o1), ItemUtils.getId(o2)));
