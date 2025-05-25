@@ -7,11 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 public interface VisualizableInRecipesMenuComponent extends CustomComponent<Object> {
 
-    VisualizableInRecipesMenuComponent DEFAULT = new VisualizableInRecipesMenuComponent() {
-        @Override
-        public @NotNull Visualizer getVisualizer() {
-            throw new UnsupportedOperationException("This is a default VisualizableComponent");
-        }
+    VisualizableInRecipesMenuComponent DEFAULT = () -> {
+        throw new UnsupportedOperationException("This is a default VisualizableComponent");
     };
 
 

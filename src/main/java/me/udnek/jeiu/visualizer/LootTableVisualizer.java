@@ -11,7 +11,6 @@ import me.udnek.jeiu.visualizer.abstraction.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;

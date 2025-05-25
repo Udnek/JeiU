@@ -2,7 +2,6 @@ package me.udnek.jeiu.menu;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
-import io.papermc.paper.datacomponent.item.DyedItemColor;
 import me.udnek.itemscoreu.customitem.CustomItem;
 import me.udnek.jeiu.visualizer.animator.Animator;
 import net.kyori.adventure.text.format.TextColor;
@@ -12,8 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public interface JeiUMenu extends ClickableMenu{
     @NotNull TextColor MAIN_COLOR = TextColor.color(163, 128, 106);
