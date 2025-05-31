@@ -1,8 +1,8 @@
 package me.udnek.jeiu.item;
 
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
-import me.udnek.itemscoreu.customcomponent.instance.AutoGeneratingFilesItem;
-import me.udnek.itemscoreu.customitem.ConstructableCustomItem;
+import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
+import me.udnek.coreu.custom.item.ConstructableCustomItem;
 import me.udnek.jeiu.component.Components;
 import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemFlag;

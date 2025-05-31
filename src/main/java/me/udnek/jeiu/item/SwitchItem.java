@@ -1,8 +1,8 @@
 package me.udnek.jeiu.item;
 
-import me.udnek.itemscoreu.customcomponent.instance.AutoGeneratingFilesItem;
-import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.resourcepack.path.VirtualRpJsonFile;
+import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
+import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.resourcepack.path.VirtualRpJsonFile;
 import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.key.Key;
 import org.bukkit.NamespacedKey;

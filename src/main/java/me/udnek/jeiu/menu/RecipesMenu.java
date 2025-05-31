@@ -2,12 +2,12 @@ package me.udnek.jeiu.menu;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
-import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.customitem.ItemUtils;
-import me.udnek.itemscoreu.customloot.LootTableUtils;
-import me.udnek.itemscoreu.customrecipe.RecipeManager;
-import me.udnek.itemscoreu.util.ComponentU;
+import me.udnek.coreu.custom.inventory.ConstructableCustomInventory;
+import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.custom.item.ItemUtils;
+import me.udnek.coreu.custom.loot.LootTableUtils;
+import me.udnek.coreu.custom.recipe.RecipeManager;
+import me.udnek.coreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.item.Items;

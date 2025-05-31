@@ -1,11 +1,11 @@
 package me.udnek.jeiu.component;
 
-import me.udnek.itemscoreu.customcomponent.CustomComponent;
-import me.udnek.itemscoreu.customcomponent.CustomComponentType;
-import me.udnek.itemscoreu.customitem.CustomItem;
+import me.udnek.coreu.custom.component.CustomComponentType;
+import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.custom.item.CustomItemComponent;
 import org.jetbrains.annotations.NotNull;
 
-public class TechnicalItemComponent implements CustomComponent<CustomItem> {
+public class TechnicalItemComponent implements CustomItemComponent {
 
     public static TechnicalItemComponent INSTANCE = new TechnicalItemComponent();
 

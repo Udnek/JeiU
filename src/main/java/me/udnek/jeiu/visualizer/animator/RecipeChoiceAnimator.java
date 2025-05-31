@@ -1,7 +1,7 @@
 package me.udnek.jeiu.visualizer.animator;
 
 import com.google.common.base.Preconditions;
-import me.udnek.itemscoreu.customrecipe.choice.CustomRecipeChoice;
+import me.udnek.coreu.custom.recipe.choice.CustomRecipeChoice;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.Nullable;
@@ -40,14 +40,13 @@ public class RecipeChoiceAnimator implements Animator {
 
     @Override
     public @Nullable ItemStack getNextFrame(){
-        if (choice == null) return null;
-        if (choice instanceof RecipeChoice.MaterialChoice materialChoice){
-            return new ItemStack(materialChoice.getChoices().get(getNewIndex()));
-        } else if (choice instanceof RecipeChoice.ExactChoice exactChoice){
-            return exactChoice.getChoices().get(getNewIndex());
-        } else {
-            return  ((CustomRecipeChoice) choice).getAllPossible().get(getNewIndex());
-        }
+        return switch (choice) {
+            case null -> null;
+            case RecipeChoice.MaterialChoice materialChoice ->
+                    new ItemStack(materialChoice.getChoices().get(getNewIndex()));
+            case RecipeChoice.ExactChoice exactChoice -> exactChoice.getChoices().get(getNewIndex());
+            default -> ((CustomRecipeChoice) choice).getAllPossible().get(getNewIndex());
+        };
     }
 
 

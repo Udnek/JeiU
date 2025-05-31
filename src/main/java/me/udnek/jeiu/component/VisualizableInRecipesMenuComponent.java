@@ -1,7 +1,7 @@
 package me.udnek.jeiu.component;
 
-import me.udnek.itemscoreu.customcomponent.CustomComponent;
-import me.udnek.itemscoreu.customcomponent.CustomComponentType;
+import me.udnek.coreu.custom.component.CustomComponent;
+import me.udnek.coreu.custom.component.CustomComponentType;
 import me.udnek.jeiu.visualizer.abstraction.Visualizer;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,6 +1,6 @@
 package me.udnek.jeiu.util;
 
-import me.udnek.itemscoreu.customevent.CustomEvent;
+import me.udnek.coreu.custom.event.CustomEvent;
 import me.udnek.jeiu.visualizer.abstraction.Visualizable;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;

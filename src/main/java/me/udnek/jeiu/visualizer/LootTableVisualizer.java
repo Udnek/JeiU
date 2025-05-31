@@ -1,9 +1,9 @@
 package me.udnek.jeiu.visualizer;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import me.udnek.itemscoreu.customloot.LootTableUtils;
-import me.udnek.itemscoreu.nms.Nms;
-import me.udnek.itemscoreu.util.LogUtils;
+import me.udnek.coreu.custom.loot.LootTableUtils;
+import me.udnek.coreu.nms.Nms;
+import me.udnek.coreu.util.LogUtils;
 import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;

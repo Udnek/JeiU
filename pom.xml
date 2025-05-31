@@ -13,7 +13,7 @@
 
     <properties>
         <java.version>21</java.version>
-        <lib.itemscoreu>C:\Users\glebd\OneDrive\Documents\CODING\Java\ItemsCoreU\target\ItemsCoreU-1.0-SNAPSHOT-remapped.jar</lib.itemscoreu>
+        <lib.coreu>C:\Users\glebd\OneDrive\Documents\CODING\Java\ItemsCoreU\target\CoreU-1.0-SNAPSHOT-remapped.jar</lib.coreu>
     </properties>
 
     <build>
@@ -73,10 +73,10 @@
 
         <dependency>
             <groupId>me.udnek</groupId>
-            <artifactId>ItemsCoreU</artifactId>
+            <artifactId>CoreU</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${lib.itemscoreu}</systemPath>
+            <systemPath>${lib.coreu}</systemPath>
         </dependency>
     </dependencies>
 

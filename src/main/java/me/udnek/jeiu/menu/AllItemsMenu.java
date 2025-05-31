@@ -1,8 +1,8 @@
 package me.udnek.jeiu.menu;
 
-import me.udnek.itemscoreu.custominventory.ConstructableCustomInventory;
-import me.udnek.itemscoreu.customitem.ItemUtils;
-import me.udnek.itemscoreu.util.ComponentU;
+import me.udnek.coreu.custom.inventory.ConstructableCustomInventory;
+import me.udnek.coreu.custom.item.ItemUtils;
+import me.udnek.coreu.util.ComponentU;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;

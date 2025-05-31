@@ -2,7 +2,7 @@ package me.udnek.jeiu.menu;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.CustomModelData;
-import me.udnek.itemscoreu.customitem.CustomItem;
+import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.jeiu.visualizer.animator.Animator;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;

@@ -1,14 +1,14 @@
 package me.udnek.jeiu.menu;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.customitem.VanillaItemManager;
-import me.udnek.itemscoreu.customrecipe.CustomRecipe;
-import me.udnek.itemscoreu.customrecipe.RecipeManager;
-import me.udnek.itemscoreu.customregistry.AbstractRegistrable;
-import me.udnek.itemscoreu.customregistry.CustomRegistries;
-import me.udnek.itemscoreu.customregistry.CustomRegistry;
-import me.udnek.itemscoreu.customregistry.MappedCustomRegistry;
+import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.custom.item.VanillaItemManager;
+import me.udnek.coreu.custom.recipe.CustomRecipe;
+import me.udnek.coreu.custom.recipe.RecipeManager;
+import me.udnek.coreu.custom.registry.AbstractRegistrable;
+import me.udnek.coreu.custom.registry.CustomRegistries;
+import me.udnek.coreu.custom.registry.CustomRegistry;
+import me.udnek.coreu.custom.registry.MappedCustomRegistry;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.item.Items;

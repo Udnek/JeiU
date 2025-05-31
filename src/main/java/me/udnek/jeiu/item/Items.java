@@ -1,8 +1,8 @@
 package me.udnek.jeiu.item;
 
-import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.customregistry.CustomRegistries;
-import me.udnek.itemscoreu.util.ComponentU;
+import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.custom.registry.CustomRegistries;
+import me.udnek.coreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;

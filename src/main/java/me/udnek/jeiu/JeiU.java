@@ -1,9 +1,10 @@
 package me.udnek.jeiu;
 
-import me.udnek.itemscoreu.customcomponent.CustomComponentType;
-import me.udnek.itemscoreu.customhelp.CustomHelpCommand;
-import me.udnek.itemscoreu.customitem.CustomItem;
-import me.udnek.itemscoreu.resourcepack.ResourcePackablePlugin;
+import me.udnek.coreu.custom.component.CustomComponentType;
+import me.udnek.coreu.custom.help.CustomHelpCommand;
+import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.custom.item.CustomItemComponent;
+import me.udnek.coreu.resourcepack.ResourcePackablePlugin;
 import me.udnek.jeiu.command.AllItemsCommand;
 import me.udnek.jeiu.command.RecipeCommand;
 import me.udnek.jeiu.command.RecipeUsagesCommand;
@@ -26,7 +27,7 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
     @Override
     public void onEnable() {
         instance = this;
-        CustomComponentType<CustomItem, ?> technicalItem = Components.TECHNICAL_ITEM;
+        CustomComponentType<CustomItem, CustomItemComponent> componentType = Components.HIDDEN_ITEM;
         ItemStack item = Items.BANNER.getItem();
 
         getCommand("recipe").setExecutor(new RecipeCommand());
