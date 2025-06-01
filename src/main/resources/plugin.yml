@@ -2,7 +2,7 @@ name: JeiU
 version: '${project.version}'
 main: me.udnek.jeiu.JeiU
 api-version: '1.21.4'
-depend: [ItemsCoreU]
+depend: [CoreU]
 commands:
   recipe:
     description: "recipe"
