@@ -13,6 +13,7 @@ import me.udnek.jeiu.item.Items;
 import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 
 public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
@@ -40,7 +41,11 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
     }
 
     @Override
-    public void onDisable() {
+    public void onDisable() {}
+
+    @Override
+    public @NotNull Priority getPriority() {
+        return Priority.TECHNICAL;
     }
 }
 
