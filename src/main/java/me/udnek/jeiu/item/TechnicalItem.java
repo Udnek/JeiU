@@ -1,6 +1,7 @@
 package me.udnek.jeiu.item;
 
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
+import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
 import me.udnek.jeiu.component.Components;
@@ -58,7 +59,7 @@ public class TechnicalItem extends ConstructableCustomItem {
     }
 
     @Override
-    public @Nullable Boolean getHideTooltip() {
-        return false;
+    public @Nullable DataSupplier<io.papermc.paper.datacomponent.item.TooltipDisplay> getTooltipDisplay() {
+        return DataSupplier.of(TooltipDisplay.tooltipDisplay().hideTooltip(true).build());
     }
 }
