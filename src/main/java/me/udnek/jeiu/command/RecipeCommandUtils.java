@@ -3,9 +3,11 @@ package me.udnek.jeiu.command;
 import me.udnek.coreu.custom.item.ItemUtils;
 import me.udnek.coreu.custom.registry.CustomRegistries;
 import org.bukkit.Material;
+import org.bukkit.Registry;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,13 +26,10 @@ public class RecipeCommandUtils {
             return itemInMainHand;
         }
         String id = args[0];
-        if (!ItemUtils.isCustomItemOrMaterial(id)) return null;
-        ItemStack customItemOrMaterial = ItemUtils.getFromCustomItemOrMaterial(id);
-        if (customItemOrMaterial.getType() == Material.AIR) return null;
-        return customItemOrMaterial;
+        return ItemUtils.getFromCustomItemOrMaterial(id);
     }
 
-    public static List<String> getOptions(CommandSender commandSender, String[] args) {
+    public static @NotNull List<String> getOptions(@NotNull CommandSender commandSender, @NotNull String[] args) {
         if (args.length > 1) return new ArrayList<>();
 
         final String search = args[0];
@@ -40,8 +39,9 @@ public class RecipeCommandUtils {
             if (id.contains(search)) options.add(id);
         }
 
-        for (Material material : Material.values()) {
-            String materialName = material.toString().toLowerCase();
+        for (Material type : Material.values()) {
+            if (!type.isItem()) continue;
+            String materialName = type.toString().toLowerCase();
             if (materialName.contains(search)) options.add(materialName);
         }
 

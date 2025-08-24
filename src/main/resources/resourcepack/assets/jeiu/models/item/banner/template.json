@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"layer0": "jeiu:item/banner/template"
@@ -20,7 +21,7 @@
 	"gui_light": "front",
 	"display": {
 		"gui": {
-			"translation": [-76, -34, 0],
+			"translation": [-76, -34, -80],
 			"scale": [4, 4, 4]
 		}
 	}

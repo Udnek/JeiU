@@ -13,7 +13,7 @@
 
     <properties>
         <java.version>21</java.version>
-        <lib.coreu>C:\Users\glebd\OneDrive\Documents\CODING\Java\CoreU\target\CoreU-1.0-SNAPSHOT-remapped.jar</lib.coreu>
+        <lib.coreu>C:\Users\glebd\OneDrive\Documents\CODING\Java\CoreU\build\libs\CoreU-1.0-SNAPSHOT.jar</lib.coreu>
     </properties>
 
     <build>

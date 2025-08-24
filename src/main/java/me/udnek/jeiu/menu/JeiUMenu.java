@@ -29,22 +29,14 @@ public interface JeiUMenu extends ClickableMenu{
         else setThemedItem(index, customItem.getItem());
     }
 
-    default void setItem(int index, @Nullable ItemStack itemStack) {
-        getInventory().setItem(index, itemStack);
-    }
+    void setItem(int index, @Nullable ItemStack stack);
+
     default void setItem(int index, @Nullable RecipeChoice recipeChoice) {
         if (recipeChoice == null) return;
         setItem(index, recipeChoice.getItemStack());
     }
-    default void setItem(int index, @NotNull Material material) {
-        if (!material.isItem()) return;
-        setItem(index, new ItemStack(material));
-    }
     default void setItem(@NotNull Animator animator) {
         setItem(animator.getPosition(), animator.getNextFrame());
-    }
-    default void setItem(int index, @NotNull CustomItem customItem){
-        setItem(index, customItem.getItem());
     }
 
     @Override

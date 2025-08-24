@@ -1,5 +1,6 @@
 package me.udnek.jeiu.item;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers;
 import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
@@ -27,8 +28,7 @@ public class TechnicalItem extends ConstructableCustomItem {
     public TechnicalItem(@NotNull String rawId, boolean hideTooltip){
         this(rawId, hideTooltip, null);
     }
-
-
+    
     @Override
     public void initializeComponents() {
         super.initializeComponents();
@@ -39,11 +39,6 @@ public class TechnicalItem extends ConstructableCustomItem {
     @Override
     public @Nullable DataSupplier<ItemAttributeModifiers> getAttributeModifiers() {
         return DataSupplier.of(null);
-    }
-
-    @Override
-    public @Nullable List<ItemFlag> getTooltipHides() {
-        return List.of(ItemFlag.HIDE_ADDITIONAL_TOOLTIP, ItemFlag.HIDE_ATTRIBUTES);
     }
 
     @Override
@@ -60,6 +55,10 @@ public class TechnicalItem extends ConstructableCustomItem {
 
     @Override
     public @Nullable DataSupplier<io.papermc.paper.datacomponent.item.TooltipDisplay> getTooltipDisplay() {
-        return DataSupplier.of(TooltipDisplay.tooltipDisplay().hideTooltip(true).build());
+        return DataSupplier.of(TooltipDisplay.tooltipDisplay()
+                .hideTooltip(hideTooltip)
+                .addHiddenComponents(DataComponentTypes.ATTRIBUTE_MODIFIERS)
+                .build()
+        );
     }
 }
