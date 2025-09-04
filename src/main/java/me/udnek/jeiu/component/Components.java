@@ -4,16 +4,15 @@ import me.udnek.coreu.custom.component.ConstructableComponentType;
 import me.udnek.coreu.custom.component.CustomComponent;
 import me.udnek.coreu.custom.component.CustomComponentType;
 import me.udnek.coreu.custom.item.CustomItem;
-import me.udnek.coreu.custom.item.CustomItemComponent;
 import me.udnek.coreu.custom.registry.CustomRegistries;
 import me.udnek.jeiu.JeiU;
 
 
 public class Components {
     // TODO: 10/12/2024 USE INSTEADOF HARD INHERITANCE
-    public static final CustomComponentType<Object, ?> VISUALIZABLE_IN_RECIPES_MENU;
-    public static final CustomComponentType<CustomItem, CustomItemComponent> HIDDEN_ITEM;
-    public static final CustomComponentType<CustomItem, CustomItemComponent> TECHNICAL_ITEM;
+    public static final CustomComponentType<Object, VisualizableInRecipesMenuComponent> VISUALIZABLE_IN_RECIPES_MENU;
+    public static final CustomComponentType<CustomItem, HiddenItemComponent> HIDDEN_ITEM;
+    public static final CustomComponentType<CustomItem, TechnicalItemComponent> TECHNICAL_ITEM;
 
     static {
         VISUALIZABLE_IN_RECIPES_MENU = register(new ConstructableComponentType<>("visualizable_in_recipes_menu", VisualizableInRecipesMenuComponent.DEFAULT));

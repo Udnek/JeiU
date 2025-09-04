@@ -2,10 +2,10 @@ package me.udnek.jeiu.component;
 
 import me.udnek.coreu.custom.component.CustomComponentType;
 import me.udnek.coreu.custom.item.CustomItem;
-import me.udnek.coreu.custom.item.CustomItemComponent;
+import me.udnek.coreu.custom.item.LoreProvidingItemComponent;
 import org.jetbrains.annotations.NotNull;
 
-public class TechnicalItemComponent implements CustomItemComponent {
+public class TechnicalItemComponent implements LoreProvidingItemComponent {
 
     public static TechnicalItemComponent INSTANCE = new TechnicalItemComponent();
 
