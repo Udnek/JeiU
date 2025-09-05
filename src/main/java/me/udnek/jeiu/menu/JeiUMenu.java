@@ -6,7 +6,6 @@ import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.jeiu.visualizer.animator.Animator;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.NotNull;

@@ -3,11 +3,9 @@ package me.udnek.jeiu.command;
 import me.udnek.coreu.custom.item.ItemUtils;
 import me.udnek.coreu.custom.registry.CustomRegistries;
 import org.bukkit.Material;
-import org.bukkit.Registry;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ItemType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
