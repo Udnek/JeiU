@@ -1,6 +1,7 @@
 package me.udnek.jeiu;
 
 import me.udnek.coreu.custom.help.CustomHelpCommand;
+import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.coreu.mgu.MGUItems;
 import me.udnek.coreu.resourcepack.ResourcePackablePlugin;
 import me.udnek.jeiu.command.AllItemsCommand;
@@ -26,7 +27,7 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
     @Override
     public void onEnable() {
         instance = this;
-        ItemStack item = Items.BANNER.getItem();
+        CustomItem item = Items.BANNER;
 
         MGUItems.COORDINATE_WAND.getComponents().set(HiddenItemComponent.INSTANCE);
 
