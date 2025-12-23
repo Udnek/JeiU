@@ -9,8 +9,8 @@ import me.udnek.jeiu.command.RecipeCommand;
 import me.udnek.jeiu.command.RecipeUsagesCommand;
 import me.udnek.jeiu.component.HiddenItemComponent;
 import me.udnek.jeiu.item.Items;
+import me.udnek.jeiu.menu.Category;
 import net.kyori.adventure.text.Component;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,6 +28,7 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
     public void onEnable() {
         instance = this;
         CustomItem item = Items.BANNER;
+        Category category = Category.ALL_ITEMS;
 
         MGUItems.COORDINATE_WAND.getComponents().set(HiddenItemComponent.INSTANCE);
 

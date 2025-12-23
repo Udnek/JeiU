@@ -6,6 +6,7 @@ import io.papermc.paper.datacomponent.item.TooltipDisplay;
 import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
 import me.udnek.jeiu.component.Components;
+import me.udnek.jeiu.component.RecipeAndUsagesItem;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +32,8 @@ public class TechnicalItem extends ConstructableCustomItem {
     @Override
     public void initializeComponents() {
         super.initializeComponents();
-        getComponents().set(Components.TECHNICAL_ITEM.getDefault());
+        getComponents().set(RecipeAndUsagesItem.EMPTY);
+        getComponents().set(Components.ALWAYS_HIDDEN_ITEM.getDefault());
         getComponents().set(AutoGeneratingFilesItem.CUSTOM_MODEL_DATA_COLORABLE);
     }
 

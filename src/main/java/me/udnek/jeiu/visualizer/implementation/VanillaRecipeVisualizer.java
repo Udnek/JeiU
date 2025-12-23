@@ -1,10 +1,9 @@
-package me.udnek.jeiu.visualizer;
+package me.udnek.jeiu.visualizer.implementation;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;
-import me.udnek.jeiu.visualizer.abstraction.AbstractVisualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Keyed;
@@ -16,24 +15,24 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class VanillaRecipeVisualizer extends AbstractVisualizer {
+public class VanillaRecipeVisualizer extends AbstractRecipeVisualizer {
 
-    public static final int CRAFTING_MATRIX_OFFSET = 9 * 1 + 1;
-    public static final int CRAFTING_RESULT_OFFSET = 9 * 2 + 5;
+    public static final int CRAFTING_MATRIX_OFFSET = 9 * 1 + 1 + RecipesMenu.VISUALIZER_X_OFFSET;
+    public static final int CRAFTING_RESULT_OFFSET = 9 * 2 + 5 + RecipesMenu.VISUALIZER_X_OFFSET;
 
-    public static final int COOKING_INPUT_OFFSET = 9 * 1 + 2;
-    public static final int COOKING_RESULT_OFFSET = 9 * 2 + 5;
+    public static final int COOKING_INPUT_OFFSET = 9 * 1 + 2 + RecipesMenu.VISUALIZER_X_OFFSET;
+    public static final int COOKING_RESULT_OFFSET = 9 * 2 + 5 + RecipesMenu.VISUALIZER_X_OFFSET;
 
-    public static final int SMITHING_TEMPLATE_OFFSET = 9 * 2 + 1;
-    public static final int SMITHING_BASE_OFFSET = 9 * 2 + 2;
-    public static final int SMITHING_ADDITION_OFFSET = 9 * 2 + 3;
-    public static final int SMITHING_RESULT_OFFSET = 9 * 2 + 5;
+    public static final int SMITHING_TEMPLATE_OFFSET = 9 * 2 + 1 + RecipesMenu.VISUALIZER_X_OFFSET;
+    public static final int SMITHING_BASE_OFFSET = 9 * 2 + 2 + RecipesMenu.VISUALIZER_X_OFFSET;
+    public static final int SMITHING_ADDITION_OFFSET = 9 * 2 + 3 + RecipesMenu.VISUALIZER_X_OFFSET;
+    public static final int SMITHING_RESULT_OFFSET = 9 * 2 + 5 + RecipesMenu.VISUALIZER_X_OFFSET;
 
-    public static final int STONECUTTING_INPUT_OFFSET = 9 * 2 + 2;
-    public static final int STONECUTTING_RESULT_OFFSET = 9 * 2 + 5;
+    public static final int STONECUTTING_INPUT_OFFSET = 9 * 2 + 2 + RecipesMenu.VISUALIZER_X_OFFSET;
+    public static final int STONECUTTING_RESULT_OFFSET = 9 * 2 + 5 + RecipesMenu.VISUALIZER_X_OFFSET;
 
     public static final int RECIPE_BANNER_OFFSET = RecipesMenu.getBannerPosition();
-    public static final int COOKING_RECIPE_FIRE_ICON_OFFSET = 9 * 2 + 2;
+    public static final int COOKING_RECIPE_FIRE_ICON_OFFSET = 9 * 2 + 2 + RecipesMenu.VISUALIZER_X_OFFSET;
 
     public static final ItemStack FIRE_ICON = Items.FIRE_ICON.getItem();
 
@@ -173,10 +172,8 @@ public class VanillaRecipeVisualizer extends AbstractVisualizer {
             blockMaterial = Material.BARRIER;
         }
 
-        ItemStack itemStack = Items.BANNER.getItem().clone();
-        itemStack.setData(DataComponentTypes.ITEM_MODEL, bannerModel);
-
-        menu.setThemedItem(RECIPE_BANNER_OFFSET, itemStack);
+        assert bannerModel != null;
+        menu.setThemedItem(RECIPE_BANNER_OFFSET, BannerItem.withModel(bannerModel));
         menu.setItem(RecipesMenu.getRecipeStationPosition(), blockMaterial);
     }
 }

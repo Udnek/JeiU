@@ -34,9 +34,6 @@ public interface JeiUMenu extends ClickableMenu{
         if (recipeChoice == null) return;
         setItem(index, recipeChoice.getItemStack());
     }
-    default void setItem(@NotNull Animator animator) {
-        setItem(animator.getPosition(), animator.getNextFrame());
-    }
 
     @Override
     default boolean shouldAutoUpdateItems() {

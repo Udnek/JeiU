@@ -2,8 +2,8 @@ package me.udnek.jeiu.visualizer;
 
 import com.google.common.base.Preconditions;
 import me.udnek.jeiu.util.Utils;
-import me.udnek.jeiu.visualizer.abstraction.Visualizable;
-import me.udnek.jeiu.visualizer.abstraction.Visualizer;
+import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
+import me.udnek.jeiu.visualizer.implementation.VanillaRecipeVisualizer;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.loot.LootTable;
 import org.jetbrains.annotations.NotNull;

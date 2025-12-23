@@ -1,11 +1,13 @@
 package me.udnek.jeiu.item;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
 import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.coreu.resourcepack.path.VirtualRpJsonFile;
 import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.key.Key;
 import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,6 +24,12 @@ public class BannerItem extends TechnicalItem{
     public static final Key SMALL_LOOT_TABLE = new NamespacedKey(JeiU.getInstance(), "banner/small_loot_table");
     public static final Key SMITHING_TABLE = new NamespacedKey(JeiU.getInstance(), "banner/smithing_table");
     public static final Key STONECUTTER = new NamespacedKey(JeiU.getInstance(), "banner/stonecutter");
+
+    public static @NotNull ItemStack withModel(@NotNull Key key){
+        ItemStack item = Items.BANNER.getItem();
+        item.setData(DataComponentTypes.ITEM_MODEL, key);
+        return item;
+    }
 
     public BannerItem() {
         super("banner", false);

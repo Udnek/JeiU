@@ -13,6 +13,6 @@ public class TechnicalItemComponent implements CustomComponent<CustomItem> {
 
     @Override
     public @NotNull CustomComponentType<CustomItem, ?> getType() {
-        return Components.TECHNICAL_ITEM;
+        return Components.ALWAYS_HIDDEN_ITEM;
     }
 }

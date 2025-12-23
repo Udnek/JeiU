@@ -1,4 +1,4 @@
-package me.udnek.jeiu.visualizer.abstraction;
+package me.udnek.jeiu.visualizer;
 
 import me.udnek.jeiu.menu.RecipesMenu;
 import net.kyori.adventure.text.Component;

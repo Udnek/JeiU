@@ -21,9 +21,11 @@ import java.util.List;
 
 public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMenu {
 
-    public static final int PREVIOUS_BUTTON_POSITION = 9-1;
-    public static final int NEXT_BUTTON_POSITION = 2*9-1;
-    public static final int SWITCH_BUTTON_POSITION = 3*9-1;
+    public static final int SWITCH_BUTTON_POSITION = 3*9;
+    public static final int PREVIOUS_BUTTON_POSITION = 4*9;
+    public static final int NEXT_BUTTON_POSITION = 5*9;
+
+    public static final int CONTENT_OFFSET_X = 1;
 
     public static final int MAX_COLUMN = 9-2;
     public static final int ITEMS_PER_PAGE = 8*6;
@@ -55,7 +57,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
         while (index < all.size()) {
             if (row*9+column >= getInventorySize()) break;
             ItemStack customItem = all.get(index);
-            setItem(row*9+column, customItem);
+            setItem(row*9+column+CONTENT_OFFSET_X, customItem);
 
             column++;
             index++;
@@ -89,9 +91,9 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     @Override
     public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
         if (event.isLeftClick()) {
-            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, getBackCall(), true), event);
+            runNewQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, event);
         } else if (event.isRightClick()) {
-            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.USAGES, getBackCall(), true), event);
+            runNewQuery(event.getCurrentItem(), MenuQuery.Type.USAGES, event);
         }
     }
 
@@ -104,16 +106,20 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
         showItems(0);
     }
 
-    @Override
-    public void runNewQuery(@NotNull MenuQuery menuQuery, @Nullable InventoryClickEvent event) {
-        if (event == null) return;
-        menuQuery.setBackCall(() -> {
-            AllItemsMenu menu = new AllItemsMenu();
-            menu.category = this.category;
-            menu.open((Player) event.getWhoClicked());
-            menu.showItems(firstItemIndex);
-        });
-        new RecipesMenu((Player) event.getWhoClicked()).runNewQuery(menuQuery, event);
+
+    public void runNewQuery(@NotNull ItemStack stack, @NotNull MenuQuery.Type type, @NotNull InventoryClickEvent event) {
+        var query = new MenuQuery(
+                stack,
+                type,
+                () -> {
+                    AllItemsMenu menu = new AllItemsMenu();
+                    menu.category = this.category;
+                    menu.open((Player) event.getWhoClicked());
+                    menu.showItems(firstItemIndex);
+                },
+                true
+        );
+        new RecipesMenu((Player) event.getWhoClicked()).runNewQuery(query);
     }
 
     @Override
@@ -125,9 +131,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
         showItems(lastItemIndex+1);
     }
     @Override
-    public void pressedBack(@NotNull InventoryClickEvent event) {}
-    @Override
-    public @Nullable BackCallable getBackCall() {return null;}
+    public void pressedCallback(@NotNull InventoryClickEvent event) {}
     @Override
     public int getInventorySize() {
         return 9*6;

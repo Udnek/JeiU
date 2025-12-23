@@ -1,0 +1,146 @@
+package me.udnek.jeiu.visualizer.implementation;
+
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import me.udnek.coreu.custom.item.ItemUtils;
+import me.udnek.coreu.custom.loot.LootTableUtils;
+import me.udnek.coreu.nms.Nms;
+import me.udnek.coreu.util.LogUtils;
+import me.udnek.jeiu.item.BannerItem;
+import me.udnek.jeiu.item.Items;
+import me.udnek.jeiu.item.LootTableIconItem;
+import me.udnek.jeiu.menu.RecipesMenu;
+import me.udnek.jeiu.util.Utils;
+import me.udnek.jeiu.visualizer.Visualizer;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootTable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class LootTableVisualizer implements Visualizer {
+
+    private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9*1 + 1 + RecipesMenu.VISUALIZER_X_OFFSET, BannerItem.SMALL_LOOT_TABLE);
+    private static final Layout MIDDLE_LAYOUT = new Layout(7, 5, 1 + RecipesMenu.VISUALIZER_X_OFFSET, BannerItem.MIDDLE_LOOT_TABLE);
+    private static final Layout BIG_LAYOUT = new Layout(8, 6, RecipesMenu.VISUALIZER_X_OFFSET, BannerItem.BIG_LOOT_TABLE);
+
+    private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
+
+    private final LootTable lootTable;
+    private RecipesMenu recipesMenu;
+
+    public LootTableVisualizer(@NotNull LootTable lootTable){
+        this.lootTable = lootTable;
+    }
+
+    @Override
+    public @Nullable List<Component> getInformation() {
+        return List.of(Component.text("ID: " + lootTable.getKey().asString()));
+    }
+
+    @Override
+    public void tickAnimation() {}
+
+    public void visualize(@NotNull RecipesMenu recipesMenu) {
+        this.recipesMenu = recipesMenu;
+
+        List<ItemStack> possibleLoot = LootTableUtils.getPossibleLoot(lootTable);
+
+        if (possibleLoot.size() > MAX_CAPACITY) {
+            LogUtils.log(String.format("LootTable (%s) overloaded max capacity (%d): %d. Clearing duplicates.", lootTable.key(), MAX_CAPACITY, possibleLoot.size()));
+            possibleLoot = clearDuplicates(possibleLoot);
+            if (possibleLoot.size() > MAX_CAPACITY) {
+                LogUtils.log(String.format("Still overloads capacity (%d): %d. Cutting.", MAX_CAPACITY, possibleLoot.size()));
+                possibleLoot = possibleLoot.subList(0, MAX_CAPACITY);
+            }
+        }
+
+        Layout layout = BIG_LAYOUT;
+        if (SMALL_LAYOUT.willFitIn(possibleLoot.size())) layout = SMALL_LAYOUT;
+        else if (MIDDLE_LAYOUT.willFitIn(possibleLoot.size())) layout = MIDDLE_LAYOUT;
+
+        int collum = 0;
+        int row = 0;
+
+        for (ItemStack itemStack : possibleLoot) {
+            recipesMenu.setItem(row * 9 + collum + layout.offset, itemStack);
+            collum++;
+            if (collum % layout.x == 0) {
+                collum = 0;
+                row++;
+            }
+        }
+
+        recipesMenu.setThemedItem(RecipesMenu.getBannerPosition(), BannerItem.withModel(layout.model));
+        recipesMenu.setItem(RecipesMenu.getRecipeStationPosition(), LootTableIconItem.withLootTable(lootTable));
+    }
+
+    public @NotNull List<ItemStack> clearDuplicates(@NotNull List<ItemStack> itemStacks) {
+        List<ItemStack> newItems = new ArrayList<>();
+        for (ItemStack itemStack : itemStacks) {
+            boolean contains = newItems.stream().anyMatch(addedItem -> ItemUtils.isSameIds(addedItem, itemStack));
+            if (!contains) newItems.add(itemStack);
+        }
+        return newItems;
+    }
+
+
+    public static class Layout {
+        public final int x;
+        public final int y;
+        public final int offset;
+        public final @NotNull Key model;
+
+        Layout(int x, int y, int offset, @NotNull Key key) {
+            this.x = x;
+            this.y = y;
+            this.offset = offset;
+            this.model = key;
+        }
+
+        int getCapacity() {
+            return x * y;
+        }
+
+        boolean willFitIn(int capacity) {
+            return capacity <= getCapacity();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

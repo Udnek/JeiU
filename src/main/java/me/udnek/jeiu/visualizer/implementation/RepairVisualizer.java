@@ -1,4 +1,4 @@
-package me.udnek.jeiu.visualizer;
+package me.udnek.jeiu.visualizer.implementation;
 
 import com.google.common.base.Preconditions;
 import io.papermc.paper.datacomponent.DataComponentTypes;
@@ -7,9 +7,9 @@ import io.papermc.paper.registry.TypedKey;
 import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.coreu.custom.item.RepairData;
 import me.udnek.jeiu.JeiU;
+import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.RecipesMenu;
-import me.udnek.jeiu.visualizer.abstraction.AbstractVisualizer;
 import me.udnek.jeiu.visualizer.animator.ListAnimator;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class RepairVisualizer extends AbstractVisualizer {
+public class RepairVisualizer extends AbstractRecipeVisualizer {
 
     public static final int RESULTS_POSITION = VanillaRecipeVisualizer.CRAFTING_RESULT_OFFSET;
     public static final int REPAIRING_POSITION = RESULTS_POSITION -2;
@@ -69,9 +69,7 @@ public class RepairVisualizer extends AbstractVisualizer {
     }
 
     void setBanner(){
-        ItemStack stack = Items.BANNER.getItem();
-        stack.setData(DataComponentTypes.ITEM_MODEL, new NamespacedKey(JeiU.getInstance(), "banner/anvil"));
-        menu.setThemedItem(RecipesMenu.getBannerPosition(), stack);
+        menu.setThemedItem(RecipesMenu.getBannerPosition(), BannerItem.withModel(BannerItem.ANVIL));
         menu.setItem(RecipesMenu.getRecipeStationPosition(), Material.ANVIL);
     }
 

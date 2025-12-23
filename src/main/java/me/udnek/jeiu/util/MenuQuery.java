@@ -6,10 +6,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class MenuQuery {
 
-    private ItemStack itemStack;
-    private Type type;
+    private final ItemStack itemStack;
+    private final Type type;
     private BackCallable backCall;
-    private boolean openIfNothingFound;
+    public final boolean openIfNothingFound;
 
     public MenuQuery(@NotNull ItemStack itemStack, @NotNull Type type, @Nullable BackCallable backCall, boolean openIfNothingFound){
         this.itemStack = itemStack;
@@ -26,12 +26,14 @@ public class MenuQuery {
         return type;
     }
     public @NotNull ItemStack getItemStack() {
-        return itemStack.clone();
+        return itemStack;
     }
-    public @Nullable BackCallable getBackCall() {return backCall;}
-    public void setBackCall(@Nullable BackCallable backCall){this.backCall = backCall;}
-    public boolean isOpenIfNothingFound() {return openIfNothingFound;}
-    public void setOpenIfNothingFound(boolean openIfNothingFound) {this.openIfNothingFound = openIfNothingFound;}
+    public @Nullable BackCallable getCallback() {
+        return backCall;
+    }
+    public void setBackCall(@Nullable BackCallable backCall){
+        this.backCall = backCall;
+    }
 
     public enum Type{
         USAGES,

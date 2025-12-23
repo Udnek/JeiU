@@ -12,6 +12,6 @@ public class HiddenItemComponent implements CustomComponent<CustomItem> {
 
     @Override
     public @NotNull CustomComponentType<? super CustomItem, ? extends CustomComponent<? super CustomItem>> getType() {
-        return Components.HIDDEN_ITEM;
+        return Components.HIDDEN_FROM_NORMAL_PLAYERS_ITEM;
     }
 }

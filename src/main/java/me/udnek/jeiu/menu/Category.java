@@ -1,6 +1,9 @@
 package me.udnek.jeiu.menu;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.coreu.custom.item.VanillaItemManager;
 import me.udnek.coreu.custom.recipe.CustomRecipe;
@@ -9,29 +12,25 @@ import me.udnek.coreu.custom.registry.AbstractRegistrable;
 import me.udnek.coreu.custom.registry.CustomRegistries;
 import me.udnek.coreu.custom.registry.CustomRegistry;
 import me.udnek.coreu.custom.registry.MappedCustomRegistry;
+import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.item.Items;
+import me.udnek.jeiu.item.StructureIconItem;
 import me.udnek.jeiu.item.SwitchItem;
 import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
+import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Category extends AbstractRegistrable {
 
     public static final CustomRegistry<Category> REGISTRY = CustomRegistries.addRegistry(JeiU.getInstance(), new MappedCustomRegistry<>("category"));
-
-
 
     public static final Category ALL_ITEMS = register(new Category("all_items") {
         @Override
@@ -48,8 +47,8 @@ public abstract class Category extends AbstractRegistrable {
 
             List<ItemStack> all = new ArrayList<>();
             CustomRegistries.ITEM.getAll(customItem -> {
-                if (customItem.getComponents().has(Components.TECHNICAL_ITEM)) return;
-                if (!forceShowHidden && customItem.getComponents().has(Components.HIDDEN_ITEM)) return;
+                if (customItem.getComponents().has(Components.ALWAYS_HIDDEN_ITEM)) return;
+                if (!forceShowHidden && customItem.getComponents().has(Components.HIDDEN_FROM_NORMAL_PLAYERS_ITEM)) return;
                 all.add(customItem.getItem());
             });
 
@@ -130,11 +129,29 @@ public abstract class Category extends AbstractRegistrable {
             return stacks;
         }
     });
+    public static final Category STRUCTURES = register(new Category("structures") {
+        @Override
+        public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
+            ItemStack item = Items.SWITCH.getItem();
+            item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.structures"));
+            item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.STRUCTURES);
+            return item;
+        }
+
+        @Override
+        public @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context) {
+            List<ItemStack> items = new ArrayList<>();
+            Registry<@NotNull Structure> registry = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE);
+            registry.keyStream().forEach(structure -> {
+                items.add(StructureIconItem.withStructure(structure));
+            });
+            return items;
+        }
+    });
 
     private static @NotNull Category register(@NotNull Category category){
         return REGISTRY.register(JeiU.getInstance(), category);
     }
-
 
     private final String rawId;
 
@@ -144,7 +161,9 @@ public abstract class Category extends AbstractRegistrable {
 
     @Override
     @NotNull
-    public String getRawId() {return rawId;}
+    public String getRawId() {
+        return rawId;
+    }
 
     public abstract @NotNull ItemStack getIcon(@NotNull AllItemsMenu context);
     public abstract @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context);

@@ -4,20 +4,15 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.udnek.coreu.custom.inventory.ConstructableCustomInventory;
 import me.udnek.coreu.custom.item.CustomItem;
-import me.udnek.coreu.custom.item.ItemUtils;
-import me.udnek.coreu.custom.loot.LootTableUtils;
-import me.udnek.coreu.custom.recipe.RecipeManager;
 import me.udnek.coreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
+import me.udnek.jeiu.component.RecipeAndUsagesItem;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
 import me.udnek.jeiu.util.MenuQueryEvent;
-import me.udnek.jeiu.util.Utils;
-import me.udnek.jeiu.visualizer.RepairVisualizer;
-import me.udnek.jeiu.visualizer.abstraction.Visualizable;
-import me.udnek.jeiu.visualizer.abstraction.Visualizer;
+import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -25,8 +20,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
-import org.bukkit.loot.LootTable;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
@@ -37,15 +30,16 @@ import java.util.List;
 
 public class RecipesMenu extends ConstructableCustomInventory implements JeiUMenu {
 
-    private static final int BACK_BUTTON_POSITION = 9*1-1;
-    private static final int BANNER_AND_INFO_POSITION = 9*2-1;
-    private static final int RECIPE_STATION_POSITION = 9*3-1;
-    private static final int HELP_BUTTON_POSITION = 9*4-1;
-    private static final int PREVIOUS_BUTTON_POSITION = 9*5-1;
-    private static final int NEXT_BUTTON_POSITION = 9*6-1;
+    public static final int BANNER_AND_INFO_POSITION = 0;
+    public static final int HELP_BUTTON_POSITION = 9*1;
+    public static final int RECIPE_STATION_POSITION = 9*2;
+    public static final int BACK_BUTTON_POSITION = 9*3;
+    public static final int PREVIOUS_BUTTON_POSITION = 9*4;
+    public static final int NEXT_BUTTON_POSITION = 9*5;
+    public static final int VISUALIZER_X_OFFSET = 1;
 
     private BukkitTask animatorTicker = null;
-    private List<Visualizable> visualizables;
+    private List<Visualizer> recipes;
     private int recipeIndex;
     private Visualizer currentRecipe;
 
@@ -56,87 +50,107 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         this.player = player;
     }
 
+    public @NotNull MenuQuery getQuery() {
+        return query;
+    }
+
     @Override
-    public void pressedBack(@NotNull InventoryClickEvent event) {
-        BackCallable backCall = query.getBackCall();
-        if (backCall != null) backCall.backCall();
+    public void pressedCallback(@NotNull InventoryClickEvent event) {
+        BackCallable backCall = query.getCallback();
+        if (backCall != null) backCall.callback();
     }
     @Override
-    public void pressedNext(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex+1);}
+    public void pressedNext(@NotNull InventoryClickEvent event) {
+        openRecipe(recipeIndex+1);
+    }
     @Override
-    public void pressedPrevious(@NotNull InventoryClickEvent event) {openRecipeNumber(recipeIndex-1);}
+    public void pressedPrevious(@NotNull InventoryClickEvent event) {
+        openRecipe(recipeIndex-1);
+    }
 
-    protected void openRecipeNumber(int recipeIndex) {
-        this.recipeIndex = Math.clamp(recipeIndex, 0, Math.max(0, visualizables.size()-1));
+    protected void openRecipe(int recipeIndex) {
+        this.recipeIndex = Math.clamp(recipeIndex, 0, Math.max(0, recipes.size()-1));
         runPage();
     }
 
     private boolean isTechnical(@Nullable ItemStack itemStack){
         if (itemStack == null) return false;
-        return CustomItem.isCustom(itemStack) && CustomItem.get(itemStack).getComponents().has(Components.TECHNICAL_ITEM);
+        CustomItem customItem = CustomItem.get(itemStack);
+        return customItem != null && customItem.getComponents().has(Components.ALWAYS_HIDDEN_ITEM);
     }
 
-    @Override
-    public void runNewQuery(@NotNull MenuQuery query, @Nullable InventoryClickEvent event){
-        List<Visualizable> newRecipes = new ArrayList<>();
+    public void runNewQuery(@NotNull MenuQuery query){
+        List<Visualizer> newRecipes = new ArrayList<>();
 
-        List<Recipe> rawRecipes = new ArrayList<>();
-        if (query.getType() == MenuQuery.Type.USAGES){
-            RecipeManager.getInstance().getRecipesAsIngredient(query.getItemStack(), rawRecipes::add);
-            Utils.toVisualizables(rawRecipes, List.of(), newRecipes::add);
-        } else {
-            List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(query.getItemStack());
-            RecipeManager.getInstance().getRecipesAsResult(query.getItemStack(), rawRecipes::add);
-            Utils.toVisualizables(rawRecipes, lootTables, newRecipes::add);
-            if (ItemUtils.isRepairable(query.getItemStack())){
-                newRecipes.add(new Visualizable.Simple(new RepairVisualizer(query.getItemStack())));
+        switch (query.getType()) {
+            case USAGES -> {
+                CustomItem customItem = CustomItem.get(query.getItemStack());
+                if (customItem != null){
+                    customItem.getComponents().getOrDefault(Components.RECIPE_AND_USAGES_ITEM)
+                            .getUsages(query.getItemStack(), newRecipes::add);
+                } else { // DEFAULT BEHAVIOUR
+                    RecipeAndUsagesItem.DEFAULT.getUsages(query.getItemStack(), newRecipes::add);
+                }
+            }
+            case RECIPES -> {
+                CustomItem customItem = CustomItem.get(query.getItemStack());
+                if (customItem != null) {
+                    customItem.getComponents().getOrDefault(Components.RECIPE_AND_USAGES_ITEM)
+                            .getRecipes(query.getItemStack(), newRecipes::add);
+                } else { // DEFAULT BEHAVIOUR
+                    RecipeAndUsagesItem.DEFAULT.getRecipes(query.getItemStack(), newRecipes::add);
+                }
             }
         }
 
-
         new MenuQueryEvent(query, newRecipes).callEvent();
-        if (newRecipes.isEmpty() && !query.isOpenIfNothingFound()) return;
+        if (newRecipes.isEmpty() && !query.openIfNothingFound) return;
         this.query = query;
-        visualizables = newRecipes;
+        recipes = newRecipes;
         recipeIndex = 0;
         runPage();
         open(player);
-
     }
 
 
     @Override
     public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
         if (isTechnical(event.getCurrentItem())) return;
+        BackCallable newCallBack = new BackCallable() {
+            //int oldRecipeIndex = RecipesMenu.this.recipeIndex;
+            final MenuQuery oldQuery = RecipesMenu.this.query;
+            @Override
+            public void callback() {
+                runNewQuery(oldQuery);
+            }
+        };
         if (event.isLeftClick()) {
-            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, getBackCall(), false), event);
+            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, newCallBack, false));
         } else if (event.isRightClick()) {
-            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.USAGES, getBackCall(), false), event);
+            runNewQuery(new MenuQuery(event.getCurrentItem(), MenuQuery.Type.USAGES, newCallBack, false));
         }
     }
 
-    @Override
-    public @Nullable BackCallable getBackCall() {return query.getBackCall();}
-
     public boolean hasViewers() {return !getInventory().getViewers().isEmpty();}
+
     protected void runPage() {
         if (animatorTicker != null) animatorTicker.cancel();
         getInventory().clear();
-        if (!visualizables.isEmpty()) {
-            currentRecipe = visualizables.get(recipeIndex).getVisualizer();
+        if (!recipes.isEmpty()) {
+            currentRecipe = recipes.get(recipeIndex);
             currentRecipe.visualize(this);
         }
         setPageButtons();
         animateRecipes();
     }
     protected void setPageButtons() {
-        if (recipeIndex < visualizables.size() - 1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT);
+        if (recipeIndex < recipes.size() - 1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT);
         else setItem(NEXT_BUTTON_POSITION, (ItemStack) null);
 
         if (recipeIndex > 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS);
         else setItem(PREVIOUS_BUTTON_POSITION, (ItemStack) null);
 
-        if (query.getBackCall() != null) setThemedItem(BACK_BUTTON_POSITION, Items.BACK);
+        if (query.getCallback() != null) setThemedItem(BACK_BUTTON_POSITION, Items.BACK);
         else setItem(BACK_BUTTON_POSITION, (ItemStack) null);
 
         setThemedItem(HELP_BUTTON_POSITION, Items.HELP);

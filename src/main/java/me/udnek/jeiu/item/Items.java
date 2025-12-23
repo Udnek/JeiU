@@ -7,6 +7,8 @@ import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,8 @@ public class Items {
     public static final CustomItem BACK = register(new TechnicalItem("back", true));
     public static final CustomItem BANNER = register(new BannerItem());
     public static final CustomItem SWITCH = register(new SwitchItem());
+    public static final CustomItem STRUCTURE_ICON = register(new StructureIconItem());
+    public static final CustomItem LOOT_TABLE_ICON = register(new LootTableIconItem());
 
     static {
         List<Component> lore = new ArrayList<>();

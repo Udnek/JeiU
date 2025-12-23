@@ -17,6 +17,7 @@ public class SwitchItem extends TechnicalItem{
     public static final Key ENCHANTED_BOOKS = new NamespacedKey(JeiU.getInstance(), "category/enchanted_books");
     public static final Key CUSTOM_RECIPES = new NamespacedKey(JeiU.getInstance(), "category/custom_recipes");
     public static final Key CUSTOM_ITEMS = new NamespacedKey(JeiU.getInstance(), "category/custom_items");
+    public static final Key STRUCTURES = new NamespacedKey(JeiU.getInstance(), "category/structures");
 
     public SwitchItem() {
         super("switch", false);
@@ -37,6 +38,7 @@ public class SwitchItem extends TechnicalItem{
                 addNewFile(files, ENCHANTED_BOOKS);
                 addNewFile(files, CUSTOM_RECIPES);
                 addNewFile(files, CUSTOM_ITEMS);
+                addNewFile(files, STRUCTURES);
                 return files;
             }
 
