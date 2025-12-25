@@ -87,18 +87,18 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
                 CustomItem customItem = CustomItem.get(query.getItemStack());
                 if (customItem != null){
                     customItem.getComponents().getOrDefault(Components.RECIPE_AND_USAGES_ITEM)
-                            .getUsages(query.getItemStack(), newRecipes::add);
+                            .getUsages(customItem, query.getItemStack(), newRecipes::add);
                 } else { // DEFAULT BEHAVIOUR
-                    RecipeAndUsagesItem.DEFAULT.getUsages(query.getItemStack(), newRecipes::add);
+                    RecipeAndUsagesItem.getRecipesAsIngredient(query.getItemStack(), newRecipes::add);
                 }
             }
             case RECIPES -> {
                 CustomItem customItem = CustomItem.get(query.getItemStack());
                 if (customItem != null) {
                     customItem.getComponents().getOrDefault(Components.RECIPE_AND_USAGES_ITEM)
-                            .getRecipes(query.getItemStack(), newRecipes::add);
+                            .getRecipes(customItem, query.getItemStack(), newRecipes::add);
                 } else { // DEFAULT BEHAVIOUR
-                    RecipeAndUsagesItem.DEFAULT.getRecipes(query.getItemStack(), newRecipes::add);
+                    RecipeAndUsagesItem.getRecipesAndWhereOccursInLootTables(query.getItemStack(), newRecipes::add);
                 }
             }
         }

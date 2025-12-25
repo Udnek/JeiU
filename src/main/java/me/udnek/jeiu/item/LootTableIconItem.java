@@ -6,6 +6,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.udnek.coreu.custom.component.instance.TranslatableThing;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
+import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.RecipeAndUsagesItem;
 import me.udnek.jeiu.util.StructureCache;
@@ -67,7 +68,7 @@ public class LootTableIconItem extends ConstructableCustomItem {
         super.initializeComponents();
         getComponents().set(new RecipeAndUsagesItem() {
             @Override
-            public void getRecipes(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+            public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
                 NamespacedKey lootTableId = LootTableIconItem.getLootTableId(stack);
                 if (lootTableId == null) return;
                 LootTable lootTable = Bukkit.getLootTable(lootTableId);
@@ -76,7 +77,7 @@ public class LootTableIconItem extends ConstructableCustomItem {
             }
 
             @Override
-            public void getUsages(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+            public void getUsages(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
                 NamespacedKey lootTableId = LootTableIconItem.getLootTableId(stack);
                 if (lootTableId == null) return;
                 for (NamespacedKey structureId : StructureCache.getInstance().structuresWithLootTable(lootTableId)) {

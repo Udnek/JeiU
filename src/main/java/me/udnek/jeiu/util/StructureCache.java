@@ -31,10 +31,8 @@ public class StructureCache {
             structureToLootTables = new HashMap<>();
             Registry<@NotNull Structure> registry = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE);
             registry.keyStream().forEach(structureId -> {
-                Structure structure = registry.get(structureId);
-                assert structure != null;
                 List<NamespacedKey> lootTables = new ArrayList<>();
-                Nms.get().getAllPossibleLootTablesInStructure(structure, lootTable -> {
+                Nms.get().getAllPossibleLootTablesInStructure(structureId, lootTable -> {
                     lootTables.add(lootTable.getKey());
                 });
                 if (lootTables.isEmpty()){

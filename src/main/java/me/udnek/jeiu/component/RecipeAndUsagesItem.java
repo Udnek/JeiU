@@ -20,37 +20,45 @@ import java.util.function.Consumer;
 
 public interface RecipeAndUsagesItem extends CustomComponent<CustomItem> {
 
+     static void getRecipesAndWhereOccursInLootTables(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer){
+         List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(stack);
+         List<Recipe> recipes = new ArrayList<>();
+         RecipeManager.getInstance().getRecipesAsResult(stack, recipes::add);
+         Utils.toVisualizers(recipes, lootTables, consumer);
+         if (ItemUtils.isRepairable(stack)){
+             consumer.accept(new RepairVisualizer(stack));
+         }
+    }
+
+    static void getRecipesAsIngredient(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer){
+        List<Recipe> recipes = new ArrayList<>();
+        RecipeManager.getInstance().getRecipesAsIngredient(stack, recipes::add);
+        Utils.toVisualizers(recipes, List.of(), consumer);
+    }
+
     RecipeAndUsagesItem DEFAULT = new RecipeAndUsagesItem() {
         @Override
-        public void getRecipes(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
-            List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(stack);
-            List<Recipe> recipes = new ArrayList<>();
-            RecipeManager.getInstance().getRecipesAsResult(stack, recipes::add);
-            Utils.toVisualizers(recipes, lootTables, consumer);
-            if (ItemUtils.isRepairable(stack)){
-                consumer.accept(new RepairVisualizer(stack));
-            }
+        public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+            getRecipesAndWhereOccursInLootTables(stack, consumer);
         }
 
         @Override
-        public void getUsages(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
-            List<Recipe> recipes = new ArrayList<>();
-            RecipeManager.getInstance().getRecipesAsIngredient(stack, recipes::add);
-            Utils.toVisualizers(recipes, List.of(), consumer);
+        public void getUsages(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+            getRecipesAsIngredient(stack, consumer);
         }
     };
 
     RecipeAndUsagesItem EMPTY = new RecipeAndUsagesItem() {
         @Override
-        public void getRecipes(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {}
+        public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {}
 
         @Override
-        public void getUsages(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {}
+        public void getUsages(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {}
     };
 
 
-    void getRecipes(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer);
-    void getUsages(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer);
+    void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer);
+    void getUsages(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer);
 
     @Override
     default @NotNull CustomComponentType<CustomItem, ?> getType(){

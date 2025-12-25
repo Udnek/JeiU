@@ -5,6 +5,7 @@ import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
+import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.RecipeAndUsagesItem;
@@ -73,7 +74,7 @@ public class StructureIconItem extends ConstructableCustomItem {
         super.initializeComponents();
         getComponents().set(new RecipeAndUsagesItem() {
             @Override
-            public void getRecipes(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+            public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
                 NamespacedKey structureId = StructureIconItem.getStructureId(stack);
                 if (structureId == null) return;
                 for (NamespacedKey lootTableId : StructureCache.getInstance().getLootTablesForStructure(structureId)) {
@@ -85,8 +86,8 @@ public class StructureIconItem extends ConstructableCustomItem {
             }
 
             @Override
-            public void getUsages(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
-                getRecipes(stack, consumer);
+            public void getUsages(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+                getRecipes(customItem, stack, consumer);
             }
         });
     }

@@ -54,6 +54,10 @@
 
     <repositories>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
@@ -72,11 +76,9 @@
         </dependency>
 
         <dependency>
-            <groupId>me.udnek</groupId>
+            <groupId>com.github.Udnek</groupId>
             <artifactId>CoreU</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${lib.coreu}</systemPath>
+            <version>main-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
