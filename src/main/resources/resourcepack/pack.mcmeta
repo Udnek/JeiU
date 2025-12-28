@@ -1,6 +1,7 @@
 {
   "pack": {
-    "pack_format": 64,
-    "description": "JeiU"
+    "description": "JeiU",
+    "min_format": 75,
+    "max_format": 2000
   }
 }

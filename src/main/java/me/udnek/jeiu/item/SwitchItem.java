@@ -44,7 +44,7 @@ public class SwitchItem extends TechnicalItem{
 
             public void addNewFile(@NotNull List<VirtualRpJsonFile> list, @NotNull Key key){
                 list.add(new VirtualRpJsonFile(getDefinition(key), getDefinitionPath(key)));
-                list.add(new VirtualRpJsonFile(getModels(key).getFirst(), getModelPath(key)));
+                list.add(new VirtualRpJsonFile(getModels(key).getFirst().getRight(), getModelPath(key)));
             }
         });
     }

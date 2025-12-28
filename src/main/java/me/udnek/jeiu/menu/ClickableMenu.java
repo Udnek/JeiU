@@ -2,11 +2,9 @@ package me.udnek.jeiu.menu;
 
 import me.udnek.coreu.custom.inventory.CustomInventory;
 import me.udnek.jeiu.item.Items;
-import me.udnek.jeiu.util.MenuQuery;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public interface ClickableMenu extends CustomInventory {
     @Override

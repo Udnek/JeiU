@@ -1,14 +1,11 @@
 package me.udnek.jeiu.util;
 
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.visualizer.Visualizable;
 import me.udnek.jeiu.visualizer.Visualizer;
 import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
 import me.udnek.jeiu.visualizer.implementation.VanillaRecipeVisualizer;
 import net.kyori.adventure.key.Key;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;

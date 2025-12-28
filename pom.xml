@@ -70,14 +70,15 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.7-R0.1-SNAPSHOT</version>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
-            <groupId>com.github.Udnek</groupId>
+            <groupId>me.udnek</groupId>
             <artifactId>CoreU</artifactId>
-            <version>main-SNAPSHOT</version>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/glebd/OneDrive/Documents/CODING/Java/CoreU/build/libs/CoreU-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 

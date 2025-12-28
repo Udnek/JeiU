@@ -1,7 +1,7 @@
 name: JeiU
 version: '${project.version}'
 main: me.udnek.jeiu.JeiU
-api-version: '1.21.7'
+api-version: '1.21.11'
 depend: [CoreU]
 commands:
   recipe:

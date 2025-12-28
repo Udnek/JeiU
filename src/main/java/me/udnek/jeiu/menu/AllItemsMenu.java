@@ -4,7 +4,6 @@ import me.udnek.coreu.custom.inventory.ConstructableCustomInventory;
 import me.udnek.coreu.custom.item.ItemUtils;
 import me.udnek.coreu.util.ComponentU;
 import me.udnek.jeiu.item.Items;
-import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;

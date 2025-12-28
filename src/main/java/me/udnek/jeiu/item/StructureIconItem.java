@@ -2,19 +2,14 @@ package me.udnek.jeiu.item;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
 import me.udnek.coreu.custom.item.CustomItem;
-import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.JeiU;
+import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.component.RecipeAndUsagesItem;
 import me.udnek.jeiu.util.StructureCache;
-import me.udnek.jeiu.util.Utils;
 import me.udnek.jeiu.visualizer.Visualizer;
 import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
-import me.udnek.jeiu.visualizer.implementation.StructureSetVIsualizer;
-import me.udnek.jeiu.visualizer.implementation.StructureVisualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -22,8 +17,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
-import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
@@ -72,6 +65,7 @@ public class StructureIconItem extends ConstructableCustomItem {
     @Override
     public void initializeComponents() {
         super.initializeComponents();
+        getComponents().set(Components.ALWAYS_HIDDEN_ITEM.getDefault());
         getComponents().set(new RecipeAndUsagesItem() {
             @Override
             public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {

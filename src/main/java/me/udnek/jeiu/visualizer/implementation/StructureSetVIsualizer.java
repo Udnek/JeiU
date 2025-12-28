@@ -1,21 +1,15 @@
 package me.udnek.jeiu.visualizer.implementation;
 
 import me.udnek.jeiu.item.BannerItem;
-import me.udnek.jeiu.item.LootTableIconItem;
 import me.udnek.jeiu.item.StructureIconItem;
 import me.udnek.jeiu.menu.RecipesMenu;
-import me.udnek.jeiu.util.StructureCache;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StructureSetVIsualizer implements Visualizer {

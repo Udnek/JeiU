@@ -1,20 +1,14 @@
 package me.udnek.jeiu.visualizer.implementation;
 
-import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.udnek.coreu.custom.item.ItemUtils;
 import me.udnek.coreu.custom.loot.LootTableUtils;
-import me.udnek.coreu.nms.Nms;
 import me.udnek.coreu.util.LogUtils;
 import me.udnek.jeiu.item.BannerItem;
-import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.item.LootTableIconItem;
 import me.udnek.jeiu.menu.RecipesMenu;
-import me.udnek.jeiu.util.Utils;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
 import org.jetbrains.annotations.NotNull;

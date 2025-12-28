@@ -6,8 +6,6 @@ import me.udnek.coreu.nms.Nms;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.generator.structure.Structure;
-import org.bukkit.loot.LootTable;
-import org.checkerframework.checker.units.qual.N;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

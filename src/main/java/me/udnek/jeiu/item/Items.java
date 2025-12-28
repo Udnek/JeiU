@@ -7,8 +7,6 @@ import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,5 +39,4 @@ public class Items {
     private static CustomItem register(CustomItem customItem) {
         return CustomRegistries.ITEM.register(JeiU.getInstance(), customItem);
     }
-
 }

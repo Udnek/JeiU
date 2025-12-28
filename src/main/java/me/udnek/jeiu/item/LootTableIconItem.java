@@ -8,13 +8,13 @@ import me.udnek.coreu.custom.component.instance.TranslatableThing;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
 import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.jeiu.JeiU;
+import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.component.RecipeAndUsagesItem;
 import me.udnek.jeiu.util.StructureCache;
 import me.udnek.jeiu.util.Utils;
 import me.udnek.jeiu.visualizer.Visualizer;
 import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
 import me.udnek.jeiu.visualizer.implementation.StructureVisualizer;
-import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
@@ -66,6 +66,7 @@ public class LootTableIconItem extends ConstructableCustomItem {
     @Override
     public void initializeComponents() {
         super.initializeComponents();
+        getComponents().set(Components.ALWAYS_HIDDEN_ITEM.getDefault());
         getComponents().set(new RecipeAndUsagesItem() {
             @Override
             public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {

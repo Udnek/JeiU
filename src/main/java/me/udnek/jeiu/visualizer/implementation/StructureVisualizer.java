@@ -1,14 +1,11 @@
 package me.udnek.jeiu.visualizer.implementation;
 
-import me.udnek.coreu.nms.Nms;
-import me.udnek.coreu.nms.NmsUtils;
 import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.LootTableIconItem;
 import me.udnek.jeiu.item.StructureIconItem;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.util.StructureCache;
 import me.udnek.jeiu.visualizer.Visualizer;
-import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;

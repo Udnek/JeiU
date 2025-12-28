@@ -1,7 +1,6 @@
 package me.udnek.jeiu.menu;
 
 import io.papermc.paper.datacomponent.DataComponentTypes;
-import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import me.udnek.coreu.custom.item.CustomItem;
@@ -12,7 +11,6 @@ import me.udnek.coreu.custom.registry.AbstractRegistrable;
 import me.udnek.coreu.custom.registry.CustomRegistries;
 import me.udnek.coreu.custom.registry.CustomRegistry;
 import me.udnek.coreu.custom.registry.MappedCustomRegistry;
-import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.item.Items;
@@ -20,13 +18,19 @@ import me.udnek.jeiu.item.StructureIconItem;
 import me.udnek.jeiu.item.SwitchItem;
 import net.kyori.adventure.key.Keyed;
 import net.kyori.adventure.text.Component;
-import org.bukkit.*;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public abstract class Category extends AbstractRegistrable {
 

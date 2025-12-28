@@ -1,7 +1,6 @@
 package me.udnek.jeiu.util;
 
 import me.udnek.coreu.custom.event.CustomEvent;
-import me.udnek.jeiu.visualizer.Visualizable;
 import me.udnek.jeiu.visualizer.Visualizer;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;

@@ -23,10 +23,10 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
         return instance;
     }
 
-
     @Override
     public void onEnable() {
         instance = this;
+
         CustomItem item = Items.BANNER;
         Category category = Category.ALL_ITEMS;
 
