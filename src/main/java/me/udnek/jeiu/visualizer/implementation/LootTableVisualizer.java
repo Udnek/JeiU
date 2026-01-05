@@ -1,7 +1,15 @@
 package me.udnek.jeiu.visualizer.implementation;
 
+import io.papermc.paper.datacomponent.DataComponentTypes;
+import io.papermc.paper.datacomponent.item.ItemLore;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.set.RegistryKeySet;
 import me.udnek.coreu.custom.item.ItemUtils;
-import me.udnek.coreu.custom.loot.LootTableUtils;
+import me.udnek.coreu.nms.Nms;
+import me.udnek.coreu.nms.loot.condition.LootConditionPortrait;
+import me.udnek.coreu.nms.loot.condition.LootConditionWrapper;
+import me.udnek.coreu.nms.loot.util.LootInfo;
 import me.udnek.coreu.util.LogUtils;
 import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.LootTableIconItem;
@@ -9,6 +17,10 @@ import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import org.apache.commons.lang3.tuple.Pair;
+import org.bukkit.Registry;
+import org.bukkit.block.Biome;
+import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +28,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class LootTableVisualizer implements Visualizer {
 
@@ -43,11 +56,14 @@ public class LootTableVisualizer implements Visualizer {
     public void visualize(@NotNull RecipesMenu recipesMenu) {
         this.recipesMenu = recipesMenu;
 
-        List<ItemStack> possibleLoot = LootTableUtils.getPossibleLoot(lootTable);
+
+        List<Pair<ItemStack, LootInfo>> possibleLoot = new ArrayList<>();
+        Nms.get().getLootTableWrapper(lootTable).extractItems(possibleLoot::add);
+
 
         if (possibleLoot.size() > MAX_CAPACITY) {
             LogUtils.log(String.format("LootTable (%s) overloaded max capacity (%d): %d. Clearing duplicates.", lootTable.key(), MAX_CAPACITY, possibleLoot.size()));
-            possibleLoot = clearDuplicates(possibleLoot);
+            //possibleLoot = clearDuplicates(possibleLoot);
             if (possibleLoot.size() > MAX_CAPACITY) {
                 LogUtils.log(String.format("Still overloads capacity (%d): %d. Cutting.", MAX_CAPACITY, possibleLoot.size()));
                 possibleLoot = possibleLoot.subList(0, MAX_CAPACITY);
@@ -61,7 +77,38 @@ public class LootTableVisualizer implements Visualizer {
         int collum = 0;
         int row = 0;
 
-        for (ItemStack itemStack : possibleLoot) {
+        for (Pair<ItemStack, LootInfo> pair : possibleLoot) {
+            ItemStack itemStack = pair.getLeft();
+            itemStack.setAmount(1);
+            ItemLore lore = itemStack.getDataOrDefault(DataComponentTypes.LORE, ItemLore.lore().build());
+            List<Component> lines = new ArrayList<>(lore.lines());
+
+            float probability = pair.getRight().probability();
+
+
+            for (LootConditionWrapper condition : pair.getRight().conditions()) {
+                LootConditionPortrait portrait = condition.getPortrait();
+//                for (String s : condition.toString().split(",")) {
+//                    lines.add(Component.text(s));
+//                }
+                for (Biome biome : portrait.biomes) {
+                    lines.add(Component.text("Biome: ").append(Component.translatable(biome.translationKey())));
+                }
+                for (Structure structure : portrait.structures) {
+                    lines.add(Component.text("Structure: "
+                            + RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure)));
+                }
+                if (portrait.randomChance != null){
+                    probability *= portrait.randomChance;
+                }
+                if (portrait.unenchantedRandomChance != null){
+                    probability *= portrait.unenchantedRandomChance;
+                }
+            }
+
+            lines.add(Component.text("Prob: " + probability *100 + "%"));
+
+            itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lines));
             recipesMenu.setItem(row * 9 + collum + layout.offset, itemStack);
             collum++;
             if (collum % layout.x == 0) {
@@ -69,6 +116,34 @@ public class LootTableVisualizer implements Visualizer {
                 row++;
             }
         }
+
+
+//        List<ItemStack> possibleLoot = Nms.get().getPossibleLoot(lootTable);
+//
+//        if (possibleLoot.size() > MAX_CAPACITY) {
+//            LogUtils.log(String.format("LootTable (%s) overloaded max capacity (%d): %d. Clearing duplicates.", lootTable.key(), MAX_CAPACITY, possibleLoot.size()));
+//            possibleLoot = clearDuplicates(possibleLoot);
+//            if (possibleLoot.size() > MAX_CAPACITY) {
+//                LogUtils.log(String.format("Still overloads capacity (%d): %d. Cutting.", MAX_CAPACITY, possibleLoot.size()));
+//                possibleLoot = possibleLoot.subList(0, MAX_CAPACITY);
+//            }
+//        }
+//
+//        Layout layout = BIG_LAYOUT;
+//        if (SMALL_LAYOUT.willFitIn(possibleLoot.size())) layout = SMALL_LAYOUT;
+//        else if (MIDDLE_LAYOUT.willFitIn(possibleLoot.size())) layout = MIDDLE_LAYOUT;
+//
+//        int collum = 0;
+//        int row = 0;
+//
+//        for (ItemStack itemStack : possibleLoot) {
+//            recipesMenu.setItem(row * 9 + collum + layout.offset, itemStack);
+//            collum++;
+//            if (collum % layout.x == 0) {
+//                collum = 0;
+//                row++;
+//            }
+//        }
 
         recipesMenu.setThemedItem(RecipesMenu.getBannerPosition(), BannerItem.withModel(layout.model));
         recipesMenu.setItem(RecipesMenu.getRecipeStationPosition(), LootTableIconItem.withLootTable(lootTable));

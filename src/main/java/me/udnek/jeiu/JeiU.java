@@ -7,6 +7,7 @@ import me.udnek.coreu.resourcepack.ResourcePackablePlugin;
 import me.udnek.jeiu.command.AllItemsCommand;
 import me.udnek.jeiu.command.RecipeCommand;
 import me.udnek.jeiu.command.RecipeUsagesCommand;
+import me.udnek.jeiu.command.StructureCommand;
 import me.udnek.jeiu.component.HiddenItemComponent;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.Category;
@@ -35,10 +36,12 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
         getCommand("recipe").setExecutor(new RecipeCommand());
         getCommand("recipe_usages").setExecutor(new RecipeUsagesCommand());
         getCommand("all_items").setExecutor(new AllItemsCommand());
+        getCommand("structure").setExecutor(new StructureCommand());
 
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe"));
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe_usages"));
         CustomHelpCommand.getInstance().addLine(Component.text("/items"));
+        CustomHelpCommand.getInstance().addLine(Component.text("/structure"));
     }
 
     @Override

@@ -80,7 +80,7 @@ public class Utils {
             case "archaeology" ->  Material.BRUSH;
             case "blocks" -> {
                 Material material = Material.getMaterial(subtype.toUpperCase());
-                if (material != null) yield material;
+                if (material != null && material.isItem()) yield material;
                 yield Material.STRUCTURE_VOID;
             }
             case "chests" -> Material.CHEST;

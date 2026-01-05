@@ -4,7 +4,6 @@ import me.udnek.coreu.custom.component.CustomComponent;
 import me.udnek.coreu.custom.component.CustomComponentType;
 import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.coreu.custom.item.ItemUtils;
-import me.udnek.coreu.custom.loot.LootTableUtils;
 import me.udnek.coreu.custom.recipe.RecipeManager;
 import me.udnek.jeiu.util.Utils;
 import me.udnek.jeiu.visualizer.Visualizer;
@@ -21,7 +20,7 @@ import java.util.function.Consumer;
 public interface RecipeAndUsagesItem extends CustomComponent<CustomItem> {
 
      static void getRecipesAndWhereOccursInLootTables(@NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer){
-         List<LootTable> lootTables = LootTableUtils.getWhereItemOccurs(stack);
+         List<LootTable> lootTables = ItemUtils.getWhereItemOccurs(stack);
          List<Recipe> recipes = new ArrayList<>();
          RecipeManager.getInstance().getRecipesAsResult(stack, recipes::add);
          Utils.toVisualizers(recipes, lootTables, consumer);

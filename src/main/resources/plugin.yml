@@ -19,3 +19,8 @@ commands:
     usage: "/all_items"
     aliases: [items]
     permission-message: "You do not have permission to use this command"
+  structure:
+    description: "structure"
+    usage: "/structure"
+    aliases: []
+    permission-message: "You do not have permission to use this command"
