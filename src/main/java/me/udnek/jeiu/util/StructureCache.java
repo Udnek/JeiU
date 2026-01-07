@@ -7,6 +7,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.generator.structure.Structure;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,10 +16,10 @@ import java.util.Map;
 
 public class StructureCache {
 
-    private static StructureCache instance;
+    private static @Nullable StructureCache instance;
 
     public static StructureCache getInstance() {
-        if(instance == null) instance = new StructureCache();
+        if (instance == null) instance = new StructureCache();
         return instance;
     }
 

@@ -73,12 +73,6 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         runPage();
     }
 
-    private boolean isTechnical(@Nullable ItemStack itemStack){
-        if (itemStack == null) return false;
-        CustomItem customItem = CustomItem.get(itemStack);
-        return customItem != null && customItem.getComponents().has(Components.ALWAYS_HIDDEN_ITEM);
-    }
-
     public void runNewQuery(@NotNull MenuQuery query){
         List<Visualizer> newRecipes = new ArrayList<>();
 
@@ -115,7 +109,6 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
     @Override
     public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
-        if (isTechnical(event.getCurrentItem())) return;
         BackCallable newCallBack = new BackCallable() {
             //int oldRecipeIndex = RecipesMenu.this.recipeIndex;
             final MenuQuery oldQuery = RecipesMenu.this.query;

@@ -24,3 +24,8 @@ commands:
     usage: "/structure"
     aliases: []
     permission-message: "You do not have permission to use this command"
+  loot_table:
+    description: "loot_table"
+    usage: "/loot_table"
+    aliases: []
+    permission-message: "You do not have permission to use this command"

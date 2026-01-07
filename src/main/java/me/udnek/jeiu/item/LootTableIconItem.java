@@ -7,6 +7,7 @@ import io.papermc.paper.registry.RegistryKey;
 import me.udnek.coreu.custom.component.instance.TranslatableThing;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
 import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.component.RecipeAndUsagesItem;
@@ -72,7 +73,7 @@ public class LootTableIconItem extends ConstructableCustomItem {
             public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
                 NamespacedKey lootTableId = LootTableIconItem.getLootTableId(stack);
                 if (lootTableId == null) return;
-                LootTable lootTable = Bukkit.getLootTable(lootTableId);
+                LootTable lootTable = Nms.get().getLootTable(lootTableId);
                 if (lootTable == null) return;
                 consumer.accept(new LootTableVisualizer(lootTable));
             }
