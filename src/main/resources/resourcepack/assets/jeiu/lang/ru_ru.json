@@ -26,5 +26,11 @@
 	"gui.jeiu.help.description.11": "§7 указанный предмет используется",
 	"gui.jeiu.help.description.12": "",
 	"gui.jeiu.help.description.13": "§7⚠ Мод 'Just Enough Items' может",
-	"gui.jeiu.help.description.14": "§7 показывать рецепты не точно!"
+	"gui.jeiu.help.description.14": "§7 показывать рецепты не точно!",
+
+	"dialog_menu.jeiu.recipe": "Рецепты",
+	"dialog_menu.jeiu.recipe.description": "Нажмите, чтобы получить все рецепты для этого предмета.",
+	"dialog_menu.jeiu.recipe_usages": "Использования в рeцептах",
+	"dialog_menu.jeiu.recipe_usages.description": "Нажмите, чтобы ознакомиться со всеми рецептами где используется этот предмет.",
+	"dialog_menu.jeiu.exit": "Выход"
 }

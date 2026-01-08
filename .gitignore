@@ -82,3 +82,7 @@ target/*
 
 # IntelliJ
 out
+
+/.gradle/
+/build/
+/gradle/
