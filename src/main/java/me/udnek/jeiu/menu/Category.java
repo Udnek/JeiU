@@ -36,11 +36,11 @@ public abstract class Category extends AbstractRegistrable {
 
     public static final CustomRegistry<Category> REGISTRY = CustomRegistries.addRegistry(JeiU.getInstance(), new MappedCustomRegistry<>("category"));
 
-    public static final Category ALL_ITEMS = register(new Category("all_items") {
+    public static final Category ALL_ITEMS = register(new Category("all_items", Component.translatable("item.jeiu.custom_items")) {
         @Override
         public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
             ItemStack item = Items.SWITCH.getItem();
-            item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.custom_items"));
+            item.setData(DataComponentTypes.ITEM_NAME, categoryName);
             item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.CUSTOM_ITEMS);
             return item;
         }
@@ -59,11 +59,11 @@ public abstract class Category extends AbstractRegistrable {
             return all;
         }
     });
-    public static final Category CUSTOM_RECIPES = register(new Category("custom_recipes") {
+    public static final Category CUSTOM_RECIPES = register(new Category("custom_recipes", Component.translatable("item.jeiu.custom_recipes")) {
         @Override
         public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
             ItemStack item = Items.SWITCH.getItem();
-            item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.custom_recipes"));
+            item.setData(DataComponentTypes.ITEM_NAME, categoryName);
             item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.CUSTOM_RECIPES);
             return item;
         }
@@ -103,11 +103,11 @@ public abstract class Category extends AbstractRegistrable {
             return stacks;
         }
     });
-    public static final Category ENCHANTED_BOOKS = register(new Category("enchanted_books") {
+    public static final Category ENCHANTED_BOOKS = register(new Category("enchanted_books", Component.translatable("item.jeiu.enchanted_books")) {
         @Override
         public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
             ItemStack item = Items.SWITCH.getItem();
-            item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.enchanted_books"));
+            item.setData(DataComponentTypes.ITEM_NAME, categoryName);
             item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.ENCHANTED_BOOKS);
             return item;
         }
@@ -133,11 +133,11 @@ public abstract class Category extends AbstractRegistrable {
             return stacks;
         }
     });
-    public static final Category STRUCTURES = register(new Category("structures") {
+    public static final Category STRUCTURES = register(new Category("structures", Component.translatable("item.jeiu.structures")) {
         @Override
         public @NotNull ItemStack getIcon(@NotNull AllItemsMenu context) {
             ItemStack item = Items.SWITCH.getItem();
-            item.setData(DataComponentTypes.ITEM_NAME, Component.translatable("item.jeiu.structures"));
+            item.setData(DataComponentTypes.ITEM_NAME, categoryName);
             item.setData(DataComponentTypes.ITEM_MODEL, SwitchItem.STRUCTURES);
             return item;
         }
@@ -158,9 +158,11 @@ public abstract class Category extends AbstractRegistrable {
     }
 
     private final String rawId;
+    protected final Component categoryName;
 
-    public Category(@NotNull String rawId){
+    public Category(@NotNull String rawId, @NotNull Component categoryName) {
         this.rawId = rawId;
+        this.categoryName = categoryName;
     }
 
     @Override
@@ -168,6 +170,12 @@ public abstract class Category extends AbstractRegistrable {
     public String getRawId() {
         return rawId;
     }
+
+    @NotNull
+    public Component getCategoryName() {
+        return categoryName;
+    }
+
 
     public abstract @NotNull ItemStack getIcon(@NotNull AllItemsMenu context);
     public abstract @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context);

@@ -28,7 +28,7 @@ public class RecipeCommandUtils {
     }
 
     public static @NotNull List<String> getOptions(@NotNull CommandSender commandSender, @NotNull String[] args) {
-        if (args.length > 1) return new ArrayList<>();
+        if (args.length > 1) return List.of();
 
         final String search = args[0];
         List<String> options = new ArrayList<>();

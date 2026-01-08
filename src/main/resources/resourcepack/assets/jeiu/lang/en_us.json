@@ -26,5 +26,12 @@
 	"gui.jeiu.help.description.11": "§7 where item is used in",
 	"gui.jeiu.help.description.12": "",
 	"gui.jeiu.help.description.13": "§7⚠ Mod 'Just Enough Items' can",
-	"gui.jeiu.help.description.14": "§7 show inaccurate recipes!"
+	"gui.jeiu.help.description.14": "§7 show inaccurate recipes!",
+
+	"dialog_menu.jeiu.title": "JeiU",
+	"dialog_menu.jeiu.recipe": "Recipe",
+	"dialog_menu.jeiu.recipe.description": "Click to get all recipe for this item.",
+	"dialog_menu.jeiu.recipe_usages": "Recipe Usages",
+	"dialog_menu.jeiu.recipe_usages.description": "Click to get all recipe usages for this item.",
+	"dialog_menu.jeiu.exit": "Exit"
 }

@@ -10,12 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
 public class RecipeUsagesCommand implements TabExecutor, CommandExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String @NonNull [] args) {
         ItemStack targetItem = RecipeCommandUtils.getTargetItem(commandSender, args);
         if (targetItem == null) return false;
         new RecipesMenu((Player) commandSender).runNewQuery(new MenuQuery(targetItem, MenuQuery.Type.USAGES, true));
@@ -23,7 +24,7 @@ public class RecipeUsagesCommand implements TabExecutor, CommandExecutor {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String @NonNull [] args) {
         return RecipeCommandUtils.getOptions(commandSender, args);
     }
 }

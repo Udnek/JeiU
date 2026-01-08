@@ -36,6 +36,8 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
         getCommand("structure").setExecutor(new StructureCommand());
         getCommand("loot_table").setExecutor(new LootTableCommand());
 
+        getCommand("u").setExecutor(new ItemInfoCommand());//TODO remove
+
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe"));
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe_usages"));
         CustomHelpCommand.getInstance().addLine(Component.text("/items"));

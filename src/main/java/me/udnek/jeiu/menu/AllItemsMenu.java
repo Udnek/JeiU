@@ -32,7 +32,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     protected int firstItemIndex;
     protected int lastItemIndex;
 
-    protected Category category = Category.ALL_ITEMS;
+    public @NotNull Category category = Category.ALL_ITEMS;
 
     public void openAndShow(@NotNull Player player){
         open(player);
