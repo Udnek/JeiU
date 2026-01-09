@@ -30,7 +30,7 @@ dependencies {
     }
     compileOnly("org.apache.commons:commons-lang3:3.20.0")
 
-    compileOnly(files("C:/Users/PC/IdeaProjects/CoreU/build/libs/CoreU-1.0-SNAPSHOT.jar"))
+    compileOnly(files("C:/Users/glebd/OneDrive/Documents/CODING/Java/CoreU/build/libs/CoreU-1.0-SNAPSHOT.jar"))
 }
 
 tasks {

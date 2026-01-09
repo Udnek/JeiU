@@ -19,7 +19,7 @@ import java.util.List;
 
 public class JeiUInfoDialog {
 
-    private final ArrayList<ActionButton> buttons = new ArrayList<>();
+    private final List<ActionButton> buttons = new ArrayList<>();
     private final DialogBase.Builder dialogBase = DialogBase.builder(Component.translatable("dialog_menu.jeiu.title"));
 
     public JeiUInfoDialog(@NotNull ItemStack itemStack) {
@@ -79,15 +79,43 @@ public class JeiUInfoDialog {
                     ));
         }
 
-        Dialog dialog = Dialog.create(builder -> {builder.empty()
+        Dialog dialog = Dialog.create(builder -> builder.empty()
                 .base(dialogBase.build())
                 .type(DialogType.multiAction(
                         buttons,
                         ActionButton.create(Component.translatable("dialog_menu.jeiu.exit"), null, 200, null),
                         2
-                ));}
+                ))
         );
 
         player.showDialog(dialog);
+    }
+
+    public Dialog b(){
+        for (Category category : Category.REGISTRY.getAll()) {
+            buttons.add(
+                    ActionButton.create(
+                            category.getCategoryName(),
+                            Component.empty(),
+                            200,
+                            DialogAction.customClick(
+                                    (view, audience) -> {
+                                        AllItemsMenu allItemsMenu = new AllItemsMenu();
+                                        allItemsMenu.category = category;
+                                        allItemsMenu.openAndShow(((Player) audience));
+                                    },
+                                    ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                            )
+                    ));
+        }
+        
+        return Dialog.create(builder -> builder.empty()
+                .base(dialogBase.build())
+                .type(DialogType.multiAction(
+                        buttons,
+                        ActionButton.create(Component.translatable("dialog_menu.jeiu.exit"), null, 200, null),
+                        2
+                ))
+        );
     }
 }

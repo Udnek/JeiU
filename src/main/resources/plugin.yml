@@ -1,5 +1,5 @@
 name: JeiU
-version: '${project.version}'
+version: '1.0-SNAPSHOT'
 main: me.udnek.jeiu.JeiU
 api-version: '1.21.11'
 depend: [CoreU]

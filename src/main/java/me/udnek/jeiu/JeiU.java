@@ -3,12 +3,17 @@ package me.udnek.jeiu;
 import me.udnek.coreu.custom.help.CustomHelpCommand;
 import me.udnek.coreu.custom.item.CustomItem;
 import me.udnek.coreu.mgu.MGUItems;
+import me.udnek.coreu.nms.Nms;
 import me.udnek.coreu.resourcepack.ResourcePackablePlugin;
 import me.udnek.jeiu.command.*;
 import me.udnek.jeiu.component.HiddenItemComponent;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.Category;
+import me.udnek.jeiu.menu.JeiUInfoDialog;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,6 +48,9 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
         CustomHelpCommand.getInstance().addLine(Component.text("/items"));
         CustomHelpCommand.getInstance().addLine(Component.text("/structure"));
         CustomHelpCommand.getInstance().addLine(Component.text("/loot_table"));
+
+        Nms.get().addDialogToQuickActions(new NamespacedKey(JeiU.getInstance(), "kek"), new JeiUInfoDialog(new ItemStack(Material.CARROT)).b());
+        Nms.get().addDialogToQuickActions(new NamespacedKey(JeiU.getInstance(), "kek2"), new JeiUInfoDialog(new ItemStack(Material.MACE)).b());
     }
 
     @Override
