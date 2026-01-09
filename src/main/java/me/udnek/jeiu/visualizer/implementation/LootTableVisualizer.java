@@ -4,7 +4,6 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
-import io.papermc.paper.registry.set.RegistryKeySet;
 import me.udnek.coreu.custom.item.ItemUtils;
 import me.udnek.coreu.nms.Nms;
 import me.udnek.coreu.nms.loot.condition.LootConditionPortrait;
@@ -18,7 +17,6 @@ import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang3.tuple.Pair;
-import org.bukkit.Registry;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +26,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class LootTableVisualizer implements Visualizer {
 

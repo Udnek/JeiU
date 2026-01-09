@@ -10,6 +10,7 @@ import me.udnek.jeiu.component.HiddenItemComponent;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.menu.Category;
 import me.udnek.jeiu.menu.JeiUInfoDialog;
+import me.udnek.jeiu.util.Listener;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -33,6 +34,8 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
         CustomItem item = Items.BANNER;
         Category category = Category.ALL_ITEMS;
 
+        new Listener(this);
+
         MGUItems.COORDINATE_WAND.getComponents().set(HiddenItemComponent.INSTANCE);
 
         getCommand("recipe").setExecutor(new RecipeCommand());
@@ -40,8 +43,6 @@ public final class JeiU extends JavaPlugin implements ResourcePackablePlugin {
         getCommand("all_items").setExecutor(new AllItemsCommand());
         getCommand("structure").setExecutor(new StructureCommand());
         getCommand("loot_table").setExecutor(new LootTableCommand());
-
-        getCommand("u").setExecutor(new ItemInfoCommand());//TODO remove
 
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe"));
         CustomHelpCommand.getInstance().addLine(Component.text("/recipe_usages"));

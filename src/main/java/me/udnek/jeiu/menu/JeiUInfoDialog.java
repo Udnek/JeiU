@@ -9,7 +9,6 @@ import io.papermc.paper.registry.data.dialog.type.DialogType;
 import me.udnek.jeiu.util.MenuQuery;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickCallback;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
