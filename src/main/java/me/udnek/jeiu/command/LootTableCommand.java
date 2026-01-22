@@ -1,20 +1,16 @@
 package me.udnek.jeiu.command;
 
 import me.udnek.coreu.nms.Nms;
-import me.udnek.coreu.nms.NmsUtils;
 import me.udnek.jeiu.item.LootTableIconItem;
-import me.udnek.jeiu.item.StructureIconItem;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.util.MenuQuery;
 import org.bukkit.NamespacedKey;
-import org.bukkit.Registry;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.loot.LootTable;
-import org.bukkit.loot.LootTables;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
