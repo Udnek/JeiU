@@ -1,7 +1,9 @@
 package me.udnek.jeiu.util;
 
+import me.udnek.coreu.custom.recipe.CustomRecipe;
 import me.udnek.coreu.nms.Nms;
-import me.udnek.jeiu.visualizer.Visualizable;
+import me.udnek.jeiu.component.Components;
+import me.udnek.jeiu.component.VisualizableRecipe;
 import me.udnek.jeiu.visualizer.Visualizer;
 import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
 import me.udnek.jeiu.visualizer.implementation.VanillaRecipeVisualizer;
@@ -39,17 +41,19 @@ public class Utils {
         List<Visualizer> result = new ArrayList<>();
 
         for (LootTable lootTable : lootTables) {
-            if (lootTable instanceof Visualizable visualizable) result.add(visualizable.getVisualizer());
-            else result.add(new LootTableVisualizer(lootTable));
+            result.add(new LootTableVisualizer(lootTable));
         }
 
         for (Recipe recipe : recipes) {
-            if (Utils.isVanillaRecipe(recipe) && !(recipe instanceof Visualizable)){
-                // ADD TO LAST
+            if (recipe instanceof CustomRecipe<?> customRecipe){
+                VisualizableRecipe vr = customRecipe.getComponents().get(Components.VISUALIZABLE_RECIPE);
+                if (vr != null) result.add(vr.getVisualizer());
+            }
+            else if (Utils.isVanillaRecipe(recipe)){
+                // adds smithing result to the tail
                 if (recipe instanceof SmithingTrimRecipe) result.add(new VanillaRecipeVisualizer(recipe));
                 else result.addFirst(new VanillaRecipeVisualizer(recipe));
             }
-            else if (recipe instanceof Visualizable visualizable) result.addFirst(visualizable.getVisualizer());
         }
 
         result.forEach(consumer);
