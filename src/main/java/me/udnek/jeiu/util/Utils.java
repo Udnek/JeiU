@@ -3,7 +3,7 @@ package me.udnek.jeiu.util;
 import me.udnek.coreu.custom.recipe.CustomRecipe;
 import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.component.Components;
-import me.udnek.jeiu.component.VisualizableRecipe;
+import me.udnek.jeiu.component.VisualizableRecipeType;
 import me.udnek.jeiu.visualizer.Visualizer;
 import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
 import me.udnek.jeiu.visualizer.implementation.VanillaRecipeVisualizer;
@@ -45,8 +45,8 @@ public class Utils {
         }
 
         for (Recipe recipe : recipes) {
-            if (recipe instanceof CustomRecipe<?> customRecipe){
-                VisualizableRecipe vr = customRecipe.getComponents().get(Components.VISUALIZABLE_RECIPE);
+            if (recipe instanceof CustomRecipe customRecipe){
+                VisualizableRecipeType vr = customRecipe.getType().getComponents().get(Components.VISUALIZABLE_RECIPE_TYPE);
                 if (vr != null) result.add(vr.getVisualizer());
             }
             else if (Utils.isVanillaRecipe(recipe)){

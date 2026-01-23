@@ -83,7 +83,7 @@ public abstract class Category extends AbstractRegistrable {
 
                 List<ItemStack> toProceed = new ArrayList<>();
 
-                if (recipe instanceof CustomRecipe<?> customRecipe){
+                if (recipe instanceof CustomRecipe customRecipe){
                     toProceed.addAll(customRecipe.getResults());
                 } else {
                     toProceed.add(recipe.getResult());
@@ -120,7 +120,7 @@ public abstract class Category extends AbstractRegistrable {
             List<ItemStack> stacks = new ArrayList<>();
             for (Recipe recipe : recipes) {
                 List<ItemStack> toProceed = new ArrayList<>();
-                if (recipe instanceof CustomRecipe<?> customRecipe){
+                if (recipe instanceof CustomRecipe customRecipe){
                     toProceed.addAll(customRecipe.getResults());
                 } else {
                     toProceed.add(recipe.getResult());
@@ -175,7 +175,6 @@ public abstract class Category extends AbstractRegistrable {
     public Component getCategoryName() {
         return categoryName;
     }
-
 
     public abstract @NotNull ItemStack getIcon(@NotNull AllItemsMenu context);
     public abstract @NotNull List<ItemStack> getAll(@NotNull AllItemsMenu context);
