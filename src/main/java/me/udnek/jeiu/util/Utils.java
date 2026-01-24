@@ -47,7 +47,7 @@ public class Utils {
         for (Recipe recipe : recipes) {
             if (recipe instanceof CustomRecipe customRecipe){
                 VisualizableRecipeType vr = customRecipe.getType().getComponents().get(Components.VISUALIZABLE_RECIPE_TYPE);
-                if (vr != null) result.add(vr.getVisualizer());
+                if (vr != null) result.add(vr.getVisualizer(customRecipe));
             }
             else if (Utils.isVanillaRecipe(recipe)){
                 // adds smithing result to the tail
