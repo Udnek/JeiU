@@ -4,6 +4,7 @@ import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import me.udnek.coreu.custom.item.ConstructableCustomItem;
 import me.udnek.coreu.custom.item.CustomItem;
+import me.udnek.coreu.util.Utils;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.component.RecipeAndUsagesItem;
@@ -36,7 +37,7 @@ public class StructureIconItem extends ConstructableCustomItem {
         icon.editPersistentDataContainer(container ->
                 container.set(STRUCTURE_ID_KEY, PersistentDataType.STRING, structureId.asString())
         );
-        icon.setData(DataComponentTypes.ITEM_NAME, Component.text(structureId.asString()));
+        icon.setData(DataComponentTypes.ITEM_NAME, Utils.translateStructure(structureId));
 
         List<Component> lore = new ArrayList<>();
         for (NamespacedKey lootTableId : StructureCache.getInstance().getLootTablesForStructure(structureId)) {
@@ -74,9 +75,6 @@ public class StructureIconItem extends ConstructableCustomItem {
                 for (NamespacedKey lootTableId : StructureCache.getInstance().getLootTablesForStructure(structureId)) {
                     consumer.accept(new LootTableVisualizer(Objects.requireNonNull(Bukkit.getLootTable(lootTableId))));
                 }
-//                Structure structure = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).get(structureId);
-//                if (structure == null) return;
-//                consumer.accept(new StructureVisualizer(structureId, structure));
             }
 
             @Override

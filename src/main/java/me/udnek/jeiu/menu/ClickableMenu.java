@@ -26,12 +26,9 @@ public interface ClickableMenu extends CustomInventory {
             clickedNonButtonItem(event);
         }
     }
-
-    //@Nullable BackCallable getBackCall();
     void clickedNonButtonItem(@NotNull InventoryClickEvent event);
     void pressedCallback(@NotNull InventoryClickEvent event);
     void pressedNext(@NotNull InventoryClickEvent event);
     void pressedPrevious(@NotNull InventoryClickEvent event);
     void pressedSwitch(@NotNull InventoryClickEvent event);
-    //void runNewQuery(@NotNull MenuQuery menuQuery, @Nullable InventoryClickEvent event);
 }

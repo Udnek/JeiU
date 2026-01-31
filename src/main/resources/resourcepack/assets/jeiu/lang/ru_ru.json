@@ -9,9 +9,15 @@
 	"item.jeiu.help": "Помощь",
 	"item.jeiu.banner": "Информация",
 
-    "item.jeiu.custom_items": "Касмтоные предметы",
+    "item.jeiu.custom_items": "Кастомные предметы",
     "item.jeiu.custom_recipes": "Предметы с изменёнными крафтами",
     "item.jeiu.enchanted_books": "Зачарованные книги",
+    "item.jeiu.structures": "Структуры",
+
+    "tooltip.jeiu.probability": "Вероятность: %s%%",
+    "tooltip.jeiu.biomes": "Только в биомах:",
+    "tooltip.jeiu.structures": "Только в структурах:",
+    "tooltip.jeiu.vehicles": "Только когда цель едет на:",
 
 	"gui.jeiu.help.description.1":  "§f[%s§f] - рецепты",
 	"gui.jeiu.help.description.2":  "§f[%s§f] - рецепты, где используется предмет",
@@ -29,8 +35,8 @@
 	"gui.jeiu.help.description.14": "§7 показывать рецепты не точно!",
 
 	"dialog_menu.jeiu.recipe": "Рецепты",
-	"dialog_menu.jeiu.recipe.description": "Нажмите, чтобы получить все рецепты для этого предмета.",
-	"dialog_menu.jeiu.recipe_usages": "Использования в рeцептах",
-	"dialog_menu.jeiu.recipe_usages.description": "Нажмите, чтобы ознакомиться со всеми рецептами где используется этот предмет.",
+	"dialog_menu.jeiu.recipe.description": "Нажмите, чтобы получить все рецепты этого предмета.",
+	"dialog_menu.jeiu.recipe_usages": "Использования в рецептах",
+	"dialog_menu.jeiu.recipe_usages.description": "Нажмите, чтобы получить все рецепты где используется этот предмет.",
 	"dialog_menu.jeiu.exit": "Выход"
 }

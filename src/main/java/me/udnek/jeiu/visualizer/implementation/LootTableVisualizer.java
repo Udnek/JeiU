@@ -10,14 +10,17 @@ import me.udnek.coreu.nms.loot.condition.LootConditionPortrait;
 import me.udnek.coreu.nms.loot.condition.LootConditionWrapper;
 import me.udnek.coreu.nms.loot.util.LootInfo;
 import me.udnek.coreu.util.LogUtils;
+import me.udnek.coreu.util.Utils;
 import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.LootTableIconItem;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.EntityType;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
@@ -26,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class LootTableVisualizer implements Visualizer {
 
@@ -53,10 +57,8 @@ public class LootTableVisualizer implements Visualizer {
     public void visualize(@NotNull RecipesMenu recipesMenu) {
         this.recipesMenu = recipesMenu;
 
-
         List<Pair<ItemStack, LootInfo>> possibleLoot = new ArrayList<>();
         Nms.get().getLootTableWrapper(lootTable).extractItems(possibleLoot::add);
-
 
         if (possibleLoot.size() > MAX_CAPACITY) {
             LogUtils.log(String.format("LootTable (%s) overloaded max capacity (%d): %d. Clearing duplicates.", lootTable.key(), MAX_CAPACITY, possibleLoot.size()));
@@ -77,24 +79,36 @@ public class LootTableVisualizer implements Visualizer {
         for (Pair<ItemStack, LootInfo> pair : possibleLoot) {
             ItemStack itemStack = pair.getLeft();
             itemStack.setAmount(1);
-            ItemLore lore = itemStack.getDataOrDefault(DataComponentTypes.LORE, ItemLore.lore().build());
-            List<Component> lines = new ArrayList<>(lore.lines());
+            List<Component> lines = new ArrayList<>();
 
             float probability = pair.getRight().probability();
-
 
             for (LootConditionWrapper condition : pair.getRight().conditions()) {
                 LootConditionPortrait portrait = condition.getPortrait();
 //                for (String s : condition.toString().split(",")) {
 //                    lines.add(Component.text(s));
 //                }
-                for (Biome biome : portrait.biomes) {
-                    lines.add(Component.text("Biome: ").append(Component.translatable(biome.translationKey())));
+                if (!portrait.biomes.isEmpty()){
+                    lines.add(Component.translatable("tooltip.jeiu.biomes"));
+                    for (Biome biome : portrait.biomes) {
+                        lines.add(Component.text(" ").append(Component.translatable(biome.translationKey())));
+                    }
                 }
-                for (Structure structure : portrait.structures) {
-                    lines.add(Component.text("Structure: "
-                            + RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure)));
+                if (!portrait.structures.isEmpty()){
+                    lines.add(Component.translatable("tooltip.jeiu.structures"));
+                    for (Structure structure : portrait.structures) {
+                        lines.add(Component.text(" ").append(Utils.translateStructure(
+                                Objects.requireNonNull(RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE).getKey(structure))
+                        )));
+                    }
                 }
+                if (!portrait.vehicles.isEmpty()){
+                    lines.add(Component.translatable("tooltip.jeiu.vehicles"));
+                    for (EntityType entityType : portrait.vehicles) {
+                        lines.add(Component.text(" ").append(Component.translatable(entityType.translationKey())));
+                    }
+                }
+
                 if (portrait.randomChance != null){
                     probability *= portrait.randomChance;
                 }
@@ -103,9 +117,15 @@ public class LootTableVisualizer implements Visualizer {
                 }
             }
 
-            lines.add(Component.text("Prob: " + probability *100 + "%"));
+            lines.add(Component.translatable("tooltip.jeiu.probability", List.of(Component.text(Utils.roundToTwoDigits(probability *100)))));
 
-            itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lines));
+            // makes bold yellow
+            lines = lines.stream().map(comp -> comp.color(NamedTextColor.YELLOW)).toList();
+
+            List<Component> lore = new ArrayList<>(itemStack.getDataOrDefault(DataComponentTypes.LORE, ItemLore.lore().build()).lines());
+            lore.addAll(lines);
+
+            itemStack.setData(DataComponentTypes.LORE, ItemLore.lore(lore));
             recipesMenu.setItem(row * 9 + collum + layout.offset, itemStack);
             collum++;
             if (collum % layout.x == 0) {
@@ -156,19 +176,7 @@ public class LootTableVisualizer implements Visualizer {
     }
 
 
-    public static class Layout {
-        public final int x;
-        public final int y;
-        public final int offset;
-        public final @NotNull Key model;
-
-        Layout(int x, int y, int offset, @NotNull Key key) {
-            this.x = x;
-            this.y = y;
-            this.offset = offset;
-            this.model = key;
-        }
-
+    public record Layout(int x, int y, int offset, @NotNull Key model) {
         int getCapacity() {
             return x * y;
         }
