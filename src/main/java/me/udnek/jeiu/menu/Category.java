@@ -84,7 +84,7 @@ public abstract class Category extends AbstractRegistrable {
                 List<ItemStack> toProceed = new ArrayList<>();
 
                 if (recipe instanceof CustomRecipe customRecipe){
-                    toProceed.addAll(customRecipe.getResults());
+                    customRecipe.getPossibleResults(toProceed::add);
                 } else {
                     toProceed.add(recipe.getResult());
                 }
@@ -121,7 +121,7 @@ public abstract class Category extends AbstractRegistrable {
             for (Recipe recipe : recipes) {
                 List<ItemStack> toProceed = new ArrayList<>();
                 if (recipe instanceof CustomRecipe customRecipe){
-                    toProceed.addAll(customRecipe.getResults());
+                    customRecipe.getPossibleResults(toProceed::add);
                 } else {
                     toProceed.add(recipe.getResult());
                 }
