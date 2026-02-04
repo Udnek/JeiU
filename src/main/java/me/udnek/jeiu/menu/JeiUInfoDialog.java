@@ -66,7 +66,7 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.RECIPES, false)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.RECIPES, true)
                                         ),
                                 ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
@@ -79,7 +79,7 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInMainHand(), MenuQuery.Type.RECIPES, false)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInMainHand(), MenuQuery.Type.RECIPES, true)
                                         ),
                                 ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
@@ -92,7 +92,7 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, false)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, true)
                                         ),
                                 ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
@@ -105,7 +105,7 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, false)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInMainHand(), MenuQuery.Type.USAGES, true)
                                         ),
                                 ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
