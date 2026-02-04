@@ -56,8 +56,68 @@ public class JeiUInfoDialog {
     }
 
     public JeiUInfoDialog() {
-        dialogBase.body(List.of(DialogBody.plainMessage(Component.empty()), DialogBody.plainMessage(Component.empty()),
-                DialogBody.plainMessage(Component.empty()), DialogBody.plainMessage(Component.empty())));
+        /*dialogBase.body(List.of(DialogBody.plainMessage(Component.empty()), DialogBody.plainMessage(Component.empty()),
+                DialogBody.plainMessage(Component.empty()), DialogBody.plainMessage(Component.empty())));*/
+        buttons.add(
+                ActionButton.create(
+                        Component.translatable("dialog_menu.jeiu.recipe.left_hand"),
+                        Component.translatable("dialog_menu.jeiu.recipe.left_hand.description"),
+                        200,
+                        DialogAction.customClick(
+                                (view, audience) ->
+                                        new RecipesMenu((Player) audience).runNewQuery(
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.RECIPES, true)
+                                        ),
+                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                        )
+                ));
+        buttons.add(
+                ActionButton.create(
+                        Component.translatable("dialog_menu.jeiu.recipe.right_hand"),
+                        Component.translatable("dialog_menu.jeiu.recipe.right_hand.description"),
+                        200,
+                        DialogAction.customClick(
+                                (view, audience) ->
+                                        new RecipesMenu((Player) audience).runNewQuery(
+                                                new MenuQuery(((Player) audience).getInventory().getItemInMainHand(), MenuQuery.Type.RECIPES, true)
+                                        ),
+                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                        )
+                ));
+        buttons.add(
+                ActionButton.create(
+                        Component.translatable("dialog_menu.jeiu.recipe_usages.left_hand"),
+                        Component.translatable("dialog_menu.jeiu.recipe_usages.left_hand.description"),
+                        200,
+                        DialogAction.customClick(
+                                (view, audience) ->
+                                        new RecipesMenu((Player) audience).runNewQuery(
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, true)
+                                        ),
+                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                        )
+                ));
+        buttons.add(
+                ActionButton.create(
+                        Component.translatable("dialog_menu.jeiu.recipe_usages.right_hand"),
+                        Component.translatable("dialog_menu.jeiu.recipe_usages.right_hand.description"),
+                        200,
+                        DialogAction.customClick(
+                                (view, audience) ->
+                                        new RecipesMenu((Player) audience).runNewQuery(
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, true)
+                                        ),
+                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                        )
+                ));
+
+        for(int i = 0; i < 2; i++) {
+            buttons.add(ActionButton.create(Component.empty(), null, 1,
+                    DialogAction.customClick((view, audience) ->
+                                    new JeiUInfoDialog().show(((Player) audience)),
+                            ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                    )));
+        }
     }
 
     public void show(@NotNull Player player) {
@@ -90,7 +150,7 @@ public class JeiUInfoDialog {
         player.showDialog(dialog);
     }
 
-    public Dialog b(){
+    public Dialog build(){
         for (Category category : Category.REGISTRY.getAll()) {
             buttons.add(
                     ActionButton.create(
