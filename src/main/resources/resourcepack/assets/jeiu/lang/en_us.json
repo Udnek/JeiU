@@ -35,9 +35,16 @@
 	"gui.jeiu.help.description.14": "§7 show inaccurate recipes!",
 
 	"dialog_menu.jeiu.title": "JeiU",
-	"dialog_menu.jeiu.recipe": "Recipe",
-	"dialog_menu.jeiu.recipe.description": "Click to get all recipe for this item.",
-	"dialog_menu.jeiu.recipe_usages": "Recipe Usages",
-	"dialog_menu.jeiu.recipe_usages.description": "Click to get all usages in recipes for this item.",
-	"dialog_menu.jeiu.exit": "Exit"
+	"dialog_menu.jeiu.exit": "Exit",
+
+	"dialog_menu.jeiu.recipe.left_hand": "Recipe",
+	"dialog_menu.jeiu.recipe.left_hand.description": "Click to get all recipe for this item.",
+	"dialog_menu.jeiu.recipe_usages.left_hand": "Recipe Usages",
+	"dialog_menu.jeiu.recipe_usages.left_hand.description": "Click to get all usages in recipes for this item.",
+	"dialog_menu.jeiu.recipe.right_hand": "Recipe",
+	"dialog_menu.jeiu.recipe.right_hand.description": "Click to get all recipe for this item.",
+	"dialog_menu.jeiu.recipe_usages.right_hand": "Recipe Usages",
+	"dialog_menu.jeiu.recipe_usages.right_hand.description": "Click to get all usages in recipes for this item."
+
+
 }
