@@ -18,6 +18,7 @@
     "tooltip.jeiu.biomes": "Only in biomes:",
     "tooltip.jeiu.structures": "Only in structures:",
     "tooltip.jeiu.vehicles": "Only when target riding:",
+    "tooltip.jeiu.attackers": "Only when attacked by:",
 
 	"gui.jeiu.help.description.1":  "§f[%s§f] to recipes",
 	"gui.jeiu.help.description.2":  "§f[%s§f] to recipes where is used in",
@@ -37,14 +38,12 @@
 	"dialog_menu.jeiu.title": "JeiU",
 	"dialog_menu.jeiu.exit": "Exit",
 
-	"dialog_menu.jeiu.recipe.left_hand": "Recipe",
+	"dialog_menu.jeiu.recipe.left_hand": "Recipes for item (left hand)",
 	"dialog_menu.jeiu.recipe.left_hand.description": "Click to get all recipe for this item.",
-	"dialog_menu.jeiu.recipe_usages.left_hand": "Recipe Usages",
+	"dialog_menu.jeiu.recipe_usages.left_hand": "Usages in recipes for item (left hand)",
 	"dialog_menu.jeiu.recipe_usages.left_hand.description": "Click to get all usages in recipes for this item.",
-	"dialog_menu.jeiu.recipe.right_hand": "Recipe",
+	"dialog_menu.jeiu.recipe.right_hand": "Recipes for item (right hand)",
 	"dialog_menu.jeiu.recipe.right_hand.description": "Click to get all recipe for this item.",
-	"dialog_menu.jeiu.recipe_usages.right_hand": "Recipe Usages",
+	"dialog_menu.jeiu.recipe_usages.right_hand": "Usages in recipes for item (right hand)",
 	"dialog_menu.jeiu.recipe_usages.right_hand.description": "Click to get all usages in recipes for this item."
-
-
 }

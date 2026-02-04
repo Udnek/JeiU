@@ -4,6 +4,7 @@ import me.udnek.coreu.custom.recipe.CustomRecipe;
 import me.udnek.coreu.nms.Nms;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.component.VisualizableRecipeType;
+import me.udnek.jeiu.event.UnknownLootTableIconEvent;
 import me.udnek.jeiu.visualizer.Visualizer;
 import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
 import me.udnek.jeiu.visualizer.implementation.VanillaRecipeVisualizer;
@@ -14,6 +15,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.*;
 import org.bukkit.loot.LootTable;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +25,10 @@ public class Utils {
 
     public static boolean isVanillaRecipe(@NotNull Recipe recipe) {
         return switch (recipe) {
-            case ShapedRecipe ignored -> true;
-            case ShapelessRecipe ignored -> true;
-            case FurnaceRecipe ignored -> true;
-            case BlastingRecipe ignored -> true;
-            case SmokingRecipe ignored -> true;
-            case CampfireRecipe ignored -> true;
+            case CookingRecipe<?> ignored -> true;
             case StonecuttingRecipe ignored -> true;
-            case SmithingTrimRecipe ignored -> true;
-            case SmithingTransformRecipe ignored -> true;
-            case TransmuteRecipe ignored -> true;
+            case SmithingRecipe ignored -> true;
+            case CraftingRecipe ignored -> true;
             default -> false;
         };
     }
@@ -47,7 +43,7 @@ public class Utils {
         for (Recipe recipe : recipes) {
             if (recipe instanceof CustomRecipe customRecipe){
                 VisualizableRecipeType vr = customRecipe.getType().getComponents().get(Components.VISUALIZABLE_RECIPE_TYPE);
-                if (vr != null) result.add(vr.getVisualizer(customRecipe));
+                if (vr != null) result.addFirst(vr.getVisualizer(customRecipe));
             }
             else if (Utils.isVanillaRecipe(recipe)){
                 // adds smithing result to the tail
@@ -68,7 +64,7 @@ public class Utils {
         }
     }
 
-    public static @NotNull Material chooseIconForLootTable(@NotNull LootTable lootTable) {
+    public static @NotNull ItemStack chooseIconForLootTable(@NotNull LootTable lootTable) {
         String key = lootTable.getKey().getKey();
         String[] split = key.split("/");
 
@@ -76,26 +72,29 @@ public class Utils {
         String subtype = "";
         if (split.length >= 2) subtype = split[1];
 
-        return chooseIconForLootTable(category, subtype);
+        Material materialIcon = chooseIconForLootTable(category, subtype);
+        if (materialIcon != null) {
+            return new ItemStack(materialIcon);
+        }
+        UnknownLootTableIconEvent event = new UnknownLootTableIconEvent(lootTable);
+        event.callEvent();
+        ItemStack icon = event.getIcon();
+        if (icon == null) return new ItemStack(Material.BARRIER);
+        return icon;
     }
 
-    public static @NotNull Material chooseIconForLootTable(@NotNull String category, @NotNull String subtype) {
+    public static @Nullable Material chooseIconForLootTable(@NotNull String category, @NotNull String subtype) {
         return switch (category) {
             case "archaeology" ->  Material.BRUSH;
-            case "blocks" -> {
+            case "blocks", "harvest", "carve" -> {
                 Material material = Material.getMaterial(subtype.toUpperCase());
                 if (material != null && material.isItem()) yield material;
                 yield Material.STRUCTURE_VOID;
             }
+            case "brush" -> Material.BRUSH;
             case "chests" -> Material.CHEST;
             case "dispensers" -> Material.DISPENSER;
-            case "entities"-> {
-                EntityType entityType = EntityType.fromName(subtype);
-                if (entityType == null) yield Material.EGG;
-                ItemStack egg = Nms.get().getSpawnEggByType(entityType);
-                if (egg == null) yield Material.EGG;
-                yield egg.getType();
-            }
+            case "entities", "charged_creeper" -> spawnEggByName(subtype);
             case "equipment" -> Material.IRON_CHESTPLATE;
             case "gameplay" -> switch (subtype) {
                 case "fishing" -> Material.FISHING_ROD;
@@ -106,13 +105,22 @@ public class Utils {
                 case "panda_sneeze" -> Material.PANDA_SPAWN_EGG;
                 case "piglin_bartering" -> Material.GOLD_INGOT;
                 case "sniffer_digging" -> Material.SNIFFER_SPAWN_EGG;
+                case "turtle_grow" -> Material.TURTLE_SPAWN_EGG;
                 default -> Material.BARRIER;
             };
             case "pots" -> Material.DECORATED_POT;
             case "shearing" -> Material.SHEARS;
             case "spawners" -> Material.TRIAL_SPAWNER;
 
-            default -> Material.BARRIER;
+            default -> null;
         };
+    }
+
+    public static @Nullable Material spawnEggByName(@NotNull String name){
+        EntityType entityType = EntityType.fromName(name);
+        if (entityType == null) return null;
+        ItemStack egg = Nms.get().getSpawnEggByType(entityType);
+        if (egg == null) return null;
+        return egg.getType();
     }
 }

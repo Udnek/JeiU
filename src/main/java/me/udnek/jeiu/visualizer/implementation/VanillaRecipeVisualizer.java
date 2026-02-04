@@ -41,6 +41,7 @@ public class VanillaRecipeVisualizer extends AbstractRecipeVisualizer {
     public VanillaRecipeVisualizer(@NotNull Recipe recipe){
         this.recipe = recipe;
     }
+
     @Override
     public @Nullable List<Component> getInformation() {
         if (recipe instanceof Keyed keyed) return List.of(Component.text("ID: " + keyed.getKey().asString()));
@@ -136,9 +137,11 @@ public class VanillaRecipeVisualizer extends AbstractRecipeVisualizer {
             }
         }
     }
+
     private void setItemInCraftingMatrix(int x, int y, RecipeChoice recipeChoice) {
         setChoice(y * 9 + x + CRAFTING_MATRIX_OFFSET, recipeChoice);
     }
+
     private void setDecorItems() {
         Key bannerModel;
         Material blockMaterial;

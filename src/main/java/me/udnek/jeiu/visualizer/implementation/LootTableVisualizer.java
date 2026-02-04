@@ -40,7 +40,6 @@ public class LootTableVisualizer implements Visualizer {
     private static final int MAX_CAPACITY = BIG_LAYOUT.getCapacity();
 
     private final LootTable lootTable;
-    private RecipesMenu recipesMenu;
 
     public LootTableVisualizer(@NotNull LootTable lootTable){
         this.lootTable = lootTable;
@@ -55,7 +54,6 @@ public class LootTableVisualizer implements Visualizer {
     public void tickAnimation() {}
 
     public void visualize(@NotNull RecipesMenu recipesMenu) {
-        this.recipesMenu = recipesMenu;
 
         List<Pair<ItemStack, LootInfo>> possibleLoot = new ArrayList<>();
         Nms.get().getLootTableWrapper(lootTable).extractItems(possibleLoot::add);
@@ -105,6 +103,12 @@ public class LootTableVisualizer implements Visualizer {
                 if (!portrait.vehicles.isEmpty()){
                     lines.add(Component.translatable("tooltip.jeiu.vehicles"));
                     for (EntityType entityType : portrait.vehicles) {
+                        lines.add(Component.text(" ").append(Component.translatable(entityType.translationKey())));
+                    }
+                }
+                if (!portrait.attackers.isEmpty()){
+                    lines.add(Component.translatable("tooltip.jeiu.attackers"));
+                    for (EntityType entityType : portrait.attackers) {
                         lines.add(Component.text(" ").append(Component.translatable(entityType.translationKey())));
                     }
                 }

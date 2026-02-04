@@ -1,6 +1,7 @@
-package me.udnek.jeiu.util;
+package me.udnek.jeiu.event;
 
 import me.udnek.coreu.custom.event.CustomEvent;
+import me.udnek.jeiu.util.MenuQuery;
 import me.udnek.jeiu.visualizer.Visualizer;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;

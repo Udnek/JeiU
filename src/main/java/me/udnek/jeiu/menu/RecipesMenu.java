@@ -11,7 +11,7 @@ import me.udnek.jeiu.component.RecipeAndUsagesItem;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
-import me.udnek.jeiu.util.MenuQueryEvent;
+import me.udnek.jeiu.event.MenuQueryEvent;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;

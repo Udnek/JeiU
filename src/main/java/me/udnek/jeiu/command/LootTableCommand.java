@@ -27,7 +27,7 @@ public class LootTableCommand implements CommandExecutor, TabExecutor {
         @Nullable LootTable lootTable = Nms.get().getLootTable(id);
         if (lootTable == null) return false;
         new RecipesMenu((Player) commandSender).runNewQuery(
-                new MenuQuery(LootTableIconItem.withLootTable(lootTable), MenuQuery.Type.USAGES, true)
+                new MenuQuery(LootTableIconItem.withLootTable(lootTable), MenuQuery.Type.RECIPES, true)
         );
         return true;
     }

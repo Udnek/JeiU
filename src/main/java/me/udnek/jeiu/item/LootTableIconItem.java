@@ -16,6 +16,7 @@ import me.udnek.jeiu.util.Utils;
 import me.udnek.jeiu.visualizer.Visualizer;
 import me.udnek.jeiu.visualizer.implementation.LootTableVisualizer;
 import me.udnek.jeiu.visualizer.implementation.StructureVisualizer;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -40,8 +41,11 @@ public class LootTableIconItem extends ConstructableCustomItem {
         item.editPersistentDataContainer(container ->
                 container.set(LOOT_TABLE_ID_KEY, PersistentDataType.STRING, lootTable.getKey().asString())
         );
-        Material material = Utils.chooseIconForLootTable(lootTable);
-        item.setData(DataComponentTypes.ITEM_MODEL, Objects.requireNonNull(material.getDefaultData(DataComponentTypes.ITEM_MODEL)));
+        ItemStack icon = Utils.chooseIconForLootTable(lootTable);
+        Key itemModel = icon.getData(DataComponentTypes.ITEM_MODEL);
+        if (itemModel != null){
+            item.setData(DataComponentTypes.ITEM_MODEL, itemModel);
+        }
         item.setData(DataComponentTypes.LORE, ItemLore.lore(
                 List.of(Component.text(lootTable.getKey().asString()).color(NamedTextColor.YELLOW))
         ));
