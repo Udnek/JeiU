@@ -66,9 +66,9 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.RECIPES, true)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.RECIPES, false)
                                         ),
-                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                                ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
                 ));
         buttons.add(
@@ -79,9 +79,9 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInMainHand(), MenuQuery.Type.RECIPES, true)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInMainHand(), MenuQuery.Type.RECIPES, false)
                                         ),
-                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                                ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
                 ));
         buttons.add(
@@ -92,9 +92,9 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, true)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, false)
                                         ),
-                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                                ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
                 ));
         buttons.add(
@@ -105,9 +105,9 @@ public class JeiUInfoDialog {
                         DialogAction.customClick(
                                 (view, audience) ->
                                         new RecipesMenu((Player) audience).runNewQuery(
-                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, true)
+                                                new MenuQuery(((Player) audience).getInventory().getItemInOffHand(), MenuQuery.Type.USAGES, false)
                                         ),
-                                ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                                ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                         )
                 ));
 
@@ -115,7 +115,7 @@ public class JeiUInfoDialog {
             buttons.add(ActionButton.create(Component.empty(), null, 1,
                     DialogAction.customClick((view, audience) ->
                                     new JeiUInfoDialog().show(((Player) audience)),
-                            ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                            ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                     )));
         }
     }
@@ -133,7 +133,7 @@ public class JeiUInfoDialog {
                                         allItemsMenu.category = category;
                                         allItemsMenu.openAndShow(player);
                                     },
-                                    ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                                    ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                             )
                     ));
         }
@@ -163,7 +163,7 @@ public class JeiUInfoDialog {
                                         allItemsMenu.category = category;
                                         allItemsMenu.openAndShow(((Player) audience));
                                     },
-                                    ClickCallback.Options.builder().uses(1).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
+                                    ClickCallback.Options.builder().uses(ClickCallback.UNLIMITED_USES).lifetime(ClickCallback.DEFAULT_LIFETIME).build()
                             )
                     ));
         }
