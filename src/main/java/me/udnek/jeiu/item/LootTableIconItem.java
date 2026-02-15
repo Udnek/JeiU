@@ -37,19 +37,18 @@ public class LootTableIconItem extends ConstructableCustomItem {
     public static final NamespacedKey LOOT_TABLE_ID_KEY = new NamespacedKey(JeiU.getInstance(), "loot_table_id");
 
     public static @NotNull ItemStack withLootTable(@NotNull LootTable lootTable){
-        ItemStack item = Items.LOOT_TABLE_ICON.getItem();
-        item.editPersistentDataContainer(container ->
+        ItemStack icon = Items.LOOT_TABLE_ICON.getItem();
+        icon.editPersistentDataContainer(container ->
                 container.set(LOOT_TABLE_ID_KEY, PersistentDataType.STRING, lootTable.getKey().asString())
         );
-        ItemStack icon = Utils.chooseIconForLootTable(lootTable);
-        Key itemModel = icon.getData(DataComponentTypes.ITEM_MODEL);
+        Key itemModel = Utils.chooseIconForLootTable(lootTable).getData(DataComponentTypes.ITEM_MODEL);
         if (itemModel != null){
-            item.setData(DataComponentTypes.ITEM_MODEL, itemModel);
+            icon.setData(DataComponentTypes.ITEM_MODEL, itemModel);
         }
-        item.setData(DataComponentTypes.LORE, ItemLore.lore(
+        icon.setData(DataComponentTypes.LORE, ItemLore.lore(
                 List.of(Component.text(lootTable.getKey().asString()).color(NamedTextColor.YELLOW))
         ));
-        return item;
+        return icon;
     }
 
     public static @Nullable NamespacedKey getLootTableId(@NotNull ItemStack stack){

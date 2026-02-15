@@ -20,26 +20,33 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+@NullMarked
 public class StructureIconItem extends ConstructableCustomItem {
 
     public static final NamespacedKey STRUCTURE_ID_KEY = new NamespacedKey(JeiU.getInstance(), "structure_id");
 
-    public static @NotNull ItemStack withStructure(@NotNull NamespacedKey structureId){
+    public static ItemStack withStructure(NamespacedKey structureId){
         ItemStack icon = Items.STRUCTURE_ICON.getItem();
         icon.editPersistentDataContainer(container ->
                 container.set(STRUCTURE_ID_KEY, PersistentDataType.STRING, structureId.asString())
         );
+        Key itemModel = me.udnek.jeiu.util.Utils.chooseIconForStructure(structureId).getData(DataComponentTypes.ITEM_MODEL);
+        if (itemModel != null){
+            icon.setData(DataComponentTypes.ITEM_MODEL, itemModel);
+        }
+
         icon.setData(DataComponentTypes.ITEM_NAME, Utils.translateStructure(structureId));
 
         List<Component> lore = new ArrayList<>();
+        lore.add(Component.text(structureId.asString()).color(NamedTextColor.GRAY));
         for (NamespacedKey lootTableId : StructureCache.getInstance().getLootTablesForStructure(structureId)) {
             lore.add(Component.text(lootTableId.asString()).color(NamedTextColor.YELLOW).decoration(TextDecoration.ITALIC, false));
         }
@@ -48,13 +55,13 @@ public class StructureIconItem extends ConstructableCustomItem {
         return icon;
     }
 
-    public static @Nullable NamespacedKey getStructureId(@NotNull ItemStack stack){
+    public static @Nullable NamespacedKey getStructureId(ItemStack stack){
         String rawId = stack.getPersistentDataContainer().get(STRUCTURE_ID_KEY, PersistentDataType.STRING);
         return rawId == null ? null : NamespacedKey.fromString(rawId);
     }
 
     @Override
-    public @NotNull String getRawId() {
+    public String getRawId() {
         return "structure_icon";
     }
 
@@ -69,7 +76,7 @@ public class StructureIconItem extends ConstructableCustomItem {
         getComponents().set(Components.ALWAYS_HIDDEN_ITEM.getDefault());
         getComponents().set(new RecipeAndUsagesItem() {
             @Override
-            public void getRecipes(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+            public void getRecipes(CustomItem customItem, ItemStack stack, Consumer<Visualizer> consumer) {
                 NamespacedKey structureId = StructureIconItem.getStructureId(stack);
                 if (structureId == null) return;
                 for (NamespacedKey lootTableId : StructureCache.getInstance().getLootTablesForStructure(structureId)) {
@@ -78,7 +85,7 @@ public class StructureIconItem extends ConstructableCustomItem {
             }
 
             @Override
-            public void getUsages(@NotNull CustomItem customItem, @NotNull ItemStack stack, @NotNull Consumer<Visualizer> consumer) {
+            public void getUsages(CustomItem customItem, ItemStack stack, Consumer<Visualizer> consumer) {
                 getRecipes(customItem, stack, consumer);
             }
         });
