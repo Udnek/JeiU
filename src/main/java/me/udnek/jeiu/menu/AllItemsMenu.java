@@ -13,11 +13,12 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.List;
 
+@NullMarked
 public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMenu {
 
     public static final int SWITCH_BUTTON_POSITION = 3*9;
@@ -32,14 +33,14 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     protected int firstItemIndex;
     protected int lastItemIndex;
 
-    public @NotNull Category category = Category.ALL_ITEMS;
+    public Category category = Category.ALL_ITEMS;
 
-    public void openAndShow(@NotNull Player player){
+    public void openAndShow(Player player){
         open(player);
         showItems(0);
     }
 
-    public @NotNull List<ItemStack> getAll(){
+    public List<ItemStack> getAll(){
         return category.getAll(this);
     }
 
@@ -71,7 +72,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
     @Override
-    public void onPlayerClicksItem(@NotNull InventoryClickEvent event) {
+    public void onPlayerClicksItem(InventoryClickEvent event) {
         if (event.isShiftClick() && event.getWhoClicked().getGameMode() == GameMode.CREATIVE && event.getCurrentItem() != null){
             event.getWhoClicked().getInventory().addItem(event.getCurrentItem());
             event.setCancelled(true);
@@ -84,11 +85,11 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
         List<ItemStack> items = getAll();
         if (lastItemIndex < items.size()-1) setThemedItem(NEXT_BUTTON_POSITION, Items.NEXT);
         if (lastItemIndex - ITEMS_PER_PAGE >= 0) setThemedItem(PREVIOUS_BUTTON_POSITION, Items.PREVIOUS);
-        setThemedItem(SWITCH_BUTTON_POSITION, category.getIcon(this));
+        setThemedItem(SWITCH_BUTTON_POSITION, category.getItemIcon(this));
     }
 
     @Override
-    public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
+    public void clickedNonButtonItem(InventoryClickEvent event) {
         if (event.isLeftClick()) {
             runNewQuery(event.getCurrentItem(), MenuQuery.Type.RECIPES, event);
         } else if (event.isRightClick()) {
@@ -97,7 +98,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
     @Override
-    public void pressedSwitch(@NotNull InventoryClickEvent event) {
+    public void pressedSwitch(InventoryClickEvent event) {
         int index = Category.REGISTRY.getIndex(category);
         if (index < Category.REGISTRY.getAll().size()-1) index++;
         else index = 0;
@@ -106,7 +107,7 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
 
-    public void runNewQuery(@NotNull ItemStack stack, @NotNull MenuQuery.Type type, @NotNull InventoryClickEvent event) {
+    public void runNewQuery(ItemStack stack, MenuQuery.Type type, InventoryClickEvent event) {
         var query = new MenuQuery(
                 stack,
                 type,
@@ -122,15 +123,15 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     }
 
     @Override
-    public void pressedPrevious(@NotNull InventoryClickEvent event) {
+    public void pressedPrevious(InventoryClickEvent event) {
         showItems(firstItemIndex-ITEMS_PER_PAGE);
     }
     @Override
-    public void pressedNext(@NotNull InventoryClickEvent event) {
+    public void pressedNext(InventoryClickEvent event) {
         showItems(lastItemIndex+1);
     }
     @Override
-    public void pressedCallback(@NotNull InventoryClickEvent event) {}
+    public void pressedCallback(InventoryClickEvent event) {}
     @Override
     public int getInventorySize() {
         return 9*6;
