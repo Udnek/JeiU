@@ -19,6 +19,8 @@
     "tooltip.jeiu.structures": "Only in structures:",
     "tooltip.jeiu.vehicles": "Only when target riding:",
     "tooltip.jeiu.attackers": "Only when attacked by:",
+    "tooltip.jeiu.in_raid": "Only during raid",
+    "tooltip.jeiu.captain": "Only if captain",
 
 	"gui.jeiu.help.description.1":  "§f[%s§f] to recipes",
 	"gui.jeiu.help.description.2":  "§f[%s§f] to recipes where is used in",

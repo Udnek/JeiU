@@ -56,8 +56,6 @@ public class JeiUInfoDialog {
     }
 
     public JeiUInfoDialog() {
-        /*dialogBase.body(List.of(DialogBody.plainMessage(Component.empty()), DialogBody.plainMessage(Component.empty()),
-                DialogBody.plainMessage(Component.empty()), DialogBody.plainMessage(Component.empty())));*/
         buttons.add(
                 ActionButton.create(
                         Component.translatable("dialog_menu.jeiu.recipe.left_hand"),

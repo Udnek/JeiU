@@ -10,7 +10,7 @@ import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public interface JeiUMenu extends ClickableMenu{
+public interface JeiUMenu extends ClickableMenu {
     @NotNull TextColor MAIN_COLOR = TextColor.color(163, 128, 106);
 
     default @NotNull ItemStack colorItemToTheme(@NotNull ItemStack itemStack){

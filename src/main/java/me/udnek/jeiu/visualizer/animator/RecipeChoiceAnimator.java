@@ -5,7 +5,9 @@ import me.udnek.coreu.custom.recipe.choice.CustomRecipeChoice;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class RecipeChoiceAnimator implements Animator {
 
     protected int position;
@@ -24,12 +26,14 @@ public class RecipeChoiceAnimator implements Animator {
         }
     }
 
-    public static boolean isAnimatableChoice(RecipeChoice recipeChoice){
-        if (recipeChoice == null) return true;
-        if (recipeChoice instanceof RecipeChoice.MaterialChoice) return true;
-        if (recipeChoice instanceof RecipeChoice.ExactChoice) return true;
-        if (recipeChoice instanceof CustomRecipeChoice) return true;
-        return false;
+    public static boolean isAnimatableChoice(@Nullable RecipeChoice recipeChoice){
+        return switch (recipeChoice) {
+            case null -> true;
+            case RecipeChoice.MaterialChoice materialChoice -> true;
+            case RecipeChoice.ExactChoice exactChoice -> true;
+            case CustomRecipeChoice customRecipeChoice -> true;
+            default -> false;
+        };
     }
 
     protected int getNewIndex(){
@@ -48,7 +52,6 @@ public class RecipeChoiceAnimator implements Animator {
             default -> ((CustomRecipeChoice) choice).getAllPossible().get(getNewIndex());
         };
     }
-
 
     @Override
     public int getPosition() {

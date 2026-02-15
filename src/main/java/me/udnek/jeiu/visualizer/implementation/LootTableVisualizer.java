@@ -112,6 +112,12 @@ public class LootTableVisualizer implements Visualizer {
                         lines.add(Component.text(" ").append(Component.translatable(entityType.translationKey())));
                     }
                 }
+                if (Boolean.TRUE.equals(portrait.raiderInRaid)){
+                    lines.add(Component.translatable("tooltip.jeiu.in_raid"));
+                }
+                if (Boolean.TRUE.equals(portrait.raiderIsCaptain)){
+                    lines.add(Component.translatable("tooltip.jeiu.captain"));
+                }
 
                 if (portrait.randomChance != null){
                     probability *= portrait.randomChance;

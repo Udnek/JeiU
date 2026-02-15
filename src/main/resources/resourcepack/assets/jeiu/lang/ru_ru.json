@@ -19,6 +19,8 @@
     "tooltip.jeiu.structures": "Только в структурах:",
     "tooltip.jeiu.vehicles": "Только когда цель едет на:",
     "tooltip.jeiu.attackers": "Только когда цель атакована:",
+    "tooltip.jeiu.in_raid": "Только в рейде",
+    "tooltip.jeiu.captain": "Только если капитан",
 
 	"gui.jeiu.help.description.1":  "§f[%s§f] - рецепты",
 	"gui.jeiu.help.description.2":  "§f[%s§f] - рецепты, где используется предмет",
