@@ -6,7 +6,6 @@ import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.util.MenuQuery;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LootTableCommand implements CommandExecutor, TabExecutor {
+public class LootTableCommand implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
         if (args.length == 0) return false;

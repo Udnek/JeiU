@@ -3,7 +3,6 @@ package me.udnek.jeiu.event;
 import me.udnek.coreu.custom.event.CustomEvent;
 import net.kyori.adventure.key.Key;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootTable;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 

@@ -17,6 +17,7 @@ import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.block.Biome;
@@ -47,7 +48,8 @@ public class LootTableVisualizer implements Visualizer {
 
     @Override
     public @Nullable List<Component> getInformation() {
-        return List.of(Component.text("ID: " + lootTable.getKey().asString()));
+        return List.of(Component.text("ID: " + lootTable.getKey().asString())
+                .clickEvent(ClickEvent.copyToClipboard("\"" + lootTable.getKey().asString() + "\"")));
     }
 
     @Override

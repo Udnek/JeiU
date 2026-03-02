@@ -7,13 +7,14 @@ import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Color;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public interface JeiUMenu extends ClickableMenu {
-    @NotNull TextColor MAIN_COLOR = TextColor.color(163, 128, 106);
+    TextColor MAIN_COLOR = TextColor.color(163, 128, 106);
 
-    default @NotNull ItemStack colorItemToTheme(@NotNull ItemStack itemStack){
+    default ItemStack colorItemToTheme(ItemStack itemStack){
         itemStack.setData(DataComponentTypes.CUSTOM_MODEL_DATA, CustomModelData.customModelData().addColor(Color.fromRGB(MAIN_COLOR.value())).build());
         return itemStack;
     }

@@ -133,6 +133,9 @@ public class AllItemsMenu extends ConstructableCustomInventory implements JeiUMe
     @Override
     public void pressedCallback(InventoryClickEvent event) {}
     @Override
+    public void pressedBanner(InventoryClickEvent event) {}
+
+    @Override
     public int getInventorySize() {
         return 9*6;
     }
