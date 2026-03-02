@@ -10,29 +10,31 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.loot.LootTable;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NullMarked
 public class LootTableCommand implements TabExecutor {
     @Override
-    public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
+    public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
+        if (!(commandSender instanceof Player player)) return false;
         if (args.length == 0) return false;
         String rawId = args[0];
         NamespacedKey id = NamespacedKey.fromString(rawId);
         if (id == null) return false;
         @Nullable LootTable lootTable = Nms.get().getLootTable(id);
         if (lootTable == null) return false;
-        new RecipesMenu((Player) commandSender).runNewQuery(
+        new RecipesMenu(player).runNewQuery(
                 new MenuQuery(LootTableIconItem.withLootTable(lootTable), MenuQuery.Type.RECIPES, true)
         );
         return true;
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, String @NotNull [] args) {
+    public @Nullable List<String> onTabComplete(CommandSender commandSender, Command command, String label, String[] args) {
         List<String> keys = new ArrayList<>();
         String arg = args.length > 0 ? args[0] : "";
         Nms.get().getRegisteredLootTableIds().forEach(key -> {
