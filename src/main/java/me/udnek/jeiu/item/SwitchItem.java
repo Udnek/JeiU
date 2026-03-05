@@ -44,8 +44,8 @@ public class SwitchItem extends TechnicalItem{
             }
 
             public void addNewFile(@NotNull List<RpFile> list, @NotNull Key key){
-                list.add(new RpJsonFile(getDefinitionPath(key), getDefinition(key)));
-                list.add(new RpJsonFile(getModelPath(key), getModels(key).getFirst().getRight()));
+                list.add(new RpJsonFile(this, getDefinitionPath(key), getDefinition(key)));
+                list.add(new RpJsonFile(this, getModelPath(key), getModels(key).getFirst().getRight()));
             }
         });
     }

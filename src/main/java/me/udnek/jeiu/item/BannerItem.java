@@ -61,7 +61,7 @@ public class BannerItem extends TechnicalItem{
             }
 
             public @NotNull RpJsonFile getNewFile(@NotNull Key key){
-                return new RpJsonFile(getDefinitionPath(key), getDefinition(key));
+                return new RpJsonFile(this, getDefinitionPath(key), getDefinition(key));
             }
         });
     }
