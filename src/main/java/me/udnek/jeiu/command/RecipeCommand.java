@@ -3,7 +3,6 @@ package me.udnek.jeiu.command;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.util.MenuQuery;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
@@ -14,7 +13,7 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
-public class RecipeCommand implements CommandExecutor, TabExecutor {
+public class RecipeCommand implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String label, @NotNull String @NonNull [] args) {
         ItemStack targetItem = RecipeCommandUtils.getTargetItem(commandSender, args);

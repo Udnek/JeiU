@@ -7,6 +7,7 @@ import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.util.StructureCache;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.generator.structure.Structure;
@@ -55,7 +56,7 @@ public class StructureVisualizer implements Visualizer {
 
     @Override
     public @Nullable List<Component> getInformation() {
-        return List.of(Component.text("ID: " + id.asString()));
+        return List.of(Component.text("ID: " + id.asString()).clickEvent(ClickEvent.copyToClipboard("\"" + id.asString() + "\"")));
     }
 
     @Override

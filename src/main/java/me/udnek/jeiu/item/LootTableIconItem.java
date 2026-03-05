@@ -19,7 +19,6 @@ import me.udnek.jeiu.visualizer.implementation.StructureVisualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
@@ -29,7 +28,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 
 public class LootTableIconItem extends ConstructableCustomItem {

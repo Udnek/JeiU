@@ -8,26 +8,28 @@ import me.udnek.coreu.util.ComponentU;
 import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.component.Components;
 import me.udnek.jeiu.component.RecipeAndUsagesItem;
+import me.udnek.jeiu.event.MenuQueryEvent;
 import me.udnek.jeiu.item.Items;
 import me.udnek.jeiu.util.BackCallable;
 import me.udnek.jeiu.util.MenuQuery;
-import me.udnek.jeiu.event.MenuQueryEvent;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.GameMode;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NullMarked
 public class RecipesMenu extends ConstructableCustomInventory implements JeiUMenu {
 
     public static final int BANNER_AND_INFO_POSITION = 0;
@@ -38,34 +40,43 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     public static final int NEXT_BUTTON_POSITION = 9*5;
     public static final int VISUALIZER_X_OFFSET = 1;
 
-    private BukkitTask animatorTicker = null;
-    private List<Visualizer> recipes;
+    private @Nullable BukkitTask animatorTicker = null;
+    private @Nullable List<Visualizer> recipes;
     private int recipeIndex;
-    private Visualizer currentRecipe;
+    private @Nullable Visualizer currentRecipe;
 
-    private MenuQuery query;
+    private @Nullable MenuQuery query;
     private final Player player;
 
-    public RecipesMenu(@NotNull Player player) {
+    public RecipesMenu(Player player) {
         this.player = player;
     }
 
-    public @NotNull MenuQuery getQuery() {
+    public @Nullable MenuQuery getQuery() {
         return query;
     }
 
     @Override
-    public void pressedCallback(@NotNull InventoryClickEvent event) {
+    public void pressedCallback(InventoryClickEvent event) {
         BackCallable backCall = query.getCallback();
         if (backCall != null) backCall.callback();
     }
     @Override
-    public void pressedNext(@NotNull InventoryClickEvent event) {
+    public void pressedNext(InventoryClickEvent event) {
         openRecipe(recipeIndex+1);
     }
     @Override
-    public void pressedPrevious(@NotNull InventoryClickEvent event) {
+    public void pressedPrevious(InventoryClickEvent event) {
         openRecipe(recipeIndex-1);
+    }
+
+    @Override
+    public void pressedBanner(InventoryClickEvent event) {
+        if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) return;
+        if (currentRecipe == null) return;
+        List<Component> information = currentRecipe.getInformation();
+        if (information == null) return;
+        information.forEach(informationComponent -> event.getWhoClicked().sendMessage(informationComponent));
     }
 
     protected void openRecipe(int recipeIndex) {
@@ -73,7 +84,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
         runPage();
     }
 
-    public void runNewQuery(@NotNull MenuQuery query){
+    public void runNewQuery(MenuQuery query){
         List<Visualizer> newRecipes = new ArrayList<>();
 
         switch (query.getType()) {
@@ -108,7 +119,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
 
 
     @Override
-    public void clickedNonButtonItem(@NotNull InventoryClickEvent event) {
+    public void clickedNonButtonItem(InventoryClickEvent event) {
         BackCallable newCallBack = new BackCallable() {
             //int oldRecipeIndex = RecipesMenu.this.recipeIndex;
             final MenuQuery oldQuery = RecipesMenu.this.query;
@@ -183,7 +194,7 @@ public class RecipesMenu extends ConstructableCustomInventory implements JeiUMen
     public static int getRecipeStationPosition() {return RECIPE_STATION_POSITION;}
 
     @Override
-    public void pressedSwitch(@NotNull InventoryClickEvent event) {}
+    public void pressedSwitch(InventoryClickEvent event) {}
     @Override
     public int getInventorySize() {return 9 * 6;}
     @Override

@@ -6,14 +6,15 @@ import me.udnek.coreu.nms.Nms;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Registry;
 import org.bukkit.generator.structure.Structure;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@NullMarked
 public class StructureCache {
 
     private static @Nullable StructureCache instance;
@@ -23,21 +24,17 @@ public class StructureCache {
         return instance;
     }
 
-    private Map<NamespacedKey, List<NamespacedKey>> structureToLootTables = null;
+    private @Nullable Map<NamespacedKey, List<NamespacedKey>> structureToLootTables = null;
 
-    public @NotNull Map<NamespacedKey, List<NamespacedKey>> getAllWithLootTable(){
+    public Map<NamespacedKey, List<NamespacedKey>> getAllWithLootTable(){
         if (structureToLootTables == null){
             structureToLootTables = new HashMap<>();
-            Registry<@NotNull Structure> registry = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE);
+            Registry<Structure> registry = RegistryAccess.registryAccess().getRegistry(RegistryKey.STRUCTURE);
             registry.keyStream().forEach(structureId -> {
                 List<NamespacedKey> lootTables = new ArrayList<>();
-                Nms.get().getAllPossibleLootTablesInStructure(structureId, lootTable -> {
-                    lootTables.add(lootTable.getKey());
-                });
+                Nms.get().getAllPossibleLootTablesInStructure(structureId, lootTable -> lootTables.add(lootTable.getKey()));
                 if (lootTables.isEmpty()){
-                    Utils.getLootTablesBasedOnName(structureId, lootTable -> {
-                        lootTables.add(lootTable.getKey());
-                    });
+                    Utils.getLootTablesBasedOnName(structureId, lootTable -> lootTables.add(lootTable.getKey()));
                 }
                 if (!lootTables.isEmpty()){
                     structureToLootTables.put(structureId, lootTables);
@@ -47,7 +44,7 @@ public class StructureCache {
         return structureToLootTables;
     }
 
-    public @NotNull List<NamespacedKey> structuresWithLootTable(@NotNull NamespacedKey lootTable){
+    public List<NamespacedKey> structuresWithLootTable(NamespacedKey lootTable){
         List<NamespacedKey> structures = new ArrayList<>();
         getAllWithLootTable().forEach((structure, lootTables) -> {
             if (lootTables.contains(lootTable)) structures.add(structure);
@@ -55,7 +52,7 @@ public class StructureCache {
         return structures;
     }
 
-    public @NotNull List<NamespacedKey> getLootTablesForStructure(@NotNull NamespacedKey structure){
+    public List<NamespacedKey> getLootTablesForStructure(NamespacedKey structure){
         return getAllWithLootTable().getOrDefault(structure, List.of());
     }
 }

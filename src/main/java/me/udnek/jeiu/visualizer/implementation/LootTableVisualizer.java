@@ -11,12 +11,14 @@ import me.udnek.coreu.nms.loot.condition.LootConditionWrapper;
 import me.udnek.coreu.nms.loot.util.LootInfo;
 import me.udnek.coreu.util.LogUtils;
 import me.udnek.coreu.util.Utils;
+import me.udnek.jeiu.JeiU;
 import me.udnek.jeiu.item.BannerItem;
 import me.udnek.jeiu.item.LootTableIconItem;
 import me.udnek.jeiu.menu.RecipesMenu;
 import me.udnek.jeiu.visualizer.Visualizer;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.block.Biome;
@@ -24,13 +26,14 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootTable;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@NullMarked
 public class LootTableVisualizer implements Visualizer {
 
     private static final Layout SMALL_LAYOUT = new Layout(5, 3, 9*1 + 1 + RecipesMenu.VISUALIZER_X_OFFSET, BannerItem.SMALL_LOOT_TABLE);
@@ -41,28 +44,29 @@ public class LootTableVisualizer implements Visualizer {
 
     private final LootTable lootTable;
 
-    public LootTableVisualizer(@NotNull LootTable lootTable){
+    public LootTableVisualizer(LootTable lootTable){
         this.lootTable = lootTable;
     }
 
     @Override
     public @Nullable List<Component> getInformation() {
-        return List.of(Component.text("ID: " + lootTable.getKey().asString()));
+        return List.of(Component.text("ID: " + lootTable.getKey().asString())
+                .clickEvent(ClickEvent.copyToClipboard("\"" + lootTable.getKey().asString() + "\"")));
     }
 
     @Override
     public void tickAnimation() {}
 
-    public void visualize(@NotNull RecipesMenu recipesMenu) {
+    public void visualize(RecipesMenu recipesMenu) {
 
         List<Pair<ItemStack, LootInfo>> possibleLoot = new ArrayList<>();
         Nms.get().getLootTableWrapper(lootTable).extractItems(possibleLoot::add);
 
         if (possibleLoot.size() > MAX_CAPACITY) {
-            LogUtils.log(String.format("LootTable (%s) overloaded max capacity (%d): %d. Clearing duplicates.", lootTable.key(), MAX_CAPACITY, possibleLoot.size()));
+            LogUtils.log(JeiU.getInstance(), String.format("LootTable (%s) overloaded max capacity (%d): %d. Clearing duplicates.", lootTable.key(), MAX_CAPACITY, possibleLoot.size()));
             //possibleLoot = clearDuplicates(possibleLoot);
             if (possibleLoot.size() > MAX_CAPACITY) {
-                LogUtils.log(String.format("Still overloads capacity (%d): %d. Cutting.", MAX_CAPACITY, possibleLoot.size()));
+                LogUtils.log(JeiU.getInstance(), String.format("Still overloads capacity (%d): %d. Cutting.", MAX_CAPACITY, possibleLoot.size()));
                 possibleLoot = possibleLoot.subList(0, MAX_CAPACITY);
             }
         }
@@ -176,7 +180,7 @@ public class LootTableVisualizer implements Visualizer {
         recipesMenu.setItem(RecipesMenu.getRecipeStationPosition(), LootTableIconItem.withLootTable(lootTable));
     }
 
-    public @NotNull List<ItemStack> clearDuplicates(@NotNull List<ItemStack> itemStacks) {
+    public List<ItemStack> clearDuplicates(List<ItemStack> itemStacks) {
         List<ItemStack> newItems = new ArrayList<>();
         for (ItemStack itemStack : itemStacks) {
             boolean contains = newItems.stream().anyMatch(addedItem -> ItemUtils.isSameIds(addedItem, itemStack));
@@ -186,7 +190,7 @@ public class LootTableVisualizer implements Visualizer {
     }
 
 
-    public record Layout(int x, int y, int offset, @NotNull Key model) {
+    public record Layout(int x, int y, int offset, Key model) {
         int getCapacity() {
             return x * y;
         }
