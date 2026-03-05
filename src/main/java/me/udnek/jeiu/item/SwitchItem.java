@@ -2,7 +2,8 @@ package me.udnek.jeiu.item;
 
 import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
 import me.udnek.coreu.custom.item.CustomItem;
-import me.udnek.coreu.resourcepack.path.VirtualRpJsonFile;
+import me.udnek.coreu.resourcepack.file.RpFile;
+import me.udnek.coreu.resourcepack.file.RpJsonFile;
 import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.key.Key;
 import org.bukkit.NamespacedKey;
@@ -33,8 +34,8 @@ public class SwitchItem extends TechnicalItem{
         getComponents().set(new AutoGeneratingFilesItem.CustomModelDataColorable(){
 
             @Override
-            public @NotNull List<VirtualRpJsonFile> getFiles(@NotNull CustomItem customItem) {
-                List<VirtualRpJsonFile> files = new ArrayList<>(super.getFiles(customItem));
+            public @NotNull List<RpFile> getFiles(@NotNull CustomItem customItem) {
+                List<RpFile> files = new ArrayList<>(super.getFiles(customItem));
                 addNewFile(files, ENCHANTED_BOOKS);
                 addNewFile(files, CUSTOM_RECIPES);
                 addNewFile(files, CUSTOM_ITEMS);
@@ -42,9 +43,9 @@ public class SwitchItem extends TechnicalItem{
                 return files;
             }
 
-            public void addNewFile(@NotNull List<VirtualRpJsonFile> list, @NotNull Key key){
-                list.add(new VirtualRpJsonFile(getDefinition(key), getDefinitionPath(key)));
-                list.add(new VirtualRpJsonFile(getModels(key).getFirst().getRight(), getModelPath(key)));
+            public void addNewFile(@NotNull List<RpFile> list, @NotNull Key key){
+                list.add(new RpJsonFile(getDefinitionPath(key), getDefinition(key)));
+                list.add(new RpJsonFile(getModelPath(key), getModels(key).getFirst().getRight()));
             }
         });
     }

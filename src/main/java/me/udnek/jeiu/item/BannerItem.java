@@ -3,7 +3,8 @@ package me.udnek.jeiu.item;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import me.udnek.coreu.custom.component.instance.AutoGeneratingFilesItem;
 import me.udnek.coreu.custom.item.CustomItem;
-import me.udnek.coreu.resourcepack.path.VirtualRpJsonFile;
+import me.udnek.coreu.resourcepack.file.RpFile;
+import me.udnek.coreu.resourcepack.file.RpJsonFile;
 import me.udnek.jeiu.JeiU;
 import net.kyori.adventure.key.Key;
 import org.bukkit.NamespacedKey;
@@ -46,8 +47,8 @@ public class BannerItem extends TechnicalItem{
         getComponents().set(new AutoGeneratingFilesItem.CustomModelDataColorable(){
 
             @Override
-            public @NotNull List<VirtualRpJsonFile> getFiles(@NotNull CustomItem customItem) {
-                ArrayList<VirtualRpJsonFile> files = new ArrayList<>(super.getFiles(customItem));
+            public @NotNull List<RpFile> getFiles(@NotNull CustomItem customItem) {
+                ArrayList<RpFile> files = new ArrayList<>(super.getFiles(customItem));
                 files.add(getNewFile(ANVIL));
                 files.add(getNewFile(CRAFTING_TABLE));
                 files.add(getNewFile(BIG_LOOT_TABLE));
@@ -59,8 +60,8 @@ public class BannerItem extends TechnicalItem{
                 return files;
             }
 
-            public @NotNull VirtualRpJsonFile getNewFile(@NotNull Key key){
-                return new VirtualRpJsonFile(getDefinition(key), getDefinitionPath(key));
+            public @NotNull RpJsonFile getNewFile(@NotNull Key key){
+                return new RpJsonFile(getDefinitionPath(key), getDefinition(key));
             }
         });
     }
