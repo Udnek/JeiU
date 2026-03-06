@@ -14,27 +14,28 @@ import org.bukkit.Material;
 import org.bukkit.Registry;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+@NullMarked
 public class RepairVisualizer extends AbstractRecipeVisualizer {
 
     public static final int RESULTS_POSITION = VanillaRecipeVisualizer.CRAFTING_RESULT_OFFSET;
     public static final int REPAIRING_POSITION = RESULTS_POSITION -2;
     public static final int TO_BE_REPAIRED_POSITION = REPAIRING_POSITION-2;
 
-    protected @NotNull ItemStack item;
+    protected ItemStack item;
 
-    public RepairVisualizer(@NotNull ItemStack itemStack){
+    public RepairVisualizer(ItemStack itemStack){
         this.item = itemStack;
     }
 
     @Override
-    public void visualize(@NotNull RecipesMenu recipesMenu) {
+    public void visualize(RecipesMenu recipesMenu) {
         super.visualize(recipesMenu);
         CustomItem customItem = CustomItem.get(item);
         RepairData repairData = null;
