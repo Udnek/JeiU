@@ -13,7 +13,7 @@ group = "me.udnek"
 version = "1.0-SNAPSHOT"
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }
 
 repositories {
@@ -25,9 +25,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT") {
-        exclude(group = "org.apache.commons", module = "commons-lang3")
-    }
+    compileOnly("io.papermc.paper:paper-api:26.2.build.+")
     compileOnly("org.apache.commons:commons-lang3:3.20.0")
 
     compileOnly(files("../CoreU/build/libs/CoreU-1.0-SNAPSHOT.jar"))
@@ -38,7 +36,7 @@ tasks {
         compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
     }
     compileJava {
-        options.release.set(21)
+        options.release.set(25)
     }
     shadowJar {
         archiveBaseName.set("JeiU")

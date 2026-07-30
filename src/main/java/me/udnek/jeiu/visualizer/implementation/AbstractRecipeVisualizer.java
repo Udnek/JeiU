@@ -8,7 +8,6 @@ import org.bukkit.inventory.RecipeChoice;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,6 @@ public abstract class AbstractRecipeVisualizer implements Visualizer {
     protected List<Animator> animators = new ArrayList<>();
     protected RecipesMenu menu;
     @Override
-    @OverridingMethodsMustInvokeSuper
     public void visualize(@NotNull RecipesMenu recipesMenu) {
         this.menu = recipesMenu;
     }

@@ -175,8 +175,6 @@ public class Utils {
     public static @Nullable Material spawnEggByName(String name){
         EntityType entityType = EntityType.fromName(name);
         if (entityType == null) return null;
-        ItemStack egg = Nms.get().getSpawnEggByType(entityType);
-        if (egg == null) return null;
-        return egg.getType();
+        return Nms.get().getSpawnEggByType(entityType);
     }
 }
